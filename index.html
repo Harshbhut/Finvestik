@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Finvestik</title>
+    <title>Finvestik - Calculator</title>
+    
+    <!-- SEO and Social Media Meta Tags -->
     <meta name="description" content="Finvestik: Position Sizing, Intraday Scanner, and Custom Index Data. Optimize trading and analysis." />
     <meta name="keywords" content="position sizing, risk management, stock trading, investment calculator, Finvestik, trading tools, intraday stocks, chartink scanner, custom index, google sheets data" />
     <meta name="author" content="Finvestik" />
@@ -11,25 +13,45 @@
     <meta property="og:title" content="Finvestik - Advanced Financial Tools" />
     <meta property="og:description" content="Calculators, Intraday Stock Scanner, and Custom Index display. Persistent inputs, dark/light themes, ₹ currency support." />
     <meta property="og:url" content="YOUR_WEBSITE_URL_HERE" />
-    <meta property="og:image" content="static/images/Financial Growth Vector Logo.png" />
+    <meta property="og:image" content="YOUR_PREVIEW_IMAGE_URL_HERE" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Finvestik" />
     <meta name="twitter:description" content="Optimize trades with position sizing tools & find intraday stock opportunities, view custom index data." />
     <meta name="twitter:image" content="YOUR_PREVIEW_IMAGE_URL_HERE" />
 
+    <!-- =================================================================== -->
+    <!-- NEW: Favicon / Browser Tab Logo -->
+    <!-- You can use your existing logo or a dedicated .ico/.png file -->
+    <link rel="icon" type="image/png" sizes="32x32" href="static/images/Financial Growth Vector Logo.png">
+    <link rel="apple-touch-icon" href="static/images/Financial Growth Vector Logo.png">
+    <!-- =================================================================== -->
+    
+    <!-- Stylesheets and Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Link to your static CSS file directly -->
     <link rel="stylesheet" href="static/css/style.css">
+
+    <!-- =================================================================== -->
+    <!-- NEW: Google Analytics Tracking Code -->
+    <!-- IMPORTANT: Replace G-XXXXXXXXXX with your actual Google Analytics Measurement ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q06244YWW6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    <!-- =================================================================== -->
+
 </head>
 <body class="min-h-screen flex flex-col antialiased">
     <header id="app-header" class="sticky top-0 z-50 w-full shadow-md" style="background-color: var(--bg-secondary);" role="banner">
         <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16 sm:h-20">
             <div class="flex-shrink-0">
-                 <!-- Link to your static image file directly -->
                  <img src="static/images/Financial Growth Vector Logo.png" alt="Finvestik Logo" id="finvestik-logo" class="h-[50px] w-[50px] sm:h-16 sm:w-16 rounded-md object-contain"/>
             </div>
             <nav class="flex-grow text-center px-2" aria-label="Main navigation">
@@ -47,7 +69,7 @@
 
     <div id="main-content-area" class="w-full max-w-5xl mx-auto flex flex-col flex-grow items-center p-4">
 
-        <!-- CALCULATOR VIEW (No changes needed here) -->
+        <!-- CALCULATOR VIEW -->
         <div id="calculator-view" class="w-full"> 
             <div class="w-full mt-2 mb-4 py-2" role="region" aria-labelledby="capital-heading">
                  <div class="flex flex-col items-end">
@@ -67,7 +89,7 @@
                         <div> <label for="risk_riskPercent" class="mb-1 text-xs sm:text-sm font-medium block" style="color: var(--text-secondary);">Risk on Capital (%)</label> <input type="text" name="risk_riskPercent" id="risk_riskPercent" placeholder="e.g., 0.5" inputmode="decimal" class="form-input pl-3 pr-3" aria-describedby="risk_riskPercent-error"> <p id="risk_riskPercent-error" class="input-error-text" aria-live="polite"></p> </div> <div> <label for="risk_entryPrice" class="mb-1 text-xs sm:text-sm font-medium block" style="color: var(--text-secondary);">Entry Price (₹)</label> <input type="text" name="risk_entryPrice" id="risk_entryPrice" placeholder="e.g., 305" inputmode="decimal" class="form-input pl-3 pr-3" aria-describedby="risk_entryPrice-error"> <p id="risk_entryPrice-error" class="input-error-text" aria-live="polite"></p> </div> <div> <label for="risk_slPrice" class="mb-1 text-xs sm:text-sm font-medium block" style="color: var(--text-secondary);">Stop Loss (SL) Price (₹)</label> <input type="text" name="risk_slPrice" id="risk_slPrice" placeholder="e.g., 300" inputmode="decimal" class="form-input pl-3 pr-3" aria-describedby="risk_slPrice-error"> <p id="risk_slPrice-error" class="input-error-text" aria-live="polite"></p> </div>
                     </div>
                     <div id="risk_results_container" class="mt-6 pt-4 space-y-2" aria-live="polite">
-                        <h3 class="text-md sm:text-lg font-semibold mb-2 text-center" style="color: var(--text-primary);">Results</h3> <div id="risk_calculation_warning" class="hidden mb-2 p-2 warning-message text-xs rounded-md border" role="alert"></div> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Quantity to Buy:</span> <span id="risk_result_qty" class="result-value qty text-xl sm:text-2xl md:text-3xl">0</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Risk Amount:</span> <span id="risk_result_riskAmount" class="result-value red text-md sm:text-lg md:text-xl">₹0.00</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Stop Loss %:</span> <span id="risk_result_slPercent" class="result-value neutral text-md sm:text-lg md:text-xl">0.00%</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Capital Allocation:</span> <span id="risk_result_allocationPercent" class="result-value neutral text-md sm:text-lg md:text-xl">0.00%</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Total Trade Value:</span> <span id="risk_result_totalCost" class="result-value neutral text-md sm:text-lg md:text-xl">₹0.00</span></p>
+                        <h3 class="text-md sm:text-lg font-semibold mb-2 text-center" style="color: var(--text-primary);">Results</h3> <div id="risk_calculation_warning" class="hidden mb-2 p-2 warning-message text-xs rounded-md border" role="alert"></div> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Quantity to Buy:</span> <span id="risk_result_qty" class="result-value qty text-xl sm:text-2xl md:text-3xl">0</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Risk Amount:</span> <span id="risk_result_riskAmount" class="result-value red text-md sm:text-lg md:text-xl">₹0.00</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Stop Loss %:</span> <span id="risk_result_slPercent" class="result-value red text-md sm:text-lg md:text-xl">0.00%</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Capital Allocation:</span> <span id="risk_result_allocationPercent" class="result-value neutral text-md sm:text-lg md:text-xl">0.00%</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Total Trade Value:</span> <span id="risk_result_totalCost" class="result-value neutral text-md sm:text-lg md:text-xl">₹0.00</span></p>
                     </div>
                     <div id="risk_error_summary" class="hidden mt-3 text-center text-xs sm:text-sm" style="color: var(--error-text);" role="alert">Correct errors above.</div>
                 </section>
@@ -78,14 +100,14 @@
                         <div> <label for="alloc_allocationPercent" class="mb-1 text-xs sm:text-sm font-medium block" style="color: var(--text-secondary);">Target Allocation (%)</label> <input type="text" name="alloc_allocationPercent" id="alloc_allocationPercent" placeholder="e.g., 20" inputmode="decimal" class="form-input pl-3 pr-3" aria-describedby="alloc_allocationPercent-error"> <p id="alloc_allocationPercent-error" class="input-error-text" aria-live="polite"></p> </div> <div> <label for="alloc_entryPrice" class="mb-1 text-xs sm:text-sm font-medium block" style="color: var(--text-secondary);">Entry Price (₹)</label> <input type="text" name="alloc_entryPrice" id="alloc_entryPrice" placeholder="e.g., 305" inputmode="decimal" class="form-input pl-3 pr-3" aria-describedby="alloc_entryPrice-error"> <p id="alloc_entryPrice-error" class="input-error-text" aria-live="polite"></p> </div> <div> <label for="alloc_slPrice" class="mb-1 text-xs sm:text-sm font-medium block" style="color: var(--text-secondary);">Stop Loss (SL) Price (₹)</label> <input type="text" name="alloc_slPrice" id="alloc_slPrice" placeholder="e.g., 300" inputmode="decimal" class="form-input pl-3 pr-3" aria-describedby="alloc_slPrice-error"> <p id="alloc_slPrice-error" class="input-error-text" aria-live="polite"></p> </div>
                     </div>
                     <div id="alloc_results_container" class="mt-6 pt-4 space-y-2" aria-live="polite">
-                        <h3 class="text-md sm:text-lg font-semibold mb-2 text-center" style="color: var(--text-primary);">Results</h3> <div id="alloc_calculation_warning" class="hidden mb-2 p-2 warning-message text-xs rounded-md border" role="alert"></div> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Quantity to Buy:</span> <span id="alloc_result_qty" class="result-value qty text-xl sm:text-2xl md:text-3xl">0</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Actual Risk on Capital:</span> <span id="alloc_result_riskOnCapitalPercent" class="result-value red text-md sm:text-lg md:text-xl">0.00%</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Risk Amount:</span> <span id="alloc_result_riskAmount" class="result-value red text-md sm:text-lg md:text-xl">₹0.00</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Stop Loss %:</span> <span id="alloc_result_slPercent" class="result-value neutral text-md sm:text-lg md:text-xl">0.00%</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Total Trade Value:</span> <span id="alloc_result_totalCost" class="result-value neutral text-md sm:text-lg md:text-xl">₹0.00</span></p>
+                        <h3 class="text-md sm:text-lg font-semibold mb-2 text-center" style="color: var(--text-primary);">Results</h3> <div id="alloc_calculation_warning" class="hidden mb-2 p-2 warning-message text-xs rounded-md border" role="alert"></div> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Quantity to Buy:</span> <span id="alloc_result_qty" class="result-value qty text-xl sm:text-2xl md:text-3xl">0</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Actual Risk on Capital:</span> <span id="alloc_result_riskOnCapitalPercent" class="result-value red text-md sm:text-lg md:text-xl">0.00%</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Risk Amount:</span> <span id="alloc_result_riskAmount" class="result-value red text-md sm:text-lg md:text-xl">₹0.00</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Stop Loss %:</span> <span id="alloc_result_slPercent" class="result-value red text-md sm:text-lg md:text-xl">0.00%</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Total Trade Value:</span> <span id="alloc_result_totalCost" class="result-value neutral text-md sm:text-lg md:text-xl">₹0.00</span></p>
                     </div>
                      <div id="alloc_error_summary" class="hidden mt-3 text-center text-xs sm:text-sm" style="color: var(--error-text);" role="alert">Correct errors above.</div>
                 </section>
             </main>
         </div>
 
-        <!-- CUSTOM INDEX VIEW (No changes needed here) -->
+        <!-- CUSTOM INDEX VIEW -->
         <div id="custom-index-view" class="w-full content-card p-4 sm:p-6">
             <div class="flex flex-wrap justify-between items-center mb-4 gap-2">
                 <h2 class="text-xl sm:text-2xl font-semibold text-transparent bg-clip-text" style="background-image: linear-gradient(to right, var(--text-hyperlink), var(--text-hyperlink-hover)); color: var(--text-primary);">
@@ -122,7 +144,6 @@
         <div class="flex justify-center space-x-4 sm:space-x-6 mb-3"> <a href="https://x.com" target="_blank" rel="noopener noreferrer" class="social-icon x-icon" aria-label="Finvestik on X (formerly Twitter)"> <i class="fa fa-twitter" aria-hidden="true"></i><span class="sr-only">X (Twitter)</span> </a> <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="social-icon youtube-icon" aria-label="Finvestik on YouTube"> <i class="fa fa-youtube-play" aria-hidden="true"></i><span class="sr-only">YouTube</span> </a> <a href="https://telegram.org" target="_blank" rel="noopener noreferrer" class="social-icon telegram-icon" aria-label="Finvestik on Telegram"> <i class="fa fa-telegram" aria-hidden="true"></i><span class="sr-only">Telegram</span> </a> </div> <p class="text-xs mt-1" style="color: var(--text-secondary);">© <span id="current-year"></span> Finvestik. All Rights Reserved.</p>
     </footer>
 
-    <!-- Link to your static JS file directly -->
     <script src="static/js/script.js"></script>
 </body>
 </html>
