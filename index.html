@@ -26,51 +26,78 @@
     <link rel="apple-touch-icon" href="static/images/Financial Growth Vector Logo.png">
     <!-- =================================================================== -->
     
-    <!-- Stylesheets and Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="static/css/style.css">
 
-    <!-- =================================================================== -->
-    <!-- NEW: Google Analytics Tracking Code -->
-    <!-- IMPORTANT: Replace G-XXXXXXXXXX with your actual Google Analytics Measurement ID -->
+    <!-- Libraries for Stock Universe - aync/defer for performance -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" defer></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" defer></script> -->
+    <!-- SortableJS for column reordering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js" defer></script>
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q06244YWW6"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-Q06244YWW6');
     </script>
-    <!-- =================================================================== -->
-
 </head>
 <body class="min-h-screen flex flex-col antialiased">
     <header id="app-header" class="sticky top-0 z-50 w-full shadow-md" style="background-color: var(--bg-secondary);" role="banner">
         <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16 sm:h-20">
             <div class="flex-shrink-0">
-                 <img src="static/images/Financial Growth Vector Logo.png" alt="Finvestik Logo" id="finvestik-logo" class="h-[50px] w-[50px] sm:h-16 sm:w-16 rounded-md object-contain"/>
+                 <img src="static/images/Financial Growth Vector Logo.png" alt="Finvestik Logo" id="finvestik-logo" class="h-[40px] w-[40px] sm:h-12 sm:w-12 md:h-16 md:w-16 rounded-md object-contain cursor-pointer"/>
             </div>
-            <nav class="flex-grow text-center px-2" aria-label="Main navigation">
+            
+            <!-- Desktop Navigation -->
+            <nav class="sm:flex flex-grow justify-center px-2" aria-label="Main navigation">
                 <button id="nav-calculator" class="nav-link" data-view="calculator-view">Position Calculator</button>
+                <button id="nav-stock-universe" class="nav-link" data-view="stock-universe-view">Stock Universe</button>
                 <button id="nav-custom-index" class="nav-link" data-view="custom-index-view">Custom Index</button>
             </nav>
-            <div class="flex-shrink-0">
-                <button id="theme-toggle" title="Toggle theme" aria-label="Toggle color theme" class="w-10 h-10 rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 text-lg"
-                        style="background-color: var(--card-bg); color: var(--text-secondary); border: 1px solid var(--border-color); --tw-ring-offset-color: var(--bg-primary); --tw-ring-color: var(--focus-ring-color);">
-                    {/* Theme icon will be injected by JavaScript */}
-                </button>
+
+            <div class="flex items-center">
+                <!-- Theme Toggle - Centered on Mobile -->
+                <div class="flex-shrink-0 sm:order-last">
+                    <button id="theme-toggle" title="Toggle theme" aria-label="Toggle color theme" class="w-10 h-10 rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 text-lg"
+                            style="background-color: var(--card-bg); color: var(--text-secondary); border: 1px solid var(--border-color); --tw-ring-offset-color: var(--bg-primary); --tw-ring-color: var(--focus-ring-color);">
+                        <!-- Icon will be injected by JS -->
+                    </button>
+                </div>
+
+                <!-- Hamburger Menu Button - Mobile Only -->
+                <div class="sm:hidden ml-3">
+                    <button id="hamburger-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" 
+                            aria-controls="mobile-menu" aria-expanded="false" style="color: var(--text-primary);">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="sm:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <button id="mobile-nav-calculator" class="mobile-nav-link block w-full text-left" data-view="calculator-view">Position Calculator</button>
+                <button id="mobile-nav-stock-universe" class="mobile-nav-link block w-full text-left" data-view="stock-universe-view">Stock Universe</button>
+                <button id="mobile-nav-custom-index" class="mobile-nav-link block w-full text-left" data-view="custom-index-view">Custom Index</button>
             </div>
         </div>
     </header>
 
-    <div id="main-content-area" class="w-full max-w-5xl mx-auto flex flex-col flex-grow items-center p-4">
+    <div id="main-content-area" class="w-full max-w-7xl mx-auto flex flex-col flex-grow items-center p-4">
 
-        <!-- CALCULATOR VIEW -->
-        <div id="calculator-view" class="w-full"> 
+        <div id="calculator-view" class="w-full max-w-5xl"> 
             <div class="w-full mt-2 mb-4 py-2" role="region" aria-labelledby="capital-heading">
                  <div class="flex flex-col items-end">
                     <div class="flex items-center space-x-2 w-full justify-end sm:w-auto">
@@ -93,7 +120,6 @@
                     </div>
                     <div id="risk_error_summary" class="hidden mt-3 text-center text-xs sm:text-sm" style="color: var(--error-text);" role="alert">Correct errors above.</div>
                 </section>
-
                 <section id="allocation-calculator" class="content-card p-4 sm:p-6" role="region" aria-labelledby="allocation-calculator-heading">
                     <h2 id="allocation-calculator-heading" class="text-xl sm:text-2xl font-semibold mb-4 text-center text-transparent bg-clip-text" style="background-image: linear-gradient(to right, var(--text-hyperlink), var(--text-hyperlink-hover)); color: var(--text-primary);">Allocation-Based Sizing</h2>
                     <div class="space-y-4">
@@ -107,22 +133,39 @@
             </main>
         </div>
 
-        <!-- CUSTOM INDEX VIEW -->
-        <div id="custom-index-view" class="w-full content-card p-4 sm:p-6">
-            <div class="flex flex-wrap justify-between items-center mb-4 gap-2">
-                <h2 class="text-xl sm:text-2xl font-semibold text-transparent bg-clip-text" style="background-image: linear-gradient(to right, var(--text-hyperlink), var(--text-hyperlink-hover)); color: var(--text-primary);">
-                    Custom Index Data
-                </h2>
-                <div class="flex items-center space-x-2">
-                    <button id="custom-index-refresh-button" class="refresh-button" title="Force refresh data from source">
-                        <i class="fa fa-refresh"></i> Refresh
-                    </button>
-                    <button id="custom-index-copy-button" class="refresh-button" title="Copy data to clipboard">
-                        <i class="fa fa-copy"></i> Copy
-                    </button>
-                    <button id="custom-index-export-button" class="refresh-button" title="Export data as .txt">
+        <div id="stock-universe-view" class="w-full content-card p-2 sm:p-4 md:p-6 hidden">
+            <div id="su-status" class="flex flex-col sm:flex-row justify-between items-center my-2 sm:my-4 gap-2" style="color: var(--text-secondary);">
+                <div class="flex-grow text-left flex items-center">
+                    <div id="su-loading" class="dots-loader hidden mr-2"><div></div><div></div><div></div></div>
+                    <p id="su-error" class="text-red-500 hidden"></p>
+                </div>
+                <div class="flex items-center gap-2 sm:gap-4">
+                    <p id="su-row-count" class="text-xs sm:text-sm"></p>
+                    <button id="su-export-button" class="refresh-button text-xs sm:text-sm py-1 px-2 sm:py-1.5 sm:px-3" title="Export currently visible data">
                         <i class="fa fa-download"></i> Export
                     </button>
+                </div>
+            </div>
+           
+            <div class="table-container">
+                <table id="su-table" class="data-table min-w-full">
+                    <thead id="su-table-head">
+                        <!-- Header and filter rows will be populated by JS -->
+                    </thead>
+                    <tbody id="su-table-body">
+                        <!-- Table body will be populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="custom-index-view" class="w-full max-w-5xl content-card p-4 sm:p-6 hidden">
+            <div class="flex flex-col sm:flex-row flex-wrap justify-between items-center mb-4 gap-2">
+                <h2 class="text-lg sm:text-xl md:text-2xl font-semibold text-transparent bg-clip-text" style="background-image: linear-gradient(to right, var(--text-hyperlink), var(--text-hyperlink-hover)); color: var(--text-primary);">Custom Index Data</h2>
+                <div class="flex items-center space-x-2">
+                    <button id="custom-index-refresh-button" class="refresh-button" title="Force refresh data from source"><i class="fa fa-refresh"></i> Refresh</button>
+                    <button id="custom-index-copy-button" class="refresh-button" title="Copy data to clipboard"><i class="fa fa-copy"></i> Copy</button>
+                    <button id="custom-index-export-button" class="refresh-button" title="Export data as .txt"><i class="fa fa-download"></i> Export</button>
                 </div>
             </div>
             <div id="custom-index-status" class="text-center my-4" style="color: var(--text-secondary);">
@@ -141,9 +184,22 @@
     </div>
 
     <footer class="w-full text-center mt-auto pt-6 pb-4" style="opacity:0.8;" role="contentinfo">
-        <div class="flex justify-center space-x-4 sm:space-x-6 mb-3"> <a href="https://x.com/harshbhut5" target="_blank" rel="noopener noreferrer" class="social-icon x-icon" aria-label="Finvestik on X (formerly Twitter)"> <i class="fa fa-twitter" aria-hidden="true"></i><span class="sr-only">X (Twitter)</span> </a> <a href="https://youtube.com/@finvestik?si=im2OcEY7GE-qDHBP" target="_blank" rel="noopener noreferrer" class="social-icon youtube-icon" aria-label="Finvestik on YouTube"> <i class="fa fa-youtube-play" aria-hidden="true"></i><span class="sr-only">YouTube</span> </a> <a href="https://t.me/finvestik" target="_blank" rel="noopener noreferrer" class="social-icon telegram-icon" aria-label="Finvestik on Telegram"> <i class="fa fa-telegram" aria-hidden="true"></i><span class="sr-only">Telegram</span> </a> </div> <p class="text-xs mt-1" style="color: var(--text-secondary);">© <span id="current-year"></span> Finvestik. All Rights Reserved.</p>
+        <div class="flex justify-center space-x-4 sm:space-x-6 mb-3">
+            <a href="https://x.com/harshbhut5" target="_blank" rel="noopener noreferrer" class="social-icon x-icon"><i class="fa fa-twitter"></i></a>
+            <a href="https://youtube.com/@finvestik?si=im2OcEY7GE-qDHBP" target="_blank" rel="noopener noreferrer" class="social-icon youtube-icon"><i class="fa fa-youtube-play"></i></a>
+            <a href="https://t.me/finvestik" target="_blank" rel="noopener noreferrer" class="social-icon telegram-icon"><i class="fa fa-telegram"></i></a>
+        </div>
+        <p class="text-xs mt-1" style="color: var(--text-secondary);">© <span id="current-year"></span> Finvestik. All Rights Reserved.</p>
     </footer>
 
-    <script src="static/js/script.js"></script>
+    <script src="static/js/script.js" defer></script>
+
+     <!-- ================== CHART POPUP CONTAINER ================== -->
+    <div id="chart-popup" class="hidden fixed content-card p-1 shadow-2xl z-50 w-[400px] h-[300px]">
+        <div id="chart-popup-container" class="w-full h-full">
+            <!-- The TradingView Widget will be dynamically injected here -->
+        </div>
+    </div>
+    <!-- =============================================================== -->
 </body>
 </html>
