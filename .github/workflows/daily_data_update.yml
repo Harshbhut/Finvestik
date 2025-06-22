@@ -2,34 +2,34 @@ name: Update Daily Market Data
 
 on:
   schedule:
-    - cron: '30 10 * * *'  # This is 4 PM IST (10:30 UTC)
-  workflow_dispatch:       # Manual trigger option
+    - cron: '30 10 * * *'  # ⏰ Runs daily at 4 PM IST (10:30 UTC)
+  workflow_dispatch:       # 🚀 Allows manual run from GitHub UI
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: 📥 Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Set up Python
+      - name: 🐍 Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
-      - name: Install Dependencies
+      - name: 📦 Install Python Dependencies
         run: |
           pip install requests
 
-      - name: Run Daily_Data.py
+      - name: 🚀 Run Daily_Data.py to generate Final_Data.json
         run: |
           python scripts/Daily_Data.py
 
-      - name: Commit and Push Final_Data.json
+      - name: 📤 Commit and Push updated Final_Data.json
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add static/data/Final_Data.json
-          git commit -m "Auto-update Final_Data.json at 4 PM IST" || echo "No changes to commit"
+          git commit -m "🔁 Auto-update Final_Data.json (Daily 4 PM IST)" || echo "No changes to commit"
           git push
