@@ -40,10 +40,10 @@ except ValueError:
 
 # List of fields FROM THE STRIKE API that we actually want to KEEP AND APPEND to Final_Data.json
 STRIKE_FIELDS_TO_APPEND = [
+    "current_price", 
     "day_open", 
     "day_high", 
     "day_low", 
-    "current_price", 
     "previous_close", 
     "change_percentage", 
     "day_volume",               # Note: 'volume' is removed, 'day_volume' is kept as per implied request
