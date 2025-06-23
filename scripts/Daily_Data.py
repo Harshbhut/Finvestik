@@ -19,8 +19,8 @@ STRIKE_DATA_LIST_KEY = "data" # e.g., "data" or "results"
 
 API_CALL_DELAY = 0.05 
 
-INPUT_JSON_FILE = "Sector_Industry.json"
-OUTPUT_JSON_FILE = "Final_Data.json"
+INPUT_JSON_FILE = os.path.join("scripts", "Sector_Industry.json")
+OUTPUT_JSON_FILE = os.path.join("static", "data", "Final_Data.json")
 
 # Full list of field names from the Strike API, IN THE ORDER THEY APPEAR in each inner list.
 # This is used for parsing the API response correctly.
