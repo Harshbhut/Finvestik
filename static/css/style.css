@@ -133,3 +133,12 @@ html.light .refresh-button:hover { background-color: var(--text-hyperlink); colo
         justify-self: end; /* Hamburger on the right */
     }
 }
+
+/* --- Helper Classes for Table Cells (from JS config) --- */
+.data-table .text-right {
+    text-align: right;
+}
+
+.data-table .font-semibold {
+    font-weight: 600;
+}
