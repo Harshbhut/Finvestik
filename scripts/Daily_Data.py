@@ -119,9 +119,28 @@ for stock in filtered_base_data:
     strike_entry = strike_data_map.get(symbol)
     if not strike_entry:
         continue
+    current_price = strike_entry.get("current_price", None)
+    high_52w = strike_entry.get("fifty_two_week_high", None)
+    low_52w = strike_entry.get("fifty_two_week_low", None)
+
+    # Calculate percentage logic safely
+    down_from_52wh = 0
+    up_from_52wl = 0
+
+    try:
+        if isinstance(current_price, (int, float)) and isinstance(high_52w, (int, float)) and high_52w > 0:
+            down_from_52wh = max(0, round((high_52w - current_price) / high_52w * 100, 2))
+        if isinstance(current_price, (int, float)) and isinstance(low_52w, (int, float)) and low_52w > 0:
+            up_from_52wl = round((current_price - low_52w) / low_52w * 100, 2)
+    except:
+        pass  # Avoid crashing on weird values
     new_data = {**stock}
     for field in STRIKE_FIELDS_TO_APPEND:
         new_data[field] = strike_entry.get(field, "N/A")
+
+    new_data["Down from 52W High (%)"] = down_from_52wh
+    new_data["Up from 52W Low (%)"] = up_from_52wl
+    
     final_data.append(new_data)
     match_count += 1
 
