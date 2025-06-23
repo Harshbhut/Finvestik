@@ -1,39 +1,39 @@
-name: Update Daily Market Data
-
-# ✅ This grants permission to push code
-permissions:
-  contents: write
+name: Auto Commit Final_Data
 
 on:
   schedule:
-    - cron: '30 10 * * *'  # 4 PM IST
+    - cron: '30 10 * * *' # every day at 4 PM IST (10:30 UTC)
   workflow_dispatch:
 
 jobs:
-  build:
+  update-data:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+    - name: Checkout repo
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
 
-      - name: Install dependencies
-        run: |
-          pip install requests
+    - name: Run data update
+      run: |
+        python your_script_that_updates_json.py
 
-      - name: Run Daily_Data.py
-        run: |
-          python scripts/Daily_Data.py
+    - name: Commit changes
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Commit and Push Final_Data.json
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        if git diff --quiet static/data/Final_Data.json; then
+          echo "No changes to commit"
+        else
+          MSG="Update Final_Data.json on $(date '+%Y-%m-%d %H:%M:%S')"
           git add static/data/Final_Data.json
-          git commit -m "🔁 Auto-update Final_Data.json (4 PM IST)" || echo "No changes"
-          git push
+          git commit -m "$MSG"
+          git push origin main
+        fi
