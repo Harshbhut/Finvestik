@@ -139,7 +139,14 @@
                 </div>
                 <div class="flex items-center gap-2 sm:gap-4">
                     <p id="su-row-count" class="text-xs sm:text-sm"></p>
-                    <button id="su-export-button" class="refresh-button text-xs sm:text-sm py-1 px-2 sm:py-1.5 sm:px-3" title="Export currently visible data">
+                    
+                    <!-- Renamed Original Button -->
+                    <button id="su-export-button" class="refresh-button text-xs sm:text-sm py-1 px-2 sm:py-1.5 sm:px-3" title="Export data as a ZIP with one file per sector">
+                        <i class="fa fa-download"></i> Download All
+                    </button>
+                
+                    <!-- New Button Added -->
+                    <button id="su-export-single-button" class="refresh-button text-xs sm:text-sm py-1 px-2 sm:py-1.5 sm:px-3" title="Export data as a single .txt file for all industries">
                         <i class="fa fa-download"></i> Export
                     </button>
                 </div>

@@ -501,7 +501,42 @@ function updateDependentDropdowns() {
     industryDropdown.value = relevantIndustries.includes(currentIndustryValue) ? currentIndustryValue : 'ALL';
 }
 
-function exportStockUniverseAsZip() { if (!currentlyDisplayedSUData || currentlyDisplayedSUData.length === 0) { alert("No data to export."); return; } if (typeof JSZip === 'undefined' || typeof saveAs === 'undefined') { console.error("JSZip or FileSaver not loaded."); return; } const sectors = {}; currentlyDisplayedSUData.forEach(stock => { const sector = stock['Sector Name']; const industry = stock['Industry Name']; const symbol = stock['Symbol']; if (!sectors[sector]) sectors[sector] = {}; if (!sectors[sector][industry]) sectors[sector][industry] = []; sectors[sector][industry].push(symbol); }); const zip = new JSZip(); Object.keys(sectors).sort().forEach(sectorName => { let fileContent = ''; Object.keys(sectors[sectorName]).sort().forEach(industryName => { const symbols = sectors[sectorName][industryName].join(','); fileContent += `###${industryName},${symbols}\n`; }); zip.file(`${sectorName}.txt`, fileContent.trim()); }); zip.generateAsync({ type: "blob" }).then(content => saveAs(content, "TV Sector Data.zip")); }
+function exportStockUniverseAsMultiFileZip() { if (!currentlyDisplayedSUData || currentlyDisplayedSUData.length === 0) { alert("No data to export."); return; } if (typeof JSZip === 'undefined' || typeof saveAs === 'undefined') { console.error("JSZip or FileSaver not loaded."); return; } const sectors = {}; currentlyDisplayedSUData.forEach(stock => { const sector = stock['Sector Name']; const industry = stock['Industry Name']; const symbol = stock['Symbol']; if (!sectors[sector]) sectors[sector] = {}; if (!sectors[sector][industry]) sectors[sector][industry] = []; sectors[sector][industry].push(symbol); }); const zip = new JSZip(); Object.keys(sectors).sort().forEach(sectorName => { let fileContent = ''; Object.keys(sectors[sectorName]).sort().forEach(industryName => { const symbols = sectors[sectorName][industryName].join(','); fileContent += `###${industryName},${symbols}\n`; }); zip.file(`${sectorName}.txt`, fileContent.trim()); }); zip.generateAsync({ type: "blob" }).then(content => saveAs(content, "TV Sector Data.zip")); }
+function exportStockUniverseAsSingleFile() {
+    if (!currentlyDisplayedSUData || currentlyDisplayedSUData.length === 0) {
+        alert("No data to export.");
+        return;
+    }
+    if (typeof saveAs === 'undefined') {
+        console.error("FileSaver library not loaded. Cannot export as .txt.");
+        alert("A required library (FileSaver.js) is not loaded yet. Please try again in a moment.");
+        return;
+    }
+
+    // Group stocks by Industry Name only
+    const industries = {};
+    currentlyDisplayedSUData.forEach(stock => {
+        const industry = stock['Industry Name'];
+        const symbol = stock['Symbol'];
+        if (!industry) return; // Skip if industry name is missing
+
+        if (!industries[industry]) {
+            industries[industry] = [];
+        }
+        industries[industry].push(symbol);
+    });
+
+    // Generate the text content for the single file
+    let fileContent = '';
+    Object.keys(industries).sort().forEach(industryName => {
+        const symbols = industries[industryName].join(',');
+        fileContent += `###${industryName},${symbols}\n`;
+    });
+    
+    // Create a blob and trigger the download
+    const blob = new Blob([fileContent.trim()], { type: "text/plain;charset=utf-8" });
+    saveAs(blob, "stock_universe.txt");
+}
 const safeParseFloat = (str) => { if (typeof str !== 'string' && typeof str !== 'number') return 0; const num = parseFloat(String(str).replace(/,/g, '')); return isNaN(num) ? 0 : num; };
 const formatCurrency = (value, symbol = '₹') => { if (isNaN(value) || !isFinite(value)) return `${symbol}0.00`; return `${symbol}${value.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`; };
 const formatPercentage = (value) => { if (isNaN(value) || !isFinite(value)) return '0.00%'; return `${value.toFixed(2)}%`; };
@@ -543,6 +578,7 @@ document.addEventListener('DOMContentLoaded', () => {
     suTable = document.getElementById('su-table');
     if (suTable) { suTableHeadElement = suTable.querySelector('thead'); suTableBodyElement = suTable.querySelector('tbody'); }
     suExportButton = document.getElementById('su-export-button');
+    const suExportSingleButton = document.getElementById('su-export-single-button'); // Add this line
     chartPopup = document.getElementById('chart-popup'); chartPopupContainer = document.getElementById('chart-popup-container');
     allCalculatorInputs = [ capitalInput, riskRiskPercentInput, riskEntryPriceInput, riskSlPriceInput, allocAllocationPercentInput, allocEntryPriceInput, allocSlPriceInput ];
 
@@ -553,7 +589,12 @@ document.addEventListener('DOMContentLoaded', () => {
      [mobileNavCalculator, 'calculator-view'], [mobileNavStockUniverse, 'stock-universe-view'], [mobileNavCustomIndex, 'custom-index-view']
     ].forEach(([navButton, viewName]) => { if (navButton) navButton.addEventListener('click', () => switchView(viewName)); });
     if(suTableHeadElement) { suTableHeadElement.addEventListener('click', (e) => { const header = e.target.closest('.sortable-header'); if (!header || e.target.classList.contains('resize-handle')) return; const key = header.dataset.key; if(!key) return; if (suCurrentSort.key === key) { suCurrentSort.order = suCurrentSort.order === 'asc' ? 'desc' : 'asc'; } else { suCurrentSort.key = key; suCurrentSort.order = 'desc'; } updateSortIcons(); applyAndRenderSU(); }); }
-    if(suExportButton) suExportButton.addEventListener('click', exportStockUniverseAsZip);
+    if(suExportButton) {
+        suExportButton.addEventListener('click', exportStockUniverseAsMultiFileZip);
+    }
+    if(suExportSingleButton) { // Add this if-block
+        suExportSingleButton.addEventListener('click', exportStockUniverseAsSingleFile);
+    }
     if(suTableBodyElement) { suTableBodyElement.addEventListener('mouseover', (e) => { if (e.target.closest('.symbol-cell')) { showChartPopup(e); } }); suTableBodyElement.addEventListener('mouseout', (e) => { if (e.target.closest('.symbol-cell')) { hideChartPopup(); } }); }
     if(chartPopup) { chartPopup.addEventListener('mouseenter', () => clearTimeout(chartPopupTimeout)); chartPopup.addEventListener('mouseleave', hideChartPopup); }
     if (customIndexRefreshButton) customIndexRefreshButton.addEventListener('click', () => fetchAndRenderCustomIndexData({ force: true }));
