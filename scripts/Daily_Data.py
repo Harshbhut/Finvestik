@@ -5,7 +5,7 @@ import random
 import json
 
 # -------------------------------
-# Configuration & Constants
+# Configuration & Constant
 # -------------------------------
 
 STRIKE_API_URL = "https://api-prod.strike.money/v1/api/marketdata/current-activity"
