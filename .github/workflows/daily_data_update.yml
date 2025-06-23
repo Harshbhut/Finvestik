@@ -30,10 +30,10 @@ jobs:
         run: |
           python scripts/Daily_Data.py
 
-      - name: Commit and Push Final_Data.json
+      - name: Commit and Push stock_universe.json
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add static/data/Final_Data.json
-          git commit -m "🔁 Auto-updated Final_Data.json (4 PM IST)" || echo "No changes"
+          git add static/data/stock_universe.json
+          git commit -m "🔁 Auto-updated stock_universe.json (4 PM IST)" || echo "No changes"
           git push

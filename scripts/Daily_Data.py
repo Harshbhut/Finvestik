@@ -20,7 +20,7 @@ STRIKE_DATA_LIST_KEY = "data" # e.g., "data" or "results"
 API_CALL_DELAY = 0.05 
 
 INPUT_JSON_FILE = os.path.join("scripts", "Sector_Industry.json")
-OUTPUT_JSON_FILE = os.path.join("static", "data", "Final_Data.json")
+OUTPUT_JSON_FILE = os.path.join("static", "data", "stock_universe.json")
 
 # Full list of field names from the Strike API, IN THE ORDER THEY APPEAR in each inner list.
 # This is used for parsing the API response correctly.
@@ -38,7 +38,7 @@ except ValueError:
     print("CRITICAL ERROR: 'symbol' not found in STRIKE_API_FULL_FIELD_ORDER. Script cannot proceed.")
     exit()
 
-# List of fields FROM THE STRIKE API that we actually want to KEEP AND APPEND to Final_Data.json
+# List of fields FROM THE STRIKE API that we actually want to KEEP AND APPEND to stock_universe.json
 STRIKE_FIELDS_TO_APPEND = [
     "current_price", 
     "day_open", 
