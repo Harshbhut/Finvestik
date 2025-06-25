@@ -6,7 +6,15 @@ permissions:
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # 4 PM IST
+    # Every 5 min between 03:45–10:05 UTC (i.e., 09:15–15:35 IST), Mon–Fri
+    - cron: '*/5 3 * * 1-5'  # 03:00–03:59 UTC
+    - cron: '*/5 4 * * 1-5'  # 04:00–04:59 UTC
+    - cron: '*/5 5 * * 1-5'  # ...
+    - cron: '*/5 6 * * 1-5'
+    - cron: '*/5 7 * * 1-5'
+    - cron: '*/5 8 * * 1-5'
+    - cron: '*/5 9 * * 1-5'
+    - cron: '*/5 10 * * 1-5'  # 10:00–10:05 UTC
   workflow_dispatch:
 
 jobs:
