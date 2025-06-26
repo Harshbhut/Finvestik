@@ -7,7 +7,6 @@ import json
 # -------------------------------
 # Configuration & Constant
 # -------------------------------
-
 STRIKE_API_URL = "https://api-prod.strike.money/v1/api/marketdata/current-activity"
 
 # !! IMPORTANT !!
