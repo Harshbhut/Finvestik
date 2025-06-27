@@ -132,34 +132,79 @@
         </div>
 
         <div id="stock-universe-view" class="w-full content-card p-2 sm:p-4 md:p-6 hidden">
-            <div id="su-status" class="flex flex-col sm:flex-row justify-between items-center my-2 sm:my-4 gap-2" style="color: var(--text-secondary);">
+             <div id="su-controls" class="flex flex-col sm:flex-row justify-between items-center mb-2 sm:mb-4 gap-2" style="color: var(--text-secondary);">
                 <div class="flex-grow text-left flex items-center">
                     <div id="su-loading" class="dots-loader hidden mr-2"><div></div><div></div><div></div></div>
                     <p id="su-error" class="text-red-500 hidden"></p>
                 </div>
                 <div class="flex items-center gap-2 sm:gap-4">
                     <p id="su-row-count" class="text-xs sm:text-sm"></p>
-                    
-                    <!-- Renamed Original Button -->
+                    <button id="su-insights-toggle-button" class="refresh-button text-xs sm:text-sm py-1 px-2 sm:py-1.5 sm:px-3" title="Toggle Insights Panel">
+                        <i class="fa fa-bar-chart"></i> Insights
+                    </button>
                     <button id="su-export-button" class="refresh-button text-xs sm:text-sm py-1 px-2 sm:py-1.5 sm:px-3" title="Export data as a ZIP with one file per sector">
                         <i class="fa fa-download"></i> Download All
                     </button>
-                
-                    <!-- New Button Added -->
                     <button id="su-export-single-button" class="refresh-button text-xs sm:text-sm py-1 px-2 sm:py-1.5 sm:px-3" title="Export data as a single .txt file for all industries">
                         <i class="fa fa-download"></i> Export
                     </button>
                 </div>
             </div>
-            <div class="table-container">
-                <table id="su-table" class="data-table min-w-full">
-                    <thead id="su-table-head">
-                        <!-- Header and filter rows will be populated by JS based on suColumnDefinitions -->
-                    </thead>
-                    <tbody id="su-table-body">
-                        <!-- Table body will be populated by JS -->
-                    </tbody>
-                </table>
+            
+            <div id="su-container" class="su-container flex w-full">
+                <div id="su-table-container" class="table-container flex-grow">
+                    <table id="su-table" class="data-table min-w-full">
+                        <thead id="su-table-head"></thead>
+                        <tbody id="su-table-body"></tbody>
+                    </table>
+                </div>
+
+                <div id="su-panel-resizer" class="su-panel-resizer hidden"></div>
+                
+                <aside id="su-chart-panel" class="su-chart-panel hidden" style="width: 400px;">
+                    <div class="p-3 border-b" style="border-color: var(--border-color);">
+                        <!-- Chart Analysis Controls -->
+                        <h3 class="text-sm font-semibold mb-2">52-Week High Analysis</h3>
+                        <div class="grid grid-cols-2 gap-x-3 gap-y-2 items-center">
+                            <label class="chart-panel-label">Group By:</label>
+                            <select id="su-chart-group-by" class="chart-panel-input">
+                                <option value="Sector Name">Sector</option>
+                                <option value="Industry Name">Industry</option>
+                            </select>
+                            
+                            <label class="chart-panel-label">% From High:</label>
+                             <div class="relative">
+                                <input type="text" id="su-chart-wh-range" inputmode="decimal" class="chart-panel-input text-center pr-5">
+                                <span class="absolute inset-y-0 right-0 flex items-center pr-2 text-xs" style="color: var(--text-secondary);">%</span>
+                            </div>
+
+                            <label class="chart-panel-label">Min Stocks:</label>
+                            <input type="text" id="su-chart-min-stocks" inputmode="numeric" class="chart-panel-input text-center" placeholder="e.g. 5">
+                        </div>
+
+                        <!-- Synchronized Text Filters -->
+                        <h3 class="text-sm font-semibold mt-4 mb-2">Filters</h3>
+                        <div class="grid grid-cols-2 gap-x-3 gap-y-2 items-center">
+                            <label class="chart-panel-label">Close:</label>
+                            <input type="text" id="su-chart-filter-close" class="chart-panel-input" data-filter-key="current_price" placeholder="e.g. >100">
+
+                            <label class="chart-panel-label">Change %:</label>
+                            <input type="text" id="su-chart-filter-change" class="chart-panel-input" data-filter-key="change_percentage" placeholder="e.g. >2">
+                            
+                            <label class="chart-panel-label">Volume:</label>
+                            <input type="text" id="su-chart-filter-volume" class="chart-panel-input" data-filter-key="day_volume" placeholder="e.g. >1M">
+
+                            <label class="chart-panel-label">Market Cap:</label>
+                            <input type="text" id="su-chart-filter-mcap" class="chart-panel-input" data-filter-key="Market Cap" placeholder="e.g. >50k">
+                        </div>
+
+                        <p id="su-chart-status" class="text-xs text-center mt-3" style="color: var(--text-secondary);"></p>
+                    </div>
+
+                    <div id="su-chart-content" class="su-chart-content overflow-y-auto pr-2 pt-2">
+                        <!-- Chart bars will be injected by JS here -->
+                    </div>
+                </aside>
             </div>
         </div>
 
