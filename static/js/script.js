@@ -38,7 +38,9 @@ const suColumnDefinitions = [
     { key: "Up from 52W Low (%)", displayName: "52WL ↑", isVisible: true, isSortable: true,isFilterable: true, filterType: 'text', formatter: formatPrice, defaultWidth: '100px', cellClass: 'text-right' },
     { key: "Sector Name", displayName: "Sector Name", isVisible: true, isSortable: true, isFilterable: true, filterType: 'dropdown', defaultWidth: '160px' }, 
     { key: "Industry Name", displayName: "Industry Name", isVisible: true, isSortable: true, isFilterable: true, filterType: 'dropdown', defaultWidth: '180px' },
-    { key: "SecurityID", displayName: "Security ID", isVisible: false }, { key: "ListingID", displayName: "Listing ID", isVisible: false },
+    
+    { key: "SecurityID", displayName: "Security ID", isVisible: false },
+    { key: "ListingID", displayName: "Listing ID", isVisible: false },
     { key: "SME Stock?", displayName: "SME?", isVisible: false }, { key: "previous_close", displayName: "Prev. Close", isVisible: false }
 ];
 

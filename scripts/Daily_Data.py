@@ -33,6 +33,12 @@ USER_AGENTS = [
     "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/111.0.0.0 Safari/537.36"
 ]
 
+# -------------------------------
+# Internal Field Toggle
+# -------------------------------
+INCLUDE_INTERNAL_FIELDS = False
+INTERNAL_FIELDS = ["SecurityID", "ListingID", "SME Stock?"]
+
 try:
     SYMBOL_INDEX_IN_STRIKE_API = STRIKE_API_FULL_FIELD_ORDER.index("symbol")
 except ValueError:
@@ -172,7 +178,11 @@ for stock in filtered_base_data:
     except:
         pass
 
-    new_data = {**stock}
+    new_data = {
+        k: v for k, v in stock.items()
+        if INCLUDE_INTERNAL_FIELDS or k not in INTERNAL_FIELDS
+    }
+
     for field in STRIKE_FIELDS_TO_APPEND:
         new_data[field] = strike_entry.get(field, "N/A")
 
@@ -187,3 +197,5 @@ for stock in filtered_base_data:
 # Save final JSON
 save_json_file(final_data, OUTPUT_JSON_FILE)
 print(f"✅ Done. {match_count} stocks saved to {OUTPUT_JSON_FILE}")
+if not INCLUDE_INTERNAL_FIELDS:
+    print("🧹 Internal fields (e.g., SecurityID, ListingID, SME Stock?) were excluded.")
