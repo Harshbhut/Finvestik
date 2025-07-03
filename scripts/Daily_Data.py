@@ -7,7 +7,7 @@ import json
 # -------------------------------
 # Configuration & Constants
 # -------------------------------
-STRIKE_API_URL = "https://api-prod.strike.money/v1/api/marketdata/current-activity"
+STRIKE_API_URL = "https://api.strike.money/v1/api/marketdata/current-activity"
 CIRCUIT_API_URL = "https://api-v2.strike.money/v2/api/equity/last-traded-state?securities=EQ%3A*"
 
 STRIKE_DATA_LIST_KEY = "data"
