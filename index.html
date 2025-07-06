@@ -18,7 +18,7 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Finvestik - Simplifying the Edge" />
     <meta name="twitter:description" content="Simple powerful tools that cut through the noise and help you make smarter trading decisions." />
-    <meta name="twitter:image" content="https://github.com/Harshbhut/Finvestik/blob/main/static/images/Financial Growth Vector Logo.png" />
+    <meta name="twitter:image" content="static/images/Financial Growth Vector Logo.png" />
 
     <link rel="icon" type="image/png" sizes="32x32" href="static/images/Financial Growth Vector Logo.png">
     <link rel="apple-touch-icon" href="static/images/Financial Growth Vector Logo.png">
@@ -31,8 +31,6 @@
     <!-- Libraries for Stock Universe - aync/defer for performance -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" defer></script>
-    <!-- XLSX no longer needed as we are using JSON -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" defer></script> -->
     <!-- SortableJS for column reordering -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js" defer></script>
 
@@ -45,14 +43,14 @@
     </script>
 </head>
 <body class="min-h-screen flex flex-col antialiased">
-    <header id="app-header" class="sticky top-0 z-50 w-full shadow-md" style="background-color: var(--bg-secondary);" role="banner">
+    <header id="app-header" class="sticky top-0 z-50 w-full shadow-md" role="banner">
         <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16 sm:h-20">
             <div class="flex-shrink-0">
                  <img src="static/images/Financial Growth Vector Logo.png" alt="Finvestik Logo" id="finvestik-logo" class="h-[40px] w-[40px] sm:h-12 sm:w-12 md:h-16 md:w-16 rounded-md object-contain cursor-pointer"/>
             </div>
             
             <!-- Desktop Navigation -->
-            <nav class="sm:flex flex-grow justify-center px-2" aria-label="Main navigation">
+            <nav class="hidden sm:flex flex-grow justify-center px-2 space-x-2" aria-label="Main navigation">
                 <button id="nav-calculator" class="nav-link" data-view="calculator-view">Position Calculator</button>
                 <button id="nav-stock-universe" class="nav-link" data-view="stock-universe-view">Stock Universe</button>
                 <button id="nav-custom-index" class="nav-link" data-view="custom-index-view">Custom Index</button>
@@ -61,8 +59,7 @@
             <div class="flex items-center">
                 <!-- Theme Toggle -->
                 <div id="theme-toggle-container" class="flex-shrink-0 sm:order-last">
-                    <button id="theme-toggle" title="Toggle theme" aria-label="Toggle color theme" class="w-10 h-10 rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 text-lg"
-                            style="background-color: var(--card-bg); color: var(--text-secondary); border: 1px solid var(--border-color); --tw-ring-offset-color: var(--bg-primary); --tw-ring-color: var(--focus-ring-color);">
+                    <button id="theme-toggle" title="Toggle theme" aria-label="Toggle color theme" class="w-10 h-10 rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 text-lg">
                         <!-- Icon will be injected by JS -->
                     </button>
                 </div>
@@ -109,24 +106,22 @@
             </div>
             <main class="w-full grid md:grid-cols-2 gap-4 sm:gap-6 flex-grow" role="main">
                 <section id="risk-calculator" class="content-card p-4 sm:p-6" role="region" aria-labelledby="risk-calculator-heading">
-                    <h2 id="risk-calculator-heading" class="text-xl sm:text-2xl font-semibold mb-4 text-center text-transparent bg-clip-text" style="background-image: linear-gradient(to right, var(--text-hyperlink), var(--text-hyperlink-hover)); color: var(--text-primary);">Risk-Based Sizing</h2>
+                    <h2 id="risk-calculator-heading" class="text-xl sm:text-2xl font-semibold mb-4 text-center text-transparent bg-clip-text" style="background-image: linear-gradient(to right, var(--accent-primary), var(--accent-secondary)); color: var(--text-primary);">Risk-Based Sizing</h2>
                     <div class="space-y-4">
                         <div> <label for="risk_riskPercent" class="mb-1 text-xs sm:text-sm font-medium block" style="color: var(--text-secondary);">Risk on Capital (%)</label> <input type="text" name="risk_riskPercent" id="risk_riskPercent" placeholder="e.g., 0.5" inputmode="decimal" class="form-input pl-3 pr-3" aria-describedby="risk_riskPercent-error"> <p id="risk_riskPercent-error" class="input-error-text" aria-live="polite"></p> </div> <div> <label for="risk_entryPrice" class="mb-1 text-xs sm:text-sm font-medium block" style="color: var(--text-secondary);">Entry Price (₹)</label> <input type="text" name="risk_entryPrice" id="risk_entryPrice" placeholder="e.g., 305" inputmode="decimal" class="form-input pl-3 pr-3" aria-describedby="risk_entryPrice-error"> <p id="risk_entryPrice-error" class="input-error-text" aria-live="polite"></p> </div> <div> <label for="risk_slPrice" class="mb-1 text-xs sm:text-sm font-medium block" style="color: var(--text-secondary);">Stop Loss (SL) Price (₹)</label> <input type="text" name="risk_slPrice" id="risk_slPrice" placeholder="e.g., 300" inputmode="decimal" class="form-input pl-3 pr-3" aria-describedby="risk_slPrice-error"> <p id="risk_slPrice-error" class="input-error-text" aria-live="polite"></p> </div>
                     </div>
-                    <div id="risk_results_container" class="mt-6 pt-4 space-y-2" aria-live="polite">
-                        <h3 class="text-md sm:text-lg font-semibold mb-2 text-center" style="color: var(--text-primary);">Results</h3> <div id="risk_calculation_warning" class="hidden mb-2 p-2 warning-message text-xs rounded-md border" role="alert"></div> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Quantity to Buy:</span> <span id="risk_result_qty" class="result-value qty text-xl sm:text-2xl md:text-3xl">0</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Risk Amount:</span> <span id="risk_result_riskAmount" class="result-value red text-md sm:text-lg md:text-xl">₹0.00</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Stop Loss %:</span> <span id="risk_result_slPercent" class="result-value red text-md sm:text-lg md:text-xl">0.00%</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Capital Allocation:</span> <span id="risk_result_allocationPercent" class="result-value neutral text-md sm:text-lg md:text-xl">0.00%</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Total Trade Value:</span> <span id="risk_result_totalCost" class="result-value neutral text-md sm:text-lg md:text-xl">₹0.00</span></p>
+                    <div id="risk_results_container" class="mt-6 pt-4 space-y-2 border-t" style="border-color: var(--border-color);" aria-live="polite">
+                        <h3 class="text-md sm:text-lg font-semibold mb-2 text-center" style="color: var(--text-primary);">Results</h3> <div id="risk_calculation_warning" class="hidden mb-2 p-2 warning-message text-xs rounded-md border" role="alert"></div> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Quantity to Buy:</span> <span id="risk_result_qty" class="result-value green text-xl sm:text-2xl md:text-3xl font-bold">0</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Risk Amount:</span> <span id="risk_result_riskAmount" class="result-value red text-md sm:text-lg md:text-xl font-medium">₹0.00</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Stop Loss %:</span> <span id="risk_result_slPercent" class="result-value red text-md sm:text-lg md:text-xl font-medium">0.00%</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Capital Allocation:</span> <span id="risk_result_allocationPercent" class="result-value neutral text-md sm:text-lg md:text-xl font-medium">0.00%</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Total Trade Value:</span> <span id="risk_result_totalCost" class="result-value neutral text-md sm:text-lg md:text-xl font-medium">₹0.00</span></p>
                     </div>
-                    <div id="risk_error_summary" class="hidden mt-3 text-center text-xs sm:text-sm" style="color: var(--error-text);" role="alert">Correct errors above.</div>
                 </section>
                 <section id="allocation-calculator" class="content-card p-4 sm:p-6" role="region" aria-labelledby="allocation-calculator-heading">
-                    <h2 id="allocation-calculator-heading" class="text-xl sm:text-2xl font-semibold mb-4 text-center text-transparent bg-clip-text" style="background-image: linear-gradient(to right, var(--text-hyperlink), var(--text-hyperlink-hover)); color: var(--text-primary);">Allocation-Based Sizing</h2>
+                    <h2 id="allocation-calculator-heading" class="text-xl sm:text-2xl font-semibold mb-4 text-center text-transparent bg-clip-text" style="background-image: linear-gradient(to right, var(--accent-primary), var(--accent-secondary)); color: var(--text-primary);">Allocation-Based Sizing</h2>
                     <div class="space-y-4">
                         <div> <label for="alloc_allocationPercent" class="mb-1 text-xs sm:text-sm font-medium block" style="color: var(--text-secondary);">Target Allocation (%)</label> <input type="text" name="alloc_allocationPercent" id="alloc_allocationPercent" placeholder="e.g., 20" inputmode="decimal" class="form-input pl-3 pr-3" aria-describedby="alloc_allocationPercent-error"> <p id="alloc_allocationPercent-error" class="input-error-text" aria-live="polite"></p> </div> <div> <label for="alloc_entryPrice" class="mb-1 text-xs sm:text-sm font-medium block" style="color: var(--text-secondary);">Entry Price (₹)</label> <input type="text" name="alloc_entryPrice" id="alloc_entryPrice" placeholder="e.g., 305" inputmode="decimal" class="form-input pl-3 pr-3" aria-describedby="alloc_entryPrice-error"> <p id="alloc_entryPrice-error" class="input-error-text" aria-live="polite"></p> </div> <div> <label for="alloc_slPrice" class="mb-1 text-xs sm:text-sm font-medium block" style="color: var(--text-secondary);">Stop Loss (SL) Price (₹)</label> <input type="text" name="alloc_slPrice" id="alloc_slPrice" placeholder="e.g., 300" inputmode="decimal" class="form-input pl-3 pr-3" aria-describedby="alloc_slPrice-error"> <p id="alloc_slPrice-error" class="input-error-text" aria-live="polite"></p> </div>
                     </div>
-                    <div id="alloc_results_container" class="mt-6 pt-4 space-y-2" aria-live="polite">
-                        <h3 class="text-md sm:text-lg font-semibold mb-2 text-center" style="color: var(--text-primary);">Results</h3> <div id="alloc_calculation_warning" class="hidden mb-2 p-2 warning-message text-xs rounded-md border" role="alert"></div> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Quantity to Buy:</span> <span id="alloc_result_qty" class="result-value qty text-xl sm:text-2xl md:text-3xl">0</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Actual Risk on Capital:</span> <span id="alloc_result_riskOnCapitalPercent" class="result-value red text-md sm:text-lg md:text-xl">0.00%</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Risk Amount:</span> <span id="alloc_result_riskAmount" class="result-value red text-md sm:text-lg md:text-xl">₹0.00</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Stop Loss %:</span> <span id="alloc_result_slPercent" class="result-value red text-md sm:text-lg md:text-xl">0.00%</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Total Trade Value:</span> <span id="alloc_result_totalCost" class="result-value neutral text-md sm:text-lg md:text-xl">₹0.00</span></p>
+                    <div id="alloc_results_container" class="mt-6 pt-4 space-y-2 border-t" style="border-color: var(--border-color);" aria-live="polite">
+                        <h3 class="text-md sm:text-lg font-semibold mb-2 text-center" style="color: var(--text-primary);">Results</h3> <div id="alloc_calculation_warning" class="hidden mb-2 p-2 warning-message text-xs rounded-md border" role="alert"></div> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Quantity to Buy:</span> <span id="alloc_result_qty" class="result-value green text-xl sm:text-2xl md:text-3xl font-bold">0</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Actual Risk on Capital:</span> <span id="alloc_result_riskOnCapitalPercent" class="result-value red text-md sm:text-lg md:text-xl font-medium">0.00%</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Risk Amount:</span> <span id="alloc_result_riskAmount" class="result-value red text-md sm:text-lg md:text-xl font-medium">₹0.00</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Stop Loss %:</span> <span id="alloc_result_slPercent" class="result-value red text-md sm:text-lg md:text-xl font-medium">0.00%</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Total Trade Value:</span> <span id="alloc_result_totalCost" class="result-value neutral text-md sm:text-lg md:text-xl font-medium">₹0.00</span></p>
                     </div>
-                     <div id="alloc_error_summary" class="hidden mt-3 text-center text-xs sm:text-sm" style="color: var(--error-text);" role="alert">Correct errors above.</div>
                 </section>
             </main>
         </div>
@@ -137,16 +132,19 @@
                     <div id="su-loading" class="dots-loader hidden mr-2"><div></div><div></div><div></div></div>
                     <p id="su-error" class="text-red-500 hidden"></p>
                 </div>
-                <div class="flex items-center gap-2 sm:gap-4">
+                <div class="flex flex-wrap items-center justify-end gap-2 sm:gap-4">
                     <p id="su-row-count" class="text-xs sm:text-sm"></p>
-                    <button id="su-insights-toggle-button" class="refresh-button text-xs sm:text-sm py-1 px-2 sm:py-1.5 sm:px-3" title="Toggle Insights Panel">
-                        <i class="fa fa-bar-chart"></i> Insights
+                    <button id="su-clear-filters-button" class="btn btn-secondary" title="Clear all filters and sorting">
+                        <i class="fa fa-eraser"></i><span class="hidden sm:inline ml-2">Clear</span>
                     </button>
-                    <button id="su-export-button" class="refresh-button text-xs sm:text-sm py-1 px-2 sm:py-1.5 sm:px-3" title="Export data as a ZIP with one file per sector">
-                        <i class="fa fa-download"></i> Download All
+                    <button id="su-insights-toggle-button" class="btn btn-primary" title="Toggle Insights Panel">
+                        <i class="fa fa-bar-chart"></i><span class="hidden sm:inline ml-2">Insights</span>
                     </button>
-                    <button id="su-export-single-button" class="refresh-button text-xs sm:text-sm py-1 px-2 sm:py-1.5 sm:px-3" title="Export data as a single .txt file for all industries">
-                        <i class="fa fa-download"></i> Export
+                    <button id="su-export-button" class="btn btn-primary" title="Export data as a ZIP with one file per sector">
+                        <i class="fa fa-download"></i><span class="hidden sm:inline ml-2">Download</span>
+                    </button>
+                    <button id="su-export-single-button" class="btn btn-primary" title="Export data as a single .txt file for all industries">
+                        <i class="fa fa-download"></i><span class="hidden sm:inline ml-2">Export</span>
                     </button>
                 </div>
             </div>
@@ -161,48 +159,73 @@
 
                 <div id="su-panel-resizer" class="su-panel-resizer hidden"></div>
                 
-                <aside id="su-chart-panel" class="su-chart-panel hidden" style="width: 400px;">
-                    <div class="p-3 border-b" style="border-color: var(--border-color);">
-                        <!-- Chart Analysis Controls -->
-                        <h3 class="text-sm font-semibold mb-2">52-Week High Analysis</h3>
-                        <div class="grid grid-cols-2 gap-x-3 gap-y-2 items-center">
-                            <label class="chart-panel-label">Group By:</label>
-                            <select id="su-chart-group-by" class="chart-panel-input">
+                <aside id="su-chart-panel" class="su-chart-panel hidden">
+                    <!-- GLOBAL CONTROLS -->
+                    <div id="su-chart-global-controls" class="p-3 border-b" style="border-color: var(--border-color);">
+                        <div class="grid grid-cols-2 gap-x-4 gap-y-2 items-center">
+                            <label class="chart-panel-label" for="su-chart-group-by">Group By:</label>
+                            <label class="chart-panel-label" for="su-chart-min-stocks">Min Stocks:</label>
+                            
+                            <select id="su-chart-group-by" class="chart-panel-input" aria-label="Group charts by Sector or Industry">
                                 <option value="Sector Name">Sector</option>
                                 <option value="Industry Name">Industry</option>
                             </select>
-                            
-                            <label class="chart-panel-label">% From High:</label>
-                             <div class="relative">
-                                <input type="text" id="su-chart-wh-range" inputmode="decimal" class="chart-panel-input text-center pr-5">
-                                <span class="absolute inset-y-0 right-0 flex items-center pr-2 text-xs" style="color: var(--text-secondary);">%</span>
-                            </div>
 
-                            <label class="chart-panel-label">Min Stocks:</label>
-                            <input type="text" id="su-chart-min-stocks" inputmode="numeric" class="chart-panel-input text-center" placeholder="e.g. 5">
+                            <input type="text" id="su-chart-min-stocks" inputmode="numeric" class="chart-panel-input text-center w-full" placeholder="e.g. 5" aria-label="Minimum stocks in a group">
                         </div>
-
-                        <!-- Synchronized Text Filters -->
-                        <h3 class="text-sm font-semibold mt-4 mb-2">Filters</h3>
-                        <div class="grid grid-cols-2 gap-x-3 gap-y-2 items-center">
-                            <label class="chart-panel-label">Close:</label>
-                            <input type="text" id="su-chart-filter-close" class="chart-panel-input" data-filter-key="current_price" placeholder="e.g. >100">
-
-                            <label class="chart-panel-label">Change %:</label>
-                            <input type="text" id="su-chart-filter-change" class="chart-panel-input" data-filter-key="change_percentage" placeholder="e.g. >2">
-                            
-                            <label class="chart-panel-label">Volume:</label>
-                            <input type="text" id="su-chart-filter-volume" class="chart-panel-input" data-filter-key="day_volume" placeholder="e.g. >1M">
-
-                            <label class="chart-panel-label">Market Cap:</label>
-                            <input type="text" id="su-chart-filter-mcap" class="chart-panel-input" data-filter-key="Market Cap" placeholder="e.g. >50k">
-                        </div>
-
                         <p id="su-chart-status" class="text-xs text-center mt-3" style="color: var(--text-secondary);"></p>
                     </div>
 
-                    <div id="su-chart-content" class="su-chart-content overflow-y-auto pr-2 pt-2">
-                        <!-- Chart bars will be injected by JS here -->
+                    <!-- ACCORDION -->
+                    <div id="su-chart-accordion-container" class="flex-grow overflow-y-auto">
+                        <!-- Accordion Item 1: Advance / Decline -->
+                        <div class="accordion-item">
+                            <button class="accordion-header" aria-expanded="false">
+                                <h3>A/D Ratio</h3>
+                                <i class="fa fa-chevron-down accordion-icon"></i>
+                            </button>
+                            <div class="accordion-content">
+                                <div class="grid grid-cols-5 gap-x-2 items-center text-xs p-2 rounded-md mb-2" style="background-color: var(--bg-secondary);">
+                                    <label class="chart-panel-label col-span-2" for="su-chart-min-up">Min Up % (>=):</label>
+                                    <label class="chart-panel-label col-span-2" for="su-chart-min-down">Min Down % (<=):</label>
+                                    <div class="col-span-1"></div>
+                                    <input type="text" id="su-chart-min-up" inputmode="decimal" class="chart-panel-input text-center w-full col-span-2" placeholder="Any" aria-label="Minimum Up Percentage">
+                                    <input type="text" id="su-chart-min-down" inputmode="decimal" class="chart-panel-input text-center w-full col-span-2" placeholder="Any" aria-label="Minimum Down Percentage">
+                                    <button id="su-chart-ad-clear-button" class="local-clear-button" aria-label="Clear Min Up/Down filters">
+                                        <i class="fa fa-eraser"></i>
+                                    </button>
+                                </div>
+                                <div id="su-chart-ad-ratio" class="chart-container"></div>
+                            </div>
+                        </div>
+
+                        <!-- Accordion Item 2: Top % Movers -->
+                        <div class="accordion-item">
+                            <button class="accordion-header" aria-expanded="false">
+                                <h3>Market Movers</h3>
+                                <i class="fa fa-chevron-down accordion-icon"></i>
+                            </button>
+                             <div class="accordion-content">
+                                <div id="su-chart-avg-gain" class="chart-container"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Accordion Item 3: 52-Week Range -->
+                        <div class="accordion-item">
+                           <button class="accordion-header" aria-expanded="false">
+                                <h3>52W High Range</h3>
+                                <i class="fa fa-chevron-down accordion-icon"></i>
+                           </button>
+                            <div class="accordion-content">
+                                <div class="grid grid-cols-5 gap-x-2 items-center text-xs p-2 rounded-md mb-2" style="background-color: var(--bg-secondary);">
+                                    <label class="chart-panel-label col-span-2" for="su-chart-wh-range">% From High (<=):</label>
+                                    <div class="col-span-3">
+                                         <input type="text" id="su-chart-wh-range" inputmode="decimal" class="chart-panel-input text-center w-full" placeholder="e.g. 25" aria-label="Percentage from 52-week high filter">
+                                    </div>
+                                </div>
+                                <div id="su-chart-52w-high" class="chart-container"></div>
+                            </div>
+                        </div>
                     </div>
                 </aside>
             </div>
@@ -210,11 +233,11 @@
 
         <div id="custom-index-view" class="w-full max-w-5xl content-card p-4 sm:p-6 hidden">
             <div class="flex flex-col sm:flex-row flex-wrap justify-between items-center mb-4 gap-2">
-                <h2 class="text-lg sm:text-xl md:text-2xl font-semibold text-transparent bg-clip-text" style="background-image: linear-gradient(to right, var(--text-hyperlink), var(--text-hyperlink-hover)); color: var(--text-primary);">Custom Index Data</h2>
+                <h2 class="text-lg sm:text-xl md:text-2xl font-semibold text-transparent bg-clip-text" style="background-image: linear-gradient(to right, var(--accent-primary), var(--accent-secondary)); color: var(--text-primary);">Custom Index Data</h2>
                 <div class="flex items-center space-x-2">
-                    <button id="custom-index-refresh-button" class="refresh-button" title="Force refresh data from source"><i class="fa fa-refresh"></i> Refresh</button>
-                    <button id="custom-index-copy-button" class="refresh-button" title="Copy data to clipboard"><i class="fa fa-copy"></i> Copy</button>
-                    <button id="custom-index-export-button" class="refresh-button" title="Export data as .txt"><i class="fa fa-download"></i> Export</button>
+                    <button id="custom-index-refresh-button" class="btn btn-secondary"><i class="fa fa-refresh"></i><span class="ml-2 hidden sm:inline">Refresh</span></button>
+                    <button id="custom-index-copy-button" class="btn btn-secondary"><i class="fa fa-copy"></i><span class="ml-2 hidden sm:inline">Copy</span></button>
+                    <button id="custom-index-export-button" class="btn btn-primary"><i class="fa fa-download"></i><span class="ml-2 hidden sm:inline">Export</span></button>
                 </div>
             </div>
             <div id="custom-index-status" class="text-center my-4" style="color: var(--text-secondary);">
