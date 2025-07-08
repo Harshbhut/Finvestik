@@ -248,6 +248,7 @@
   
   /* --- CHANGE: Updated styles for Insights Panel animation --- */
 /* --- CHANGE: Make the container's gap animatable and set it to 0 when closed --- */
+/* --- CHANGE: Make the container's gap animatable and set it to 0 when closed --- */
 #su-container {
     gap: 8px;
     align-items: stretch;
@@ -257,6 +258,7 @@
     gap: 0;
 }
 /* CHANGE: Add a transition and new rule to make the table take full width */
+/* CHANGE: Using a '0' flex-basis is the key to making the table container smoothly expand */
 /* CHANGE: Using a '0' flex-basis is the key to making the table container smoothly expand */
 #su-table-container {
     flex: 1 1 0; 
