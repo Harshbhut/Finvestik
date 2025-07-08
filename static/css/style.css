@@ -136,6 +136,12 @@
       font-size: 0.75rem;
       min-height: 1rem; /* Prevents layout shift */
   }
+
+  #risk_riskPercent::-webkit-calendar-picker-indicator {
+      display: none !important;
+      -webkit-appearance: none;
+      appearance: none;
+  }
   
   /* Buttons */
   .btn {
@@ -183,7 +189,32 @@
   }
   
   /* --- PAGE-SPECIFIC STYLES --- */
-  
+
+  .copy-qty-button {
+      background: none;
+      border: 1px solid transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      padding: 0.25rem;
+      border-radius: 999px; /* circular */
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.2s, color 0.2s;
+      width: 28px;
+      height: 28px;
+  }
+  .copy-qty-button:hover {
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+  }
+  .copy-qty-button i {
+      font-size: 0.9rem; /* 14.4px */
+  }
+  .copy-qty-button.copied i {
+      color: var(--text-positive);
+  }
+
   /* Data Table */
   .table-container { max-height: calc(100vh - 250px); overflow: auto; border: 1px solid var(--border-color); border-radius: 0.5rem;}
   .data-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
@@ -215,10 +246,35 @@
   .resize-handle { position: absolute; top: 0; right: -4px; width: 8px; height: 100%; cursor: col-resize; z-index: 20; }
   .resize-handle.active { background-color: var(--accent-primary); opacity: 0.3; }
   
-  /* Insights Panel */
-  #su-container { gap: 8px; align-items: stretch; }
-  #su-table-container { flex: 1 1 auto; min-width: 0; }
-  .su-panel-resizer { flex-shrink: 0; width: 8px; background-color: transparent; cursor: col-resize; transition: background-color 0.2s ease; z-index: 15; }
+  /* --- CHANGE: Updated styles for Insights Panel animation --- */
+/* --- CHANGE: Make the container's gap animatable and set it to 0 when closed --- */
+#su-container {
+    gap: 8px;
+    align-items: stretch;
+    transition: gap 0.3s ease-in-out;
+}
+#su-container.panel-is-closed {
+    gap: 0;
+}
+/* CHANGE: Add a transition and new rule to make the table take full width */
+/* CHANGE: Using a '0' flex-basis is the key to making the table container smoothly expand */
+#su-table-container {
+    flex: 1 1 0; 
+    min-width: 0; 
+    transition: flex-basis 0.3s ease-in-out;
+}
+#su-container.panel-is-closed #su-table-container {
+    width: 100%;
+}
+  .su-panel-resizer { 
+      flex-shrink: 0; 
+      width: 8px; 
+      background-color: transparent; 
+      cursor: col-resize; 
+      transition: background-color 0.2s ease, opacity 0.3s ease-in-out, width 0.3s ease-in-out; 
+      z-index: 15; 
+      opacity: 1;
+  }
   .su-panel-resizer:hover, .su-panel-resizer.active { background-color: var(--accent-primary); opacity: 0.5; }
   #su-chart-panel {
       display: flex; flex-direction: column; flex-shrink: 0; 
@@ -226,7 +282,25 @@
       background-color: var(--card-bg);
       border-left: 1px solid var(--border-color);
       border-radius: 0.75rem 0 0 0.75rem;
+      overflow: hidden;
+      white-space: nowrap;
+      transition: width 0.3s ease-in-out, min-width 0.3s ease-in-out, padding 0.3s ease-in-out, opacity 0.2s ease-in-out;
   }
+
+  /* Define the 'closed' state for the panel and its resizer */
+  #su-chart-panel.is-closed {
+      width: 0px;
+      min-width: 0px;
+      padding-left: 0;
+      padding-right: 0;
+      opacity: 0;
+      border-left-width: 0;
+  }
+  .su-panel-resizer.is-closed {
+      width: 0px;
+      opacity: 0;
+  }
+
   .chart-panel-label { font-size: 0.75rem; font-weight: 500; color: var(--text-secondary); }
   .chart-panel-input {
       font-size: 0.8rem; height: 1.875rem; padding: 0.25rem 0.5rem;

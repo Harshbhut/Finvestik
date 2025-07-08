@@ -52,6 +52,7 @@ let finvestikLogo, themeToggle, hamburgerMenuButton, mobileMenu,
     allocAllocationPercentInput, allocEntryPriceInput, allocSlPriceInput, allocAllocationPercentError, allocEntryPriceError, allocSlPriceError, 
     riskResultQty, riskResultRiskAmount, riskResultSlPercent, riskResultAllocationPercent, riskResultTotalCost,
     allocResultQty, allocResultRiskOnCapitalPercent, allocResultRiskAmount, allocResultSlPercent, allocResultTotalCost,
+    copyRiskQtyButton, copyAllocQtyButton,
     customIndexTable, customIndexTableHead, customIndexTableBody, customIndexLoading, customIndexError, customIndexMessage, customIndexLastUpdated, customIndexCopyButton, customIndexExportButton, customIndexRefreshButton,
     suLoading, suError, suRowCount, suTable, suTableHeadElement, suTableBodyElement, suHeaderRow, suFilterRow, suExportButton, suClearFiltersButton,
     suInsightsToggleButton, suContainer, suTableContainer, suPanelResizer, suChartPanel, suChartStatus, 
@@ -126,7 +127,7 @@ function syncChartControlsUI() {
 }
 
 // --- STOCK UNIVERSE: DATA LOADING, FILTERING & RENDERING ---
-async function preloadStockUniverseData() { if (isStockDataLoaded) return; try { const res=await fetch(STOCK_UNIVERSE_DATA_PATH); if (!res.ok) throw new Error(`${res.status}`); const jsonData=await res.json(); fullStockData=jsonData?.map(r=>({...r,"Market Cap":parseFloat(r["Market Cap"])||0}))||[]; isStockDataLoaded=true; loadSUColumnSettings(); loadSUFilters(); syncChartControlsUI(); if(stockUniverseView&&!stockUniverseView.classList.contains('hidden')) displayStockUniverse(); } catch(err){ console.error("SU data load failed:", err); if(suError)suError.textContent=`Error loading data.`;isStockDataLoaded=false;fullStockData=[]; throw err;}}
+async function preloadStockUniverseData() { if (isStockDataLoaded) return; try { const res=await fetch(STOCK_UNIVERSE_DATA_PATH); if (!res.ok) throw new Error(`${res.status}`); const jsonData=await res.json(); fullStockData=jsonData?.map(r=>({...r,"Market Cap":parseFloat(r["Market Cap"])||0}))||[]; isStockDataLoaded=true; loadSUColumnSettings(); loadSUFilters(); syncChartControlsUI(); if(stockUniverseView&&!stockUniverseView.classList.contains('hidden')) displayStockUniverse(); } catch(err){ if(suError)suError.textContent=`Error loading data.`;isStockDataLoaded=false;fullStockData=[]; throw err;}}
 function displayStockUniverse() { if(isStockDataLoaded){if(suLoading)suLoading.classList.add('hidden');if(suError)suError.classList.add('hidden');applyAndRenderSU();} else {if(suLoading)suLoading.classList.remove('hidden');if(suError)suError.classList.add('hidden');preloadStockUniverseData().catch(err=>{if(suLoading)suLoading.classList.add('hidden');if(suError){suError.textContent=`Error: ${err.message}`;suError.classList.remove('hidden');}});}}
 
 function parseNumericFilter(filterString) {
@@ -143,12 +144,6 @@ function parseNumericFilter(filterString) {
 }
 
 function updateChartFiltersAndRender() {
-    const getValOrNull = (input) => { if (!input) return null; const v = input.value.trim(); return v === '' ? null : parseFloat(v); };
-    suFilters.chart.groupBy = suChartGroupBy ? suChartGroupBy.value : 'Sector Name';
-    suFilters.chart.whRange = getValOrNull(suChartWhRange);
-    suFilters.chart.minStocks = getValOrNull(suChartMinStocks);
-    suFilters.chart.minUp = getValOrNull(suChartMinUp);
-    suFilters.chart.minDown = getValOrNull(suChartMinDown);
     applyAndRenderSU();
 }
 
@@ -175,7 +170,10 @@ function applyAndRenderSU() {
     currentlyDisplayedSUData = tableData;
     saveSUFilters();
     renderStockUniverseTable(tableData);
-    renderAllInsightCharts(tableData);
+    
+    if (suChartPanel && !suChartPanel.classList.contains('is-closed')) {
+        renderAllInsightCharts(tableData);
+    }
 }
 
 // --- STOCK UNIVERSE: UI CREATION & EVENT HANDLERS ---
@@ -223,7 +221,7 @@ function renderBarChart(container, chartData, { valueFormatter, titleFormatter, 
     container.appendChild(frag);
 }
 function renderAllInsightCharts(tableData) {
-    if (!suFilters.chart || !chartAdRatioContainer) return;
+    if (!suFilters.chart || !chartAdRatioContainer || !isStockDataLoaded) return;
     const { groupBy, minStocks, whRange, minUp, minDown } = suFilters.chart;
     if (suChartStatus) suChartStatus.textContent = `Charts based on ${tableData.length} filtered stocks.`;
 
@@ -284,7 +282,8 @@ function renderAllInsightCharts(tableData) {
 }
 function handleChartBarClick(event) {
     const bar = event.target.closest('.chart-bar-item'); if(!bar||!bar.dataset.groupKey)return;
-    const groupKeyName = suFilters.chart.groupBy, groupValue = bar.dataset.groupKey;
+    const groupKeyName = suFilters.chart.groupBy; 
+    const groupValue = bar.dataset.groupKey;
     const dropdown = suFilterRow.querySelector(`select[data-filter-key="${groupKeyName}"]`);
     if(dropdown){
         if (suFilters.columns[groupKeyName] === groupValue) suFilters.columns[groupKeyName] = 'ALL';
@@ -294,7 +293,32 @@ function handleChartBarClick(event) {
         applyAndRenderSU();
     }
 }
-function toggleInsightsPanel() { if(!suChartPanel)return; const isHidden=suChartPanel.classList.toggle('hidden'); suPanelResizer.classList.toggle('hidden',isHidden); suInsightsToggleButton.classList.toggle('active',!isHidden); try{const s=JSON.parse(localStorage.getItem(SU_CHART_PANEL_SETTINGS)||'{}');s.isOpen=!isHidden;localStorage.setItem(SU_CHART_PANEL_SETTINGS,JSON.stringify(s));}catch(e){}}
+// --- CHANGE: Final, cleaned, and animated toggle function ---
+// --- CHANGE: Added a class toggle on the parent container for the full-width animation ---
+// --- FINAL CORRECTED FUNCTION ---
+function toggleInsightsPanel() {
+    if (!suContainer || !suChartPanel || !suPanelResizer || !suInsightsToggleButton) return;
+
+    // A single class on the parent container drives all layout and animation.
+    suContainer.classList.toggle('panel-is-closed');
+    
+    // These classes handle the individual animation of the panel and resizer.
+    suChartPanel.classList.toggle('is-closed');
+    suPanelResizer.classList.toggle('is-closed');
+    suInsightsToggleButton.classList.toggle('active');
+
+    const isNowVisible = !suChartPanel.classList.contains('is-closed');
+
+    if (isNowVisible && currentlyDisplayedSUData) {
+        renderAllInsightCharts(currentlyDisplayedSUData);
+    }
+    
+    try {
+        const settings = JSON.parse(localStorage.getItem(SU_CHART_PANEL_SETTINGS) || '{}');
+        settings.isOpen = isNowVisible;
+        localStorage.setItem(SU_CHART_PANEL_SETTINGS, JSON.stringify(settings));
+    } catch (e) { /* Silently fail */ }
+}
 function initializeAccordion() {
     if(!suChartAccordionContainer) return;
     suChartAccordionContainer.addEventListener('click', (e) => {
@@ -304,8 +328,7 @@ function initializeAccordion() {
         
         const content = header.nextElementSibling;
         const isActive = header.classList.contains('active');
-
-        // Optional: Close other accordions
+        
         suChartAccordionContainer.querySelectorAll('.accordion-header').forEach(h => {
             if (h !== header) {
                 h.classList.remove('active');
@@ -337,8 +360,8 @@ const formatCurrency=(value,symbol='₹')=>{if(isNaN(value)||!isFinite(value))re
 const formatPercentage=(value)=>{if(isNaN(value)||!isFinite(value))return'0.00%';return`${value.toFixed(2)}%`;};
 const formatNumber=(value)=>{if(isNaN(value)||!isFinite(value))return'0';return Math.floor(value).toLocaleString('en-IN');};
 const defaultSettings={capital:'100000',risk_riskPercent:'0.5',risk_entryPrice:'305',risk_slPrice:'300',alloc_allocationPercent:'20',alloc_entryPrice:'305',alloc_slPrice:'300'};
-function loadCalculatorSettings(){try{const sS=localStorage.getItem(APP_SETTINGS_KEY);const s=sS?JSON.parse(sS):{...defaultSettings};if(capitalInput)capitalInput.value=s.capital||defaultSettings.capital;if(riskRiskPercentInput)riskRiskPercentInput.value=s.risk_riskPercent||defaultSettings.risk_riskPercent;if(riskEntryPriceInput)riskEntryPriceInput.value=s.risk_entryPrice||defaultSettings.risk_entryPrice;if(riskSlPriceInput)riskSlPriceInput.value=s.risk_slPrice||defaultSettings.risk_slPrice;if(allocAllocationPercentInput)allocAllocationPercentInput.value=s.alloc_allocationPercent||defaultSettings.alloc_allocationPercent;if(allocEntryPriceInput)allocEntryPriceInput.value=s.alloc_entryPrice||defaultSettings.alloc_entryPrice;if(allocSlPriceInput)allocSlPriceInput.value=s.alloc_slPrice||defaultSettings.alloc_slPrice;}catch(e){console.error('Error loading calc settings:',e);}};
-function saveCalculatorSettings(){if(!capitalInput)return;const cS={capital:capitalInput.value,risk_riskPercent:riskRiskPercentInput.value,risk_entryPrice:riskEntryPriceInput.value,risk_slPrice:riskSlPriceInput.value,alloc_allocationPercent:allocAllocationPercentInput.value,alloc_entryPrice:allocEntryPriceInput.value,alloc_slPrice:allocSlPriceInput.value};try{localStorage.setItem(APP_SETTINGS_KEY,JSON.stringify(cS));}catch(e){console.error('Error saving calc settings:',e);}};
+function loadCalculatorSettings(){try{const sS=localStorage.getItem(APP_SETTINGS_KEY);const s=sS?JSON.parse(sS):{...defaultSettings};if(capitalInput)capitalInput.value=s.capital||defaultSettings.capital;if(riskRiskPercentInput)riskRiskPercentInput.value=s.risk_riskPercent||defaultSettings.risk_riskPercent;if(riskEntryPriceInput)riskEntryPriceInput.value=s.risk_entryPrice||defaultSettings.risk_entryPrice;if(riskSlPriceInput)riskSlPriceInput.value=s.risk_slPrice||defaultSettings.risk_slPrice;if(allocAllocationPercentInput)allocAllocationPercentInput.value=s.alloc_allocationPercent||defaultSettings.alloc_allocationPercent;if(allocEntryPriceInput)allocEntryPriceInput.value=s.alloc_entryPrice||defaultSettings.alloc_entryPrice;if(allocSlPriceInput)allocSlPriceInput.value=s.alloc_slPrice||defaultSettings.alloc_slPrice;}catch(e){}}
+function saveCalculatorSettings(){if(!capitalInput)return;const cS={capital:capitalInput.value,risk_riskPercent:riskRiskPercentInput.value,risk_entryPrice:riskEntryPriceInput.value,risk_slPrice:riskSlPriceInput.value,alloc_allocationPercent:allocAllocationPercentInput.value,alloc_entryPrice:allocEntryPriceInput.value,alloc_slPrice:allocSlPriceInput.value};try{localStorage.setItem(APP_SETTINGS_KEY,JSON.stringify(cS));}catch(e){}}
 function sanitizeNumericInput(iE, options = { allowDecimal: true, allowNegative: false }) {
     if (!iE) return;
     let v = iE.value;
@@ -391,17 +414,37 @@ function calculateAllocationBased() {
 
 function updateAllCalculationsAndSave(){if(capitalInput&&!capitalInput.classList.contains('error')&&capitalError){capitalError.textContent='';}calculateRiskBased();calculateAllocationBased();saveCalculatorSettings();};
 function parseCSV(csvText){const lines=csvText.replace(/\r/g,'').trim().split('\n');if(lines.length<2)return[];const headers=lines[0].split(',').map(h=>h.trim());const result=[];for(let i=1;i<lines.length;i++){if(!lines[i])continue;const values=lines[i].split(',').map(v=>v.trim());if(values.length!==headers.length){continue;}const obj={};for(let j=0;j<headers.length;j++){obj[headers[j]]=values[j];}result.push(obj);}return result;}
-async function fetchAndRenderCustomIndexData(options={force:false}){if(!customIndexLoading||!customIndexError||!customIndexMessage||!customIndexLastUpdated||!customIndexTableHead||!customIndexTableBody){return;}try{const cachedDataJSON=localStorage.getItem(CUSTOM_INDEX_CACHE_KEY);if(cachedDataJSON&&!options.force){const cache=JSON.parse(cachedDataJSON);const isCacheFresh=(Date.now()-cache.timestamp)<CUSTOM_INDEX_CACHE_DURATION_MS;if(isCacheFresh){renderCustomIndexTable(cache.data,`Cached at: ${new Date(cache.timestamp).toLocaleString()}`);return;}}}catch(e){console.error("Could not read from custom index cache",e);}customIndexLoading.classList.remove('hidden');customIndexError.classList.add('hidden');customIndexMessage.classList.remove('hidden');customIndexMessage.textContent='Fetching latest data...';try{const response=await fetch(GOOGLE_SHEET_CSV_URL,{cache:"no-store"});if(!response.ok)throw new Error(`Network error CI: ${response.status}`);const csvText=await response.text();if(!csvText||csvText.trim().length<5)throw new Error("Empty/invalid data from CI sheet.");const data=parseCSV(csvText);const timestamp=Date.now();localStorage.setItem(CUSTOM_INDEX_CACHE_KEY,JSON.stringify({data,timestamp}));renderCustomIndexTable(data,`Fetched at: ${new Date(timestamp).toLocaleString()}`);}catch(err){customIndexLoading.classList.add('hidden');customIndexError.textContent=`Error: ${err.message}`;customIndexError.classList.remove('hidden');customIndexMessage.classList.add('hidden');}}
+async function fetchAndRenderCustomIndexData(options={force:false}){if(!customIndexLoading||!customIndexError||!customIndexMessage||!customIndexLastUpdated||!customIndexTableHead||!customIndexTableBody){return;}try{const cachedDataJSON=localStorage.getItem(CUSTOM_INDEX_CACHE_KEY);if(cachedDataJSON&&!options.force){const cache=JSON.parse(cachedDataJSON);const isCacheFresh=(Date.now()-cache.timestamp)<CUSTOM_INDEX_CACHE_DURATION_MS;if(isCacheFresh){renderCustomIndexTable(cache.data,`Cached at: ${new Date(cache.timestamp).toLocaleString()}`);return;}}}catch(e){}customIndexLoading.classList.remove('hidden');customIndexError.classList.add('hidden');customIndexMessage.classList.remove('hidden');customIndexMessage.textContent='Fetching latest data...';try{const response=await fetch(GOOGLE_SHEET_CSV_URL,{cache:"no-store"});if(!response.ok)throw new Error(`Network error CI: ${response.status}`);const csvText=await response.text();if(!csvText||csvText.trim().length<5)throw new Error("Empty/invalid data from CI sheet.");const data=parseCSV(csvText);const timestamp=Date.now();localStorage.setItem(CUSTOM_INDEX_CACHE_KEY,JSON.stringify({data,timestamp}));renderCustomIndexTable(data,`Fetched at: ${new Date(timestamp).toLocaleString()}`);}catch(err){customIndexLoading.classList.add('hidden');customIndexError.textContent=`Error: ${err.message}`;customIndexError.classList.remove('hidden');customIndexMessage.classList.add('hidden');}}
 function renderCustomIndexTable(data,timestampText){if(!customIndexLoading||!customIndexError||!customIndexMessage||!customIndexLastUpdated||!customIndexTableHead||!customIndexTableBody){return;}customIndexLoading.classList.add('hidden');customIndexError.classList.add('hidden');customIndexMessage.classList.add('hidden');customIndexLastUpdated.textContent=timestampText;customIndexTableHead.innerHTML='';customIndexTableBody.innerHTML='';if(!data||data.length===0){customIndexTableBody.innerHTML='<tr><td colspan="2" class="text-center p-4">No data to display.</td></tr>';currentCustomIndexData=[];return;}currentCustomIndexData=data;const headers=Object.keys(data[0]);const headerRow=document.createElement('tr');headers.forEach(headerText=>{const th=document.createElement('th');th.textContent=headerText.replace(/_/g,' ').replace(/\b\w/g,l=>l.toUpperCase());headerRow.appendChild(th);});customIndexTableHead.appendChild(headerRow);data.forEach(item=>{const row=document.createElement('tr');headers.forEach(header=>{const cell=document.createElement('td');cell.textContent=item[header]||'N/A';row.appendChild(cell);});customIndexTableBody.appendChild(row);});}
 function formatCustomIndexDataForExport(data){if(!data||data.length===0)return"";const firstItemKeys=Object.keys(data[0]);const sectorKey=firstItemKeys.find(key=>key.toLowerCase()==='sector')||firstItemKeys[0];const symbolKey=firstItemKeys.find(key=>key.toLowerCase()==='symbol')||(firstItemKeys.length>1?firstItemKeys[1]:firstItemKeys[0]);return data.map(item=>`###${item[sectorKey]||''},${item[symbolKey]||''}`).join(',');}
 function exportCustomIndexData(){if(!currentCustomIndexData||currentCustomIndexData.length===0){alert("No data to export.");return;}const formattedData=formatCustomIndexDataForExport(currentCustomIndexData);const blob=new Blob([formattedData],{type:'text/plain;charset=utf-8'});const link=document.createElement("a");const url=URL.createObjectURL(blob);link.setAttribute("href",url);link.setAttribute("download","custom_index_data.txt");link.style.visibility='hidden';document.body.appendChild(link);link.click();document.body.removeChild(link);URL.revokeObjectURL(url);if(customIndexMessage){customIndexMessage.textContent="Data exported.";customIndexMessage.classList.remove('hidden');setTimeout(()=>customIndexMessage.classList.add('hidden'),3000);}}
-function copyCustomIndexData(){if(!currentCustomIndexData||currentCustomIndexData.length===0){alert("No data to copy.");return;}const formattedData=formatCustomIndexDataForExport(currentCustomIndexData);navigator.clipboard.writeText(formattedData).then(()=>{if(customIndexMessage){customIndexMessage.textContent="Data copied!";customIndexMessage.classList.remove('hidden');setTimeout(()=>customIndexMessage.classList.add('hidden'),3000);}}).catch(err=>{console.error('Failed to copy CI data: ',err);if(customIndexError){customIndexError.textContent="Copy failed.";customIndexError.classList.remove('hidden');setTimeout(()=>customIndexError.classList.add('hidden'),3000);}}); }
+function copyCustomIndexData(){if(!currentCustomIndexData||currentCustomIndexData.length===0){alert("No data to copy.");return;}const formattedData=formatCustomIndexDataForExport(currentCustomIndexData);navigator.clipboard.writeText(formattedData).then(()=>{if(customIndexMessage){customIndexMessage.textContent="Data copied!";customIndexMessage.classList.remove('hidden');setTimeout(()=>customIndexMessage.classList.add('hidden'),3000);}}).catch(err=>{if(customIndexError){customIndexError.textContent="Copy failed.";customIndexError.classList.remove('hidden');setTimeout(()=>customIndexError.classList.add('hidden'),3000);}}); }
+function copyQtyToClipboard(elementId, buttonElement) {
+    const qtyElement = document.getElementById(elementId);
+    if (!qtyElement || !navigator.clipboard) return;
+
+    const qty = qtyElement.textContent.replace(/,/g, '');
+    navigator.clipboard.writeText(qty).then(() => {
+        const originalIcon = buttonElement.innerHTML;
+        buttonElement.innerHTML = `<i class="fa fa-check"></i>`;
+        buttonElement.classList.add('copied');
+
+        setTimeout(() => {
+            buttonElement.innerHTML = originalIcon;
+            buttonElement.classList.remove('copied');
+        }, 1500);
+    }).catch(err => {
+        alert('Failed to copy text.');
+    });
+}
 
 // --- DOM INITIALIZATION ---
+// --- FINAL CORRECTED DOMContentLoaded ---
 document.addEventListener('DOMContentLoaded',()=>{
     finvestikLogo=document.getElementById('finvestik-logo');themeToggle=document.getElementById('theme-toggle');hamburgerMenuButton=document.getElementById('hamburger-menu-button');mobileMenu=document.getElementById('mobile-menu');navCalculator=document.getElementById('nav-calculator');navStockUniverse=document.getElementById('nav-stock-universe');navCustomIndex=document.getElementById('nav-custom-index');mobileNavCalculator=document.getElementById('mobile-nav-calculator');mobileNavStockUniverse=document.getElementById('mobile-nav-stock-universe');mobileNavCustomIndex=document.getElementById('mobile-nav-custom-index');mainContentArea=document.getElementById('main-content-area');calculatorView=document.getElementById('calculator-view');customIndexView=document.getElementById('custom-index-view');stockUniverseView=document.getElementById('stock-universe-view');capitalInputContainer=document.querySelector('[role="region"][aria-labelledby="capital-heading"]');currentYearElement=document.getElementById('current-year');capitalInput=document.getElementById('capital');capitalError=document.getElementById('capital-error');riskRiskPercentInput=document.getElementById('risk_riskPercent');riskEntryPriceInput=document.getElementById('risk_entryPrice');riskSlPriceInput=document.getElementById('risk_slPrice');riskRiskPercentError=document.getElementById('risk_riskPercent-error');riskEntryPriceError=document.getElementById('risk_entryPrice-error');riskSlPriceError=document.getElementById('risk_slPrice-error');allocAllocationPercentInput=document.getElementById('alloc_allocationPercent');allocEntryPriceInput=document.getElementById('alloc_entryPrice');allocSlPriceInput=document.getElementById('alloc_slPrice');allocAllocationPercentError=document.getElementById('alloc_allocationPercent-error');allocEntryPriceError=document.getElementById('alloc_entryPrice-error');allocSlPriceError=document.getElementById('alloc_slPrice-error');
     riskResultQty=document.getElementById('risk_result_qty');riskResultRiskAmount=document.getElementById('risk_result_riskAmount');riskResultSlPercent=document.getElementById('risk_result_slPercent');riskResultAllocationPercent=document.getElementById('risk_result_allocationPercent');riskResultTotalCost=document.getElementById('risk_result_totalCost');
     allocResultQty=document.getElementById('alloc_result_qty');allocResultRiskOnCapitalPercent=document.getElementById('alloc_result_riskOnCapitalPercent');allocResultRiskAmount=document.getElementById('alloc_result_riskAmount');allocResultSlPercent=document.getElementById('alloc_result_slPercent');allocResultTotalCost=document.getElementById('alloc_result_totalCost');
+    copyRiskQtyButton=document.getElementById('copy-risk-qty-button');copyAllocQtyButton=document.getElementById('copy-alloc-qty-button');
     customIndexTable=document.getElementById('custom-index-table');if(customIndexTable){customIndexTableHead=customIndexTable.querySelector('thead');customIndexTableBody=customIndexTable.querySelector('tbody');}
     customIndexLoading=document.getElementById('custom-index-loading');customIndexError=document.getElementById('custom-index-error');customIndexMessage=document.getElementById('custom-index-message');customIndexLastUpdated=document.getElementById('custom-index-last-updated');customIndexRefreshButton=document.getElementById('custom-index-refresh-button');customIndexCopyButton=document.getElementById('custom-index-copy-button');customIndexExportButton=document.getElementById('custom-index-export-button');
     suLoading=document.getElementById('su-loading');suError=document.getElementById('su-error');suRowCount=document.getElementById('su-row-count');suTable=document.getElementById('su-table');if(suTable){suTableHeadElement=suTable.querySelector('thead');suTableBodyElement=suTable.querySelector('tbody');}
@@ -428,23 +471,49 @@ document.addEventListener('DOMContentLoaded',()=>{
     if(customIndexCopyButton)customIndexCopyButton.addEventListener('click',copyCustomIndexData);
     if(customIndexExportButton)customIndexExportButton.addEventListener('click',exportCustomIndexData);
     allCalculatorInputs.forEach(i=>{if(i){i.addEventListener('input',()=>{sanitizeNumericInput(i);updateAllCalculationsAndSave();});i.addEventListener('blur',()=>{sanitizeNumericInput(i);if(i.value.endsWith('.')){i.value=i.value.slice(0,-1);}updateAllCalculationsAndSave();});}});
+    if(copyRiskQtyButton) copyRiskQtyButton.addEventListener('click', (e) => copyQtyToClipboard('risk_result_qty', e.currentTarget));
+    if(copyAllocQtyButton) copyAllocQtyButton.addEventListener('click', (e) => copyQtyToClipboard('alloc_result_qty', e.currentTarget));
     if(suInsightsToggleButton)suInsightsToggleButton.addEventListener('click',toggleInsightsPanel);
     if(suChartPanel) suChartPanel.addEventListener('click', handleChartBarClick);
     
-    const debouncedUpdate = debounce(updateChartFiltersAndRender, 400);
-    [suChartGroupBy, suChartMinStocks, suChartWhRange, suChartMinUp, suChartMinDown].forEach(input => {
+    const debouncedChartUpdate = debounce(updateChartFiltersAndRender, 400);
+    [suChartMinStocks, suChartWhRange, suChartMinUp, suChartMinDown].forEach(input => {
         if(input) {
             input.addEventListener('input', () => {
-                 if (input.id.includes('down')) sanitizeNumericInput(input, {allowDecimal: true, allowNegative: true});
-                 else sanitizeNumericInput(input, {allowDecimal: true, allowNegative: false});
-                 debouncedUpdate();
+                if (input.id.includes('down')) sanitizeNumericInput(input, {allowDecimal: true, allowNegative: true});
+                else sanitizeNumericInput(input, {allowDecimal: true, allowNegative: false});
+                 const getValOrNull = (inp) => { if (!inp) return null; const v = inp.value.trim(); return v === '' ? null : parseFloat(v); };
+                suFilters.chart.whRange = getValOrNull(suChartWhRange);
+                suFilters.chart.minStocks = getValOrNull(suChartMinStocks);
+                suFilters.chart.minUp = getValOrNull(suChartMinUp);
+                suFilters.chart.minDown = getValOrNull(suChartMinDown);
+                debouncedChartUpdate();
             });
         }
     });
+
+    if(suChartGroupBy) {
+        suChartGroupBy.addEventListener('change', (e) => {
+            suFilters.chart.groupBy = e.target.value;
+            updateChartFiltersAndRender();
+        });
+    }
+
+    if(riskRiskPercentInput) {
+        riskRiskPercentInput.addEventListener('focus', (e) => {
+            const input = e.currentTarget;
+            const originalValue = input.value;
+            input.value = '';
+            setTimeout(() => { input.value = originalValue; }, 1);
+        });
+    }
+
     if(suChartADClearButton) {
         suChartADClearButton.addEventListener('click', () => {
             if(suChartMinUp) suChartMinUp.value = ''; 
             if(suChartMinDown) suChartMinDown.value = '';
+            suFilters.chart.minUp = null;
+            suFilters.chart.minDown = null;
             updateChartFiltersAndRender();
         });
     }
@@ -460,11 +529,21 @@ document.addEventListener('DOMContentLoaded',()=>{
     preloadStockUniverseData().finally(()=>{
         try {
             const settings=JSON.parse(localStorage.getItem(SU_CHART_PANEL_SETTINGS)||'{}');
-            if(settings.isOpen && suChartPanel && suPanelResizer && suInsightsToggleButton){
-                suChartPanel.classList.remove('hidden'); suPanelResizer.classList.remove('hidden'); suInsightsToggleButton.classList.add('active');
+            if (settings.isOpen) {
+                // Panel should be open on load, so we REMOVE the closed classes.
+                if(suContainer) suContainer.classList.remove('panel-is-closed');
+                if(suChartPanel) suChartPanel.classList.remove('is-closed');
+                if(suPanelResizer) suPanelResizer.classList.remove('is-closed');
+                if(suInsightsToggleButton) suInsightsToggleButton.classList.add('active');
                 if(settings.width) suChartPanel.style.width = settings.width;
-            } else { if(suChartPanel) suChartPanel.style.width = '400px'; }
-        } catch(e) { console.error("Could not restore panel settings", e); }
+            } else {
+                // Panel should be closed on load, so we ADD the closed classes.
+                if(suContainer) suContainer.classList.add('panel-is-closed');
+                if(suChartPanel) suChartPanel.classList.add('is-closed');
+                if(suPanelResizer) suPanelResizer.classList.add('is-closed');
+                if(suInsightsToggleButton) suInsightsToggleButton.classList.remove('active');
+            }
+        } catch(e) { /* Silently fail on storage error */ }
         const lastView=localStorage.getItem(ACTIVE_VIEW_KEY)||'calculator-view';
         switchView(lastView);
     });
