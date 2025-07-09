@@ -222,6 +222,7 @@
       padding: 0.75rem; text-align: left;
       border-bottom: 1px solid var(--border-color);
       font-size: 0.875rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      transition: background-color 0.3s;
   }
   .data-table th {
       background-color: var(--bg-secondary);
@@ -229,7 +230,7 @@
       position: sticky; top: 0; z-index: 10;
   }
   .data-table tr:last-child td { border-bottom: none; }
-  .data-table tr:hover { background-color: var(--bg-primary); }
+  .data-table tbody tr:hover td { background-color: var(--bg-primary); }
   .data-table .symbol-cell { font-weight: 500; color: var(--accent-primary); cursor: pointer; }
   .data-table td[style*="var(--text-positive)"] { color: var(--text-positive) !important; font-weight: 500; }
   .data-table td[style*="var(--text-negative)"] { color: var(--text-negative) !important; font-weight: 500; }
@@ -246,28 +247,23 @@
   .resize-handle { position: absolute; top: 0; right: -4px; width: 8px; height: 100%; cursor: col-resize; z-index: 20; }
   .resize-handle.active { background-color: var(--accent-primary); opacity: 0.3; }
   
-  /* --- CHANGE: Updated styles for Insights Panel animation --- */
-/* --- CHANGE: Make the container's gap animatable and set it to 0 when closed --- */
-/* --- CHANGE: Make the container's gap animatable and set it to 0 when closed --- */
-#su-container {
-    gap: 8px;
-    align-items: stretch;
-    transition: gap 0.3s ease-in-out;
-}
-#su-container.panel-is-closed {
-    gap: 0;
-}
-/* CHANGE: Add a transition and new rule to make the table take full width */
-/* CHANGE: Using a '0' flex-basis is the key to making the table container smoothly expand */
-/* CHANGE: Using a '0' flex-basis is the key to making the table container smoothly expand */
-#su-table-container {
-    flex: 1 1 0; 
-    min-width: 0; 
-    transition: flex-basis 0.3s ease-in-out;
-}
-#su-container.panel-is-closed #su-table-container {
-    width: 100%;
-}
+  /* Insights Panel */
+  #su-container {
+      gap: 8px;
+      align-items: stretch;
+      transition: gap 0.3s ease-in-out;
+  }
+  #su-container.panel-is-closed {
+      gap: 0;
+  }
+  #su-table-container {
+      flex: 1 1 0; 
+      min-width: 0; 
+      transition: flex-basis 0.3s ease-in-out;
+  }
+  #su-container.panel-is-closed #su-table-container {
+      width: 100%;
+  }
   .su-panel-resizer { 
       flex-shrink: 0; 
       width: 8px; 
@@ -380,3 +376,16 @@
       display: none !important;
     }
   }
+
+/* --- LIVE UPDATE ANIMATIONS --- */
+@keyframes flash-positive { 0% { background-color: rgba(52, 211, 153, 0.4); } 100% { background-color: transparent; } }
+@keyframes flash-negative { 0% { background-color: rgba(248, 113, 113, 0.4); } 100% { background-color: transparent; } }
+@keyframes flash-neutral  { 0% { background-color: rgba(99, 102, 241, 0.3); } 100% { background-color: transparent; } }
+@keyframes row-fade-in    { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes row-fade-out   { 0% { opacity: 1; } 100% { opacity: 0; } }
+
+.flash-positive { animation: flash-positive 1s ease-out; }
+.flash-negative { animation: flash-negative 1s ease-out; }
+.flash-neutral  { animation: flash-neutral 1s ease-out; }
+.row-fade-in    { animation: row-fade-in 0.5s ease-out; }
+.row-fade-out   { animation: row-fade-out 0.5s ease-out forwards; }

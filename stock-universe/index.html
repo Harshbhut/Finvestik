@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finvestik - Stock Universe</title>
+    
+    <meta name="description" content="Simple powerful tools that cut through the noise and help you make smarter trading decisions." />
+    <meta name="keywords" content="Stock,Position Sizing Calculator,Stock Market,Sector Rotation,Stock Universe,Custom Index,Risk Management, Trading, Stocks, Finvestik" />
+    <meta name="author" content="Finvestik" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Finvestik - Stock Universe" />
+    <meta property="og:description" content="Simple powerful tools that cut through the noise and help you make smarter trading decisions." />
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.finvestik.com/stock-universe" />
+    <meta property="og:image" content="/static/images/Financial Growth Vector Logo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Finvestik - Stock Universe" />
+    <meta name="twitter:description" content="Simple powerful tools that cut through the noise and help you make smarter trading decisions." />
+    <meta name="twitter:image" content="/static/images/Financial Growth Vector Logo.png" />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/Financial Growth Vector Logo.png">
+    <link rel="apple-touch-icon" href="/static/images/Financial Growth Vector Logo.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <!-- Libraries for Stock Universe - aync/defer for performance -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" defer></script>
+    <!-- SortableJS for column reordering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js" defer></script>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+    <header id="app-header" class="sticky top-0 z-50 w-full shadow-md" role="banner">
+        <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16 sm:h-20">
+            <div class="flex-shrink-0">
+                 <a href="/"><img src="/static/images/Financial Growth Vector Logo.png" alt="Finvestik Logo" id="finvestik-logo" class="h-[40px] w-[40px] sm:h-12 sm:w-12 md:h-16 md:w-16 rounded-md object-contain cursor-pointer"/></a>
+            </div>
+            
+            <nav class="hidden sm:flex flex-grow justify-center px-2 space-x-2" aria-label="Main navigation">
+                <a href="/" class="nav-link">Position Calculator</a>
+                <a href="/stock-universe" class="nav-link active">Stock Universe</a>
+                <a href="/custom-index" class="nav-link">Custom Index</a>
+            </nav>
+
+            <div class="flex items-center">
+                <div id="theme-toggle-container" class="flex-shrink-0 sm:order-last">
+                    <button id="theme-toggle" title="Toggle theme" aria-label="Toggle color theme" class="w-10 h-10 rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 text-lg">
+                        <!-- Icon will be injected by JS -->
+                    </button>
+                </div>
+                <div id="hamburger-menu-button-container" class="sm:hidden ml-3">
+                    <button id="hamburger-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" 
+                            aria-controls="mobile-menu" aria-expanded="false" style="color: var(--text-primary);">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="sm:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="mobile-nav-link block w-full text-left">Position Calculator</a>
+                <a href="/stock-universe" class="mobile-nav-link block w-full text-left active">Stock Universe</a>
+                <a href="/custom-index" class="mobile-nav-link block w-full text-left">Custom Index</a>
+            </div>
+        </div>
+    </header>
+
+    <div id="main-content-area" class="w-full max-w-full mx-auto flex flex-col flex-grow items-center p-4">
+
+        <div class="w-full content-card p-2 sm:p-4 md:p-6">
+             <div id="su-controls" class="flex flex-col sm:flex-row justify-between items-center mb-2 sm:mb-4 gap-2" style="color: var(--text-secondary);">
+                <div class="flex-grow text-left flex items-center">
+                    <div id="su-loading" class="dots-loader hidden mr-2"><div></div><div></div><div></div></div>
+                    <p id="su-error" class="text-red-500 hidden"></p>
+                    <p id="su-last-updated" class="text-xs ml-2 hidden"></p>
+                </div>
+                <div class="flex flex-wrap items-center justify-end gap-2 sm:gap-4">
+                    <p id="su-row-count" class="text-xs sm:text-sm"></p>
+                    <button id="su-clear-filters-button" class="btn btn-secondary" title="Clear all filters and sorting"><i class="fa fa-eraser"></i><span class="hidden sm:inline ml-2">Clear</span></button>
+                    <button id="su-insights-toggle-button" class="btn btn-primary" title="Toggle Insights Panel"><i class="fa fa-bar-chart"></i><span class="hidden sm:inline ml-2">Insights</span></button>
+                    <button id="su-export-button" class="btn btn-primary" title="Export data as a ZIP with one file per sector"><i class="fa fa-download"></i><span class="hidden sm:inline ml-2">Download</span></button>
+                    <button id="su-export-single-button" class="btn btn-primary" title="Export data as a single .txt file for all industries"><i class="fa fa-download"></i><span class="hidden sm:inline ml-2">Export</span></button>
+                </div>
+            </div>
+            
+            <!-- Skeleton Loader: Shown on initial load if no cache exists -->
+            <div id="su-skeleton-loader">
+                <div class="table-container">
+                    <table class="data-table min-w-full">
+                        <thead>
+                            <tr class="animate-pulse">
+                                <th style="width: 100px;"><div class="h-5 bg-slate-700 rounded"></div></th>
+                                <th style="width: 200px;"><div class="h-5 bg-slate-700 rounded"></div></th>
+                                <th style="width: 90px;"><div class="h-5 bg-slate-700 rounded"></div></th>
+                                <th style="width: 95px;"><div class="h-5 bg-slate-700 rounded"></div></th>
+                                <th style="width: 110px;"><div class="h-5 bg-slate-700 rounded"></div></th>
+                                <th style="width: 120px;"><div class="h-5 bg-slate-700 rounded"></div></th>
+                                <th style="width: 120px;"><div class="h-5 bg-slate-700 rounded"></div></th>
+                                <th style="width: 160px;"><div class="h-5 bg-slate-700 rounded"></div></th>
+                                <th style="width: 180px;"><div class="h-5 bg-slate-700 rounded"></div></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr class="animate-pulse"><script>for(let i=0;i<15;i++){document.write(`<tr><td><div class="h-4 bg-slate-700 rounded w-3/4"></div></td><td><div class="h-4 bg-slate-700 rounded w-full"></div></td><td><div class="h-4 bg-slate-700 rounded w-1/2 ml-auto"></div></td><td><div class="h-4 bg-slate-700 rounded w-2/3 ml-auto"></div></td><td><div class="h-4 bg-slate-700 rounded w-3/4 ml-auto"></div></td><td><div class="h-4 bg-slate-700 rounded w-5/6 ml-auto"></div></td><td><div class="h-4 bg-slate-700 rounded w-1/2 ml-auto"></div></td><td><div class="h-4 bg-slate-700 rounded w-full"></div></td><td><div class="h-4 bg-slate-700 rounded w-full"></div></td></tr>`)}</script></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Main Container: Hidden until data is loaded -->
+            <div id="su-container" class="su-container flex w-full hidden">
+                <div id="su-table-container" class="table-container flex-grow">
+                    <table id="su-table" class="data-table min-w-full">
+                        <thead id="su-table-head"></thead>
+                        <tbody id="su-table-body"></tbody>
+                    </table>
+                </div>
+                <div id="su-panel-resizer"></div>
+                <aside id="su-chart-panel" class="su-chart-panel">
+                    <div id="su-chart-global-controls" class="p-3 border-b" style="border-color: var(--border-color);">
+                        <div class="grid grid-cols-2 gap-x-4 gap-y-2 items-center">
+                            <label class="chart-panel-label" for="su-chart-group-by">Group By:</label>
+                            <label class="chart-panel-label" for="su-chart-min-stocks">Min Stocks:</label>
+                            <select id="su-chart-group-by" class="chart-panel-input" aria-label="Group charts by Sector or Industry"><option value="Sector Name">Sector</option><option value="Industry Name">Industry</option></select>
+                            <input type="text" id="su-chart-min-stocks" inputmode="numeric" class="chart-panel-input text-center w-full" placeholder="e.g. 5" aria-label="Minimum stocks in a group">
+                        </div>
+                        <p id="su-chart-status" class="text-xs text-center mt-3" style="color: var(--text-secondary);"></p>
+                    </div>
+                    <div id="su-chart-accordion-container" class="flex-grow overflow-y-auto">
+                        <div class="accordion-item"><button class="accordion-header" aria-expanded="false"><h3>A/D Ratio</h3><i class="fa fa-chevron-down accordion-icon"></i></button><div class="accordion-content"><div class="grid grid-cols-5 gap-x-2 items-center text-xs p-2 rounded-md mb-2" style="background-color: var(--bg-secondary);"><label class="chart-panel-label col-span-2" for="su-chart-min-up">Min Up % (>=):</label><label class="chart-panel-label col-span-2" for="su-chart-min-down">Min Down % (<=):</label><div class="col-span-1"></div><input type="text" id="su-chart-min-up" inputmode="decimal" class="chart-panel-input text-center w-full col-span-2" placeholder="Any" aria-label="Minimum Up Percentage"><input type="text" id="su-chart-min-down" inputmode="decimal" class="chart-panel-input text-center w-full col-span-2" placeholder="Any" aria-label="Minimum Down Percentage"><button id="su-chart-ad-clear-button" class="local-clear-button" aria-label="Clear Min Up/Down filters"><i class="fa fa-eraser"></i></button></div><div id="su-chart-ad-ratio" class="chart-container"></div></div></div>
+                        <div class="accordion-item"><button class="accordion-header" aria-expanded="false"><h3>Market Movers</h3><i class="fa fa-chevron-down accordion-icon"></i></button><div class="accordion-content"><div id="su-chart-avg-gain" class="chart-container"></div></div></div>
+                        <div class="accordion-item"><button class="accordion-header" aria-expanded="false"><h3>52W High Range</h3><i class="fa fa-chevron-down accordion-icon"></i></button><div class="accordion-content"><div class="grid grid-cols-5 gap-x-2 items-center text-xs p-2 rounded-md mb-2" style="background-color: var(--bg-secondary);"><label class="chart-panel-label col-span-2" for="su-chart-wh-range">% From High (<=):</label><div class="col-span-3"><input type="text" id="su-chart-wh-range" inputmode="decimal" class="chart-panel-input text-center w-full" placeholder="e.g. 25" aria-label="Percentage from 52-week high filter"></div></div><div id="su-chart-52w-high" class="chart-container"></div></div></div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="w-full text-center mt-auto pt-6 pb-4" style="opacity:0.8;" role="contentinfo">
+        <div class="flex justify-center space-x-4 sm:space-x-6 mb-3"><a href="https://x.com/harshbhut5" target="_blank" rel="noopener noreferrer" class="social-icon x-icon"><i class="fa fa-twitter"></i></a><a href="https://youtube.com/@finvestik?si=im2OcEY7GE-qDHBP" target="_blank" rel="noopener noreferrer" class="social-icon youtube-icon"><i class="fa fa-youtube-play"></i></a><a href="https://t.me/finvestik" target="_blank" rel="noopener noreferrer" class="social-icon telegram-icon"><i class="fa fa-telegram"></i></a></div><p class="text-xs mt-1" style="color: var(--text-secondary);">© <span id="current-year"></span> Finvestik. All Rights Reserved.</p>
+    </footer>
+
+    <script src="/static/js/main.js" defer></script>
+    <script src="/static/js/stock-universe.js" defer></script>
+
+    <!-- Chart Popup is common but loaded on SU page only for now -->
+    <div id="chart-popup" class="hidden fixed content-card p-1 shadow-2xl z-50 w-[400px] h-[300px]"><div id="chart-popup-container" class="w-full h-full"></div></div>
+</body>
+</html>

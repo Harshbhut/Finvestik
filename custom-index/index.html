@@ -1,0 +1,203 @@
+<!-- Custom Index-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finvestik - Custom Index Tool</title>
+    
+    <meta name="description" content="Simple powerful tools that cut through the noise and help you make smarter trading decisions." />
+    <meta name="keywords" content="Stock,Position Sizing Calculator,Stock Market,Sector Rotation,Stock Universe,Custom Index,Risk Management, Trading, Stocks, Finvestik" />
+    <meta name="author" content="Finvestik" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Finvestik - Custom Index Tool" />
+    <meta property="og:description" content="Simple powerful tools that cut through the noise and help you make smarter trading decisions." />
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.finvestik.com/custom-index" />
+    <meta property="og:image" content="/static/images/Financial Growth Vector Logo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Finvestik - Custom Index Tool" />
+    <meta name="twitter:description" content="Simple powerful tools that cut through the noise and help you make smarter trading decisions." />
+    <meta name="twitter:image" content="/static/images/Financial Growth Vector Logo.png" />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/Financial Growth Vector Logo.png">
+    <link rel="apple-touch-icon" href="/static/images/Financial Growth Vector Logo.png">
+
+    <!-- CHANGE: Add a prefetch link to start downloading the data for the next page -->
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+    <header id="app-header" class="sticky top-0 z-50 w-full shadow-md" role="banner">
+        <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16 sm:h-20">
+            <div class="flex-shrink-0">
+                 <a href="/"><img src="/static/images/Financial Growth Vector Logo.png" alt="Finvestik Logo" id="finvestik-logo" class="h-[40px] w-[40px] sm:h-12 sm:w-12 md:h-16 md:w-16 rounded-md object-contain cursor-pointer"/></a>
+            </div>
+            
+            <nav class="hidden sm:flex flex-grow justify-center px-2 space-x-2" aria-label="Main navigation">
+                <a href="/" class="nav-link active">Position Calculator</a>
+                <a href="/stock-universe" class="nav-link">Stock Universe</a>
+                <a href="/custom-index" class="nav-link">Custom Index</a>
+            </nav>
+
+            <div class="flex items-center">
+                <div id="theme-toggle-container" class="flex-shrink-0 sm:order-last">
+                    <button id="theme-toggle" title="Toggle theme" aria-label="Toggle color theme" class="w-10 h-10 rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 text-lg">
+                        <!-- Icon will be injected by JS -->
+                    </button>
+                </div>
+                <div id="hamburger-menu-button-container" class="sm:hidden ml-3">
+                    <button id="hamburger-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" 
+                            aria-controls="mobile-menu" aria-expanded="false" style="color: var(--text-primary);">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="sm:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="mobile-nav-link block w-full text-left">Position Calculator</a>
+                <a href="/stock-universe" class="mobile-nav-link block w-full text-left">Stock Universe</a>
+                <a href="/custom-index/" class="mobile-nav-link block w-full text-left active">Custom Index</a>
+            </div>
+        </div>
+    </header>
+
+    <div id="main-content-area" class="w-full max-w-7xl mx-auto flex flex-col flex-grow items-center p-4">
+
+        <div class="w-full max-w-5xl content-card p-4 sm:p-6">
+            <div class="flex flex-col sm:flex-row flex-wrap justify-between items-center mb-4 gap-2">
+                <h2 class="text-lg sm:text-xl md:text-2xl font-semibold text-transparent bg-clip-text" style="background-image: linear-gradient(to right, var(--accent-primary), var(--accent-secondary)); color: var(--text-primary);">Custom Index Data</h2>
+                <div class="flex items-center space-x-2">
+                    <button id="custom-index-refresh-button" class="btn btn-secondary"><i class="fa fa-refresh"></i><span class="ml-2 hidden sm:inline">Refresh</span></button>
+                    <button id="custom-index-copy-button" class="btn btn-secondary"><i class="fa fa-copy"></i><span class="ml-2 hidden sm:inline">Copy</span></button>
+                    <button id="custom-index-export-button" class="btn btn-primary"><i class="fa fa-download"></i><span class="ml-2 hidden sm:inline">Export</span></button>
+                </div>
+            </div>
+            <div id="custom-index-status" class="text-center my-4" style="color: var(--text-secondary);">
+                <div id="custom-index-loading" class="dots-loader hidden"><div></div><div></div><div></div></div>
+                <p id="custom-index-error" class="text-red-500 hidden"></p>
+                <p id="custom-index-message" class="text-slate-400 hidden"></p>
+            </div>
+            <div class="table-container">
+                <table id="custom-index-table" class="data-table min-w-full">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <p id="custom-index-last-updated" class="text-xs text-right mt-3" style="color: var(--text-secondary);">Data as of: N/A</p>
+        </div>
+
+    </div>
+
+    <footer class="w-full text-center mt-auto pt-6 pb-4" style="opacity:0.8;" role="contentinfo">
+        <div class="flex justify-center space-x-4 sm:space-x-6 mb-3"><a href="https://x.com/harshbhut5" target="_blank" rel="noopener noreferrer" class="social-icon x-icon"><i class="fa fa-twitter"></i></a><a href="https://youtube.com/@finvestik?si=im2OcEY7GE-qDHBP" target="_blank" rel="noopener noreferrer" class="social-icon youtube-icon"><i class="fa fa-youtube-play"></i></a><a href="https://t.me/finvestik" target="_blank" rel="noopener noreferrer" class="social-icon telegram-icon"><i class="fa fa-telegram"></i></a></div><p class="text-xs mt-1" style="color: var(--text-secondary);">© <span id="current-year"></span> Finvestik. All Rights Reserved.</p>
+    </footer>
+    
+    <script src="/static/js/main.js" defer></script>
+    <script>
+        // --- CUSTOM INDEX SCRIPT ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- CONSTANTS ---
+            const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTOqNgqIvbKgZ2SNvOAGkhW6iXxm1xXK_R1xCorTNDQkWRxod8-8G8x0isl1zTVHDVeHsfwfZfJLlkh/pub?output=csv";
+            const CUSTOM_INDEX_CACHE_KEY = 'finvestikCustomIndexCache';
+            const CUSTOM_INDEX_CACHE_DURATION_MS = 15 * 60 * 1000;
+
+            // --- DOM ELEMENTS ---
+            const customIndexTable = document.getElementById('custom-index-table');
+            const customIndexTableHead = customIndexTable.querySelector('thead');
+            const customIndexTableBody = customIndexTable.querySelector('tbody');
+            const customIndexLoading = document.getElementById('custom-index-loading');
+            const customIndexError = document.getElementById('custom-index-error');
+            const customIndexMessage = document.getElementById('custom-index-message');
+            const customIndexLastUpdated = document.getElementById('custom-index-last-updated');
+            const customIndexRefreshButton = document.getElementById('custom-index-refresh-button');
+            const customIndexCopyButton = document.getElementById('custom-index-copy-button');
+            const customIndexExportButton = document.getElementById('custom-index-export-button');
+            
+            let currentCustomIndexData = [];
+            
+            // --- FUNCTIONS ---
+            const parseCSV = (csvText) => {
+                const lines = csvText.replace(/\r/g,'').trim().split('\n'); if(lines.length<2) return[];
+                const headers=lines[0].split(',').map(h=>h.trim()); const result=[];
+                for(let i=1; i<lines.length; i++){
+                    if(!lines[i])continue; const values=lines[i].split(',').map(v=>v.trim());
+                    if(values.length!==headers.length){continue;} const obj={};
+                    for(let j=0; j<headers.length; j++){ obj[headers[j]]=values[j]; } result.push(obj);
+                } return result;
+            };
+
+            const renderCustomIndexTable = (data, timestampText) => {
+                customIndexLoading.classList.add('hidden'); customIndexError.classList.add('hidden');
+                customIndexMessage.classList.add('hidden'); customIndexLastUpdated.textContent = timestampText;
+                customIndexTableHead.innerHTML=''; customIndexTableBody.innerHTML='';
+                if(!data||data.length===0){ customIndexTableBody.innerHTML='<tr><td colspan="2" class="text-center p-4">No data to display.</td></tr>'; currentCustomIndexData=[]; return; }
+                currentCustomIndexData = data;
+                const headers=Object.keys(data[0]); const headerRow=document.createElement('tr');
+                headers.forEach(headerText=>{const th=document.createElement('th');th.textContent=headerText.replace(/_/g,' ').replace(/\b\w/g,l=>l.toUpperCase());headerRow.appendChild(th);});
+                customIndexTableHead.appendChild(headerRow);
+                data.forEach(item=>{const row=document.createElement('tr');headers.forEach(header=>{const cell=document.createElement('td');cell.textContent=item[header]||'N/A';row.appendChild(cell);});customIndexTableBody.appendChild(row);});
+            };
+
+            const formatCustomIndexDataForExport = (data) => {
+                if(!data || data.length === 0) return "";
+                const firstItemKeys=Object.keys(data[0]);
+                const sectorKey=firstItemKeys.find(key=>key.toLowerCase()==='sector')||firstItemKeys[0];
+                const symbolKey=firstItemKeys.find(key=>key.toLowerCase()==='symbol')||(firstItemKeys.length > 1 ? firstItemKeys[1] : firstItemKeys[0]);
+                return data.map(item => `###${item[sectorKey]||''},${item[symbolKey]||''}`).join(',');
+            };
+            
+            const fetchAndRenderCustomIndexData = async (options={force:false}) => {
+                try {
+                    const cachedDataJSON = localStorage.getItem(CUSTOM_INDEX_CACHE_KEY);
+                    if(cachedDataJSON && !options.force){ const cache=JSON.parse(cachedDataJSON); const isCacheFresh=(Date.now()-cache.timestamp)<CUSTOM_INDEX_CACHE_DURATION_MS; if(isCacheFresh){renderCustomIndexTable(cache.data,`Cached at: ${new Date(cache.timestamp).toLocaleString()}`); return; } }
+                } catch(e) {}
+                customIndexLoading.classList.remove('hidden'); customIndexError.classList.add('hidden');
+                customIndexMessage.classList.remove('hidden'); customIndexMessage.textContent='Fetching latest data...';
+                try {
+                    const response=await fetch(GOOGLE_SHEET_CSV_URL,{cache:"no-store"});
+                    if(!response.ok) throw new Error(`Network error: ${response.status}`);
+                    const csvText = await response.text();
+                    if(!csvText || csvText.trim().length < 5) throw new Error("Empty or invalid data from sheet.");
+                    const data = parseCSV(csvText); const timestamp=Date.now();
+                    localStorage.setItem(CUSTOM_INDEX_CACHE_KEY,JSON.stringify({data,timestamp}));
+                    renderCustomIndexTable(data,`Fetched at: ${new Date(timestamp).toLocaleString()}`);
+                } catch(err) { customIndexLoading.classList.add('hidden'); customIndexError.textContent=`Error: ${err.message}`; customIndexError.classList.remove('hidden'); customIndexMessage.classList.add('hidden'); }
+            };
+
+            const exportCustomIndexData = () => {
+                if(!currentCustomIndexData || currentCustomIndexData.length === 0){ alert("No data to export."); return; }
+                const formattedData = formatCustomIndexDataForExport(currentCustomIndexData);
+                const blob = new Blob([formattedData], {type: 'text/plain;charset=utf-8'});
+                const link=document.createElement("a"); const url=URL.createObjectURL(blob);
+                link.setAttribute("href",url); link.setAttribute("download","custom_index_data.txt");
+                link.style.visibility='hidden'; document.body.appendChild(link);
+                link.click(); document.body.removeChild(link); URL.revokeObjectURL(url);
+                if(customIndexMessage){ customIndexMessage.textContent="Data exported."; customIndexMessage.classList.remove('hidden'); setTimeout(()=>customIndexMessage.classList.add('hidden'),3000); }
+            };
+
+            const copyCustomIndexData = () => {
+                if(!currentCustomIndexData || currentCustomIndexData.length === 0){ alert("No data to copy."); return; }
+                const formattedData = formatCustomIndexDataForExport(currentCustomIndexData);
+                navigator.clipboard.writeText(formattedData).then(() => {
+                    if(customIndexMessage){ customIndexMessage.textContent="Data copied!"; customIndexMessage.classList.remove('hidden'); setTimeout(()=>customIndexMessage.classList.add('hidden'),3000); }
+                }).catch(() => { if(customIndexError){ customIndexError.textContent="Copy failed."; customIndexError.classList.remove('hidden'); setTimeout(()=>customIndexError.classList.add('hidden'),3000);}});
+            };
+            
+            // --- INITIALIZATION ---
+            if(customIndexRefreshButton) customIndexRefreshButton.addEventListener('click',() => fetchAndRenderCustomIndexData({force:true}));
+            if(customIndexCopyButton) customIndexCopyButton.addEventListener('click', copyCustomIndexData);
+            if(customIndexExportButton) customIndexExportButton.addEventListener('click', exportCustomIndexData);
+            
+            fetchAndRenderCustomIndexData();
+        });
+    </script>
+</body>
+</html>
