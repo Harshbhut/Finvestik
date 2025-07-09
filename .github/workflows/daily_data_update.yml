@@ -9,7 +9,7 @@ on:
     # Every 5 min between 03:45–10:05 UTC (i.e., 09:15–15:35 IST), Mon–Fri
     - cron: '*/5 3 * * 1-5'  # 03:00–03:59 UTC
     - cron: '*/5 4 * * 1-5'  # 04:00–04:59 UTC
-    - cron: '*/5 5 * * 1-5'  # ...
+    - cron: '*/5 5 * * 1-5'
     - cron: '*/5 6 * * 1-5'
     - cron: '*/5 7 * * 1-5'
     - cron: '*/5 8 * * 1-5'
@@ -33,15 +33,18 @@ jobs:
       - name: Install dependencies
         run: |
           pip install requests
-
       - name: Run Daily_Data.py
         run: |
           python scripts/Daily_Data.py
-
-      - name: Commit and Push stock_universe.json
+      - name: Commit and Push Data Files
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add static/data/stock_universe.json
-          git commit -m "🔁 Auto-updated stock_universe.json at $(TZ='Asia/Kolkata' date '+%Y-%m-%d %H:%M:%S IST')" || echo "No changes"
+          
+          # CHANGE: Add both the main data file and the new version file
+          git add static/data/stock_universe.json static/data/data_version.json
+          
+          # Check if there are changes to commit, otherwise the commit command fails
+          git diff --staged --quiet || git commit -m "🔁 Auto-updated stock data at $(TZ='Asia/Kolkata' date '+%Y-%m-%d %H:%M:%S IST')"
+          
           git push
