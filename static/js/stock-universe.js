@@ -1,4 +1,4 @@
-// --- STOCK UNIVERSE SCRIPT (V2.1 - CACHING & LIVE UPDATES, FILTER FIX) ---
+// --- STOCK UNIVERSE SCRIPT (V2.1 - CACHING & LIVE UPDATES, FILTER FIX) --
 document.addEventListener('DOMContentLoaded', () => {
     // --- CONSTANTS ---
     const STOCK_UNIVERSE_DATA_PATH = "/static/data/stock_universe.json";
