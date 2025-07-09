@@ -14,7 +14,11 @@ STRIKE_DATA_LIST_KEY = "data"
 API_CALL_DELAY = 0.05
 
 INPUT_JSON_FILE = os.path.join("scripts", "Sector_Industry.json")
-OUTPUT_JSON_FILE = os.path.join("static", "data", "stock_universe.json")
+# Define output directory to ensure it exists
+OUTPUT_DIR = os.path.join("static", "data")
+OUTPUT_JSON_FILE = os.path.join(OUTPUT_DIR, "stock_universe.json")
+# CHANGE: Define path for the new version file
+OUTPUT_VERSION_FILE = os.path.join(OUTPUT_DIR, "data_version.json")
 
 STRIKE_API_FULL_FIELD_ORDER = [
     "open", "high", "low", "current_price", "day_open", "day_high", "day_low",
@@ -72,9 +76,12 @@ def load_json_file(path):
         return json.load(f)
 
 
-def save_json_file(data, path):
+# CHANGE: Modified to accept an indent argument for performance
+def save_json_file(data, path, indent=None):
+    # Ensure the directory exists before saving
+    os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, 'w', encoding='utf-8') as f:
-        json.dump(data, f, indent=2)
+        json.dump(data, f, indent=indent)
 
 
 def get_circuit_limit_data():
@@ -194,8 +201,15 @@ for stock in filtered_base_data:
     final_data.append(new_data)
     match_count += 1
 
-# Save final JSON
+# Save final JSON - no indentation for smaller file size
 save_json_file(final_data, OUTPUT_JSON_FILE)
 print(f"✅ Done. {match_count} stocks saved to {OUTPUT_JSON_FILE}")
+
+# CHANGE: Add section to create and save the version file
+current_timestamp_ms = int(time.time() * 1000)
+version_info = {"timestamp": current_timestamp_ms}
+save_json_file(version_info, OUTPUT_VERSION_FILE, indent=2) # indent here is okay for readability
+print(f"✅ Version file created at {OUTPUT_VERSION_FILE} with timestamp {current_timestamp_ms}")
+
 if not INCLUDE_INTERNAL_FIELDS:
     print("🧹 Internal fields (e.g., SecurityID, ListingID, SME Stock?) were excluded.")
