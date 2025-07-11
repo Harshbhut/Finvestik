@@ -483,104 +483,39 @@ document.addEventListener('DOMContentLoaded', () => {
         const cols = suCurrentColumnOrder.map(k => suColumnDefinitions.find(d => d.key === k)).filter(d => d && d.isVisible);
 
         // --- BRANCH FOR SURGICAL (LIVE) UPDATE ---
-        if (isUpdate) {
-            const newDataSymbols = new Set(data.map(d => d.Symbol));
-            const fragment = document.createDocumentFragment();
-
-            // 1. Update existing rows and identify new rows
-            data.forEach(stock => {
-                const symbol = stock.Symbol;
-                let row = suTableBodyElement.querySelector(`tr[data-symbol="${symbol}"]`);
-                const oldStock = oldDataMap.get(symbol);
-
-                if (row && oldStock) { // Row exists, update it
-                    cols.forEach(def => {
-                        const cell = row.querySelector(`td:nth-child(${cols.indexOf(def) + 1})`);
-                        const oldValue = oldStock[def.key];
-                        const newValue = stock[def.key];
-                        if (cell && oldValue !== newValue) {
-                            cell.textContent = def.formatter ? def.formatter(newValue) : formatValue(newValue);
-                            if(def.key === 'change_percentage' && typeof newValue === 'number') {
-                                cell.style.color = newValue >= 0 ? 'var(--text-positive)' : 'var(--text-negative)';
-                            }
-                            let flashClass = 'flash-neutral';
-                            if (typeof newValue === 'number' && typeof oldValue === 'number') {
-                                if (newValue > oldValue) flashClass = 'flash-positive';
-                                if (newValue < oldValue) flashClass = 'flash-negative';
-                            }
-                            cell.classList.remove('flash-positive', 'flash-negative', 'flash-neutral');
-                            void cell.offsetWidth; // Trigger reflow
-                            cell.classList.add(flashClass);
-                        }
-                    });
-                } else if (!row) { // New row, create it for insertion
-                    row = document.createElement('tr');
-                    row.dataset.symbol = symbol;
-                    row.classList.add('row-fade-in');
-                    cols.forEach(def => {
-                        const cell = document.createElement('td');
-                        const value = stock[def.key];
-                        cell.textContent = def.formatter ? def.formatter(value) : formatValue(value);
-                        if(def.cellClass) cell.className = def.cellClass;
-                        if(def.key === 'change_percentage' && typeof value === 'number') cell.style.color = value >= 0 ? 'var(--text-positive)' : 'var(--text-negative)';
-                        if(def.key === 'Symbol'){ cell.classList.add('symbol-cell'); cell.dataset.symbol=value; }
-                        row.appendChild(cell);
-                    });
-                    fragment.appendChild(row);
-                }
-            });
-
-            // 2. Remove old rows that are no longer in the filtered data
-            const rowsToRemove = [];
-            suTableBodyElement.querySelectorAll('tr').forEach(row => {
-                if (!newDataSymbols.has(row.dataset.symbol)) {
-                    rowsToRemove.push(row);
-                }
-            });
-            rowsToRemove.forEach(row => {
-                row.classList.add('row-fade-out');
-                setTimeout(() => row.remove(), 500);
-            });
-            
-            // 3. Append new rows
-            if (fragment.hasChildNodes()) {
-                suTableBodyElement.appendChild(fragment);
-            }
-        
-        // --- BRANCH FOR FILTERING / SORTING (FULL RE-RENDER) ---
-        } else {
-            const fragment = document.createDocumentFragment();
-            if (data.length > 0) {
-                data.forEach(stock => {
-                    const tr = document.createElement('tr');
-                    tr.dataset.symbol = stock.Symbol;
-                    cols.forEach(def => {
-                        const td = document.createElement('td');
-                        let v = stock[def.key];
-                        td.textContent = def.formatter ? def.formatter(v) : formatValue(v);
-                        if(def.cellClass) td.className=def.cellClass;
-                        if(def.key === 'change_percentage' && typeof v === 'number') td.style.color = v >= 0 ? 'var(--text-positive)' : 'var(--text-negative)';
-                        if(def.key === 'Symbol'){ td.classList.add('symbol-cell'); td.dataset.symbol=v; }
-                        tr.appendChild(td);
-                    });
-                    fragment.appendChild(tr);
-                });
-            } else {
-                const tr = document.createElement('tr');
+         
+    const fragment = document.createDocumentFragment();
+    if (data.length > 0) {
+        data.forEach(stock => {
+            const tr = document.createElement('tr');
+            tr.dataset.symbol = stock.Symbol;
+            cols.forEach(def => {
                 const td = document.createElement('td');
-                td.colSpan = cols.length || 1;
-                td.className = 'text-center p-4';
-                td.textContent = 'No stocks match the current filters.';
+                let v = stock[def.key];
+                td.textContent = def.formatter ? def.formatter(v) : formatValue(v);
+                if(def.cellClass) td.className=def.cellClass;
+                if(def.key === 'change_percentage' && typeof v === 'number') td.style.color = v >= 0 ? 'var(--text-positive)' : 'var(--text-negative)';
+                if(def.key === 'Symbol'){ td.classList.add('symbol-cell'); td.dataset.symbol=v; }
                 tr.appendChild(td);
-                fragment.appendChild(tr);
-            }
-            suTableBodyElement.innerHTML = '';
-            suTableBodyElement.appendChild(fragment);
-        }
+            });
+            fragment.appendChild(tr);
+        });
+    } else {
+        const tr = document.createElement('tr');
+        const td = document.createElement('td');
+        td.colSpan = cols.length || 1;
+        td.className = 'text-center p-4';
+        td.textContent = 'No stocks match the current filters.';
+        tr.appendChild(td);
+        fragment.appendChild(tr);
+    }
+    suTableBodyElement.innerHTML = '';
+    suTableBodyElement.appendChild(fragment);
+}
 
-        if(suRowCount) suRowCount.textContent = `Showing ${data.length} of ${fullStockData.length} stocks.`;
-        oldDataMap.clear(); // Clear map after use
-    };
+if(suRowCount) suRowCount.textContent = `Showing ${data.length} of ${fullStockData.length} stocks.`;
+oldDataMap.clear(); // Clear map after use
+    
 
     const populateTopLevelDropdowns = () => {
         if(!suFilterRow || fullStockData.length === 0) return;
