@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finvestik - Education</title>
+    
+    <meta name="description" content="Join Finvestik Education to Learn Momentum Trading, Sector Rotation, Entry/Exit, Institutional Footprint, Market Watchlist and make Smarter, Logical, Simplifying decisions." />
+    <meta name="keywords" content="Finvestik Education, Telegram, Momentum Trading, Sector Rotation,Stocks, Finvestik, Stock Universe, Custom Index, Position Sizing Calculator" />
+    <meta name="author" content="Finvestik" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Finvestik - Education" />
+    <meta property="og:description" content="Join Finvestik Premium and access high-conviction stock insights, sector strategies, and private updates." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.finvestik.com/learn" />
+    <meta property="og:image" content="/static/images/Financial%20Growth%20Vector%20Logo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Finvestik - Education" />
+    <meta name="twitter:description" content="Join Finvestik Education to Learn Momentum Trading, Sector Rotation, Entry/Exit, Institutional Footprint, Market Watchlist and make Smarter, Logical, Simplifying decisions." />
+    <meta name="twitter:image" content="/static/images/Financial%20Growth%20Vector%20Logo.png" />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/Financial%20Growth%20Vector%20Logo.png">
+    <link rel="apple-touch-icon" href="/static/images/Financial%20Growth%20Vector%20Logo.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+    <header id="app-header" class="sticky top-0 z-50 w-full shadow-md" role="banner">
+        <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16 sm:h-20">
+            <div class="flex-shrink-0">
+                 <a href="/"><img src="/static/images/Financial%20Growth%20Vector%20Logo.png" alt="Finvestik Logo" id="finvestik-logo" class="h-[40px] w-[40px] sm:h-12 sm:w-12 md:h-16 md:w-16 rounded-md object-contain cursor-pointer"/></a>
+            </div>
+            
+            <nav class="hidden sm:flex flex-grow justify-center px-2 space-x-2" aria-label="Main navigation">
+                <a href="/" class="nav-link">Position Calculator</a>
+                <a href="/stock-universe" class="nav-link">Stock Universe</a>
+                <a href="/education" class="nav-link active">Education</a>
+            </nav>
+
+            <div class="flex items-center">
+                <div id="theme-toggle-container" class="flex-shrink-0 sm:order-last">
+                    <button id="theme-toggle" title="Toggle theme" aria-label="Toggle color theme" class="w-10 h-10 rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 text-lg"></button>
+                </div>
+                <div id="hamburger-menu-button-container" class="sm:hidden ml-3">
+                    <button id="hamburger-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" 
+                            aria-controls="mobile-menu" aria-expanded="false" style="color: var(--text-primary);">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="sm:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="mobile-nav-link block w-full text-left">Position Calculator</a>
+                <a href="/stock-universe" class="mobile-nav-link block w-full text-left">Stock Universe</a>
+                <a href="/learn" class="mobile-nav-link block w-full text-left active">Premium</a>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content-area" class="w-full max-w-full mx-auto flex flex-col flex-grow items-center">
+
+<!-- Hero Section -->
+<!-- Hero Section -->
+<section class="text-center py-8 px-4 w-full" style="background-color: var(--bg-secondary);">
+  <h2 class="text-5xl sm:text-6xl font-semibold tracking-tight" style="color: var(--accent-primary);">
+      Finvestik Education
+  </h2>
+</section>
+        <!-- What You Get Section -->
+        <section class="max-w-7xl mx-auto px-4 py-16">
+            <h3 class="text-3xl font-bold text-center mb-10" style="color: var(--text-primary);">What’s Inside</h3>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div class="content-card p-6 rounded-2xl shadow-lg transition-transform transform hover:scale-105">
+                <h4 class="font-bold text-xl mb-3 flex items-center" style="color:var(--text-primary)">
+                  <span class="text-2xl mr-3" style="color:var(--accent-secondary)">📈</span>
+                  Swing Trading Simplified
+                </h4>
+                <p style="color:var(--text-secondary)">Momentum trading with simple manner without complicated jargon</p>
+              </div>
+              <div class="content-card p-6 rounded-2xl shadow-lg transition-transform transform hover:scale-105">
+                <h4 class="font-bold text-xl mb-3 flex items-center" style="color:var(--text-primary)">
+                  <span class="text-2xl mr-3" style="color:var(--accent-secondary)">🌀</span>
+                  Sector/Industry Rotation
+                </h4>
+                <p style="color:var(--text-secondary)">Sector/Industry or special theme to focus for upcoming days</p>
+              </div>
+              
+              <div class="content-card p-6 rounded-2xl shadow-lg transition-transform transform hover:scale-105">
+                <h4 class="font-bold text-xl mb-3 flex items-center" style="color:var(--text-primary)">
+                    <span class="text-2xl mr-3" style="color:var(--accent-secondary)">🧠</span>
+                    Trading Psychology
+                </h4>
+                <p style="color:var(--text-secondary)">Learn the art of Risk management, Position Sizing & Trading Probabilities</p>
+              </div>
+
+              <div class="content-card p-6 rounded-2xl shadow-lg transition-transform transform hover:scale-105">
+                <h4 class="font-bold text-xl mb-3 flex items-center" style="color:var(--text-primary)">
+                    <span class="text-2xl mr-3" style="color:var(--accent-secondary)">📝</span>
+                    Stock Watchlist
+                </h4>
+                <p style="color:var(--text-secondary)">Stock watchlist to track for dhigh probability, low risk entries. </p>
+              </div>
+              
+              
+
+              <div class="content-card p-6 rounded-2xl shadow-lg transition-transform transform hover:scale-105">
+                <h4 class="font-bold text-xl mb-3 flex items-center" style="color:var(--text-primary)">
+                    <span class="text-2xl mr-3" style="color:var(--accent-secondary)">📊</span>
+                    Entry, Exit, Key Data pointers
+                </h4>
+                <p style="color:var(--text-secondary)">Framework for Entry setups, Exit rules, Market Breadth, Key Data pointers to lookout on charts, Institutional footprints</p>
+              </div>
+
+
+              <div class="content-card p-6 rounded-2xl shadow-lg transition-transform transform hover:scale-105">
+                <h4 class="font-bold text-xl mb-3 flex items-center" style="color:var(--text-primary)">
+                    <span class="text-2xl mr-3" style="color:var(--accent-secondary)">👨🏽‍💻</span>
+                    Educational Sessions & Q&A
+                </h4>
+                <p style="color:var(--text-secondary)">Live Session on Trading topics & Q&A based on participant interest</p>
+              </div>
+              
+              <div class="content-card p-6 rounded-2xl shadow-lg transition-transform transform hover:scale-105">
+                <h4 class="font-bold text-xl mb-3 flex items-center" style="color:var(--text-primary)">
+                    <span class="text-2xl mr-3" style="color:var(--accent-secondary)">💻</span>
+                    Learning Content & Tools
+                </h4>
+                <p style="color:var(--text-secondary)">Access to previous session recordings, scanners, and methods for stock selection.</p>
+              </div>
+              
+              
+              
+              <div class="content-card p-6 rounded-2xl shadow-lg transition-transform transform hover:scale-105">
+                <h4 class="font-bold text-xl mb-3 flex items-center" style="color:var(--text-primary)">
+                    <span class="text-2xl mr-3" style="color:var(--accent-secondary)">🧑‍🏫</span>
+                    Guest Speaker
+                </h4>
+                <p style="color:var(--text-secondary)">Special guest Session from the trading community.</p>
+              </div>
+            </div>
+        </section>
+
+        <!-- Pricing Plans Section -->
+        <section id="pricing" class="py-16 px-4 w-full" style="background-color: var(--bg-secondary);">
+          <div class="max-w-6xl mx-auto">
+            <h3 class="text-3xl font-bold text-center mb-2" style="color: var(--text-primary);">Choose Your Plan</h3>
+            <p class="text-center mb-12" style="color: var(--text-secondary);">Simple, transparent pricing. No hidden fees.</p>
+            <div class="flex flex-wrap justify-center items-stretch gap-8">
+                
+                <div class="content-card p-8 w-full md:w-1/3 lg:w-1/4 flex flex-col justify-between">
+                    <div>
+                      <h4 class="font-bold text-xl mb-2" style="color: var(--text-primary);">Quarterly</h4>
+                      <p class="text-4xl font-extrabold mb-4" style="color: var(--text-primary);">₹8000 <span class="text-base font-normal" style="color: var(--text-secondary);">/3mo</span></p>
+                      <ul class="space-y-3 mb-8">
+                          <li class="flex items-center"><i class="fa fa-check-circle mr-3" style="color:var(--text-positive);"></i>Live Discussions & Past Trading Topic Session Access</li>
+                          <li class="flex items-center"><i class="fa fa-check-circle mr-3" style="color:var(--text-positive);"></i>Private Telegram Access</li>
+                          
+                      </ul>
+                    </div>
+                    <a href="https://rzp.io/l/YOUR_MONTHLY_ID" target="_blank" class="btn btn-secondary w-full mt-4">Get Started</a>
+                </div>
+
+                <div class="content-card p-8 w-full md:w-1/3 lg:w-1/4 flex flex-col justify-between border-2 relative" style="border-color: var(--accent-primary); transform: scale(1.05);">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Most Popular</div>
+                    <div>
+                      <h4 class="font-bold text-xl mb-2" style="color: var(--text-primary);">Semi-Annual</h4>
+                      <p class="text-4xl font-extrabold mb-1" style="color: var(--text-primary);">₹14,000 <span class="text-base font-normal" style="color: var(--text-secondary);">/6mo</span></p>
+                      <p class="text-sm font-semibold mb-6" style="color: var(--text-positive);">SAVE 12.5%</p>
+                      <ul class="space-y-3 mb-8">
+                        <li class="flex items-center"><i class="fa fa-check-circle mr-3" style="color:var(--text-positive);"></i>Live Discussions & All the Past Content and Recording Access</li>
+                        <li class="flex items-center"><i class="fa fa-check-circle mr-3" style="color:var(--text-positive);"></i>Private Telegram Access</li>
+                        <li class="flex items-center"><i class="fa fa-check-circle mr-3" style="color:var(--text-positive);"></i>1-1 Doubt Clearing session</li>
+                      </ul>
+                    </div>
+                    <a href="https://rzp.io/l/YOUR_QUARTERLY_ID" target="_blank" class="btn btn-primary w-full mt-4">Get Started</a>
+                </div>
+                
+                 <div class="content-card p-8 w-full md:w-1/3 lg:w-1/4 flex flex-col justify-between">
+                    <div>
+                        <h4 class="font-bold text-xl mb-2" style="color: var(--text-primary);">Yearly</h4>
+                        <p class="text-4xl font-extrabold mb-1" style="color: var(--text-primary);">₹24,000 <span class="text-base font-normal" style="color: var(--text-secondary);">/1year</span></p>
+                        <p class="text-sm font-semibold mb-6" style="color: var(--text-positive);">SAVE 25%</p>
+                        <ul class="space-y-3 mb-8">
+                          <li class="flex items-center"><i class="fa fa-check-circle mr-3" style="color:var(--text-positive);"></i>Live Discussions & All the Past Content and Recording Access</li>
+                          <li class="flex items-center"><i class="fa fa-check-circle mr-3" style="color:var(--text-positive);"></i>Private Telegram Access</li>
+                          <li class="flex items-center"><i class="fa fa-check-circle mr-3" style="color:var(--text-positive);"></i>1-1 Doubt Clearing session</li>
+                        </ul>
+                    </div>
+                    <a href="https://rzp.io/l/YOUR_YEARLY_ID" target="_blank" class="btn btn-secondary w-full mt-4">Get Started</a>
+                </div>
+            </div>
+          </div>
+          <p class="text-center mt-12 text-sm" style="color: var(--text-secondary);">
+            Please Read Terms & Conditions and Privacy Policy before making any payment.
+        </p>
+        </section>
+
+        <!-- How It Works Section -->
+<section class="max-w-6xl mx-auto py-16 px-4">
+  <h3 class="text-3xl font-bold text-center mb-12" style="color:var(--text-primary)">How It Works</h3>
+
+  <div class="grid md:grid-cols-2 gap-y-12 gap-x-16 w-full">
+      <!-- Left Column: Steps 1-3 -->
+      <div>
+        <div class="relative pl-6 border-l-2 h-full" style="border-color: var(--border-color);">
+          <div class="mb-10 pl-6">
+            <div class="absolute w-8 h-8 bg-blue-600 rounded-full -left-4 mt-1.5 flex items-center justify-center text-white font-bold">1</div>
+            <h4 class="font-semibold text-lg mb-1" style="color:var(--text-primary)">Choose Plan & Checkout</h4>
+            <p style="color:var(--text-secondary)">Select a plan and pay securely. Remember to provide your email & Telegram username at checkout.</p>
+          </div>
+          <div class="mb-10 pl-6">
+            <div class="absolute w-8 h-8 bg-blue-600 rounded-full -left-4 mt-1.5 flex items-center justify-center text-white font-bold">2</div>
+            <h4 class="font-semibold text-lg mb-1" style="color:var(--text-primary)">Get Your Invite</h4>
+            <p style="color:var(--text-secondary)">We'll send a unique, secure invite to the private Telegram group, typically within 2-12 hours.</p>
+          </div>
+          <div class="pl-6">
+            <div class="absolute w-8 h-8 bg-blue-600 rounded-full -left-4 mt-1.5 flex items-center justify-center text-white font-bold">3</div>
+            <h4 class="font-semibold text-lg mb-1" style="color:var(--text-primary)">Welcome to Finvestik</h4>
+            <p style="color:var(--text-secondary)">You're in! You are now a member of the community. Based on your plan selection, you will be added to the past learning content recording group.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Steps 4-6 -->
+      <div>
+          <div class="relative pl-6 border-l-2 h-full" style="border-color: var(--border-color);">
+
+            <div class="mb-10 pl-6">
+              <div class="absolute w-8 h-8 bg-blue-600 rounded-full -left-4 mt-1.5 flex items-center justify-center text-white font-bold">5</div>
+              <h4 class="font-semibold text-lg mb-1" style="color:var(--text-primary)">Learn, Refine, Grow</h4>
+              <p style="color:var(--text-secondary)">Live/recorded learning content on momentum trading, sector rotation, entry, exit, etc. (subject to plan selection)</p>
+            </div>
+
+            <div class="mb-10 pl-6">
+              <div class="absolute w-8 h-8 bg-blue-600 rounded-full -left-4 mt-1.5 flex items-center justify-center text-white font-bold">4</div>
+              <h4 class="font-semibold text-lg mb-1" style="color:var(--text-primary)">Live Discussions & Learning Topic Session</h4>
+              <p style="color:var(--text-secondary)">Sessions on trading topics and discussions are scheduled based on community interest.</p>
+            </div>
+
+            
+
+            <div class="pl-6">
+              <div class="absolute w-8 h-8 bg-blue-600 rounded-full -left-4 mt-1.5 flex items-center justify-center text-white font-bold">6</div>
+              <h4 class="font-semibold text-lg mb-1" style="color:var(--text-primary)">Active Community Member</h4>
+              <p style="color:var(--text-secondary)">Be an active member of group, learn, share insights & participate in active discussions.</p>
+            </div>
+          </div>
+        </div>
+  </div>
+</section>
+    </main>
+
+    <footer class="w-full text-center mt-auto pt-6 pb-4" style="opacity:0.8;" role="contentinfo">
+        <div class="flex justify-center space-x-4 sm:space-x-6 mb-3">
+            <a href="https://x.com/harshbhut5" target="_blank" rel="noopener noreferrer" class="social-icon x-icon"><i class="fa fa-twitter"></i></a>
+            <a href="https://youtube.com/@finvestik?si=im2OcEY7GE-qDHBP" target="_blank" rel="noopener noreferrer" class="social-icon youtube-icon"><i class="fa fa-youtube-play"></i></a>
+            <a href="https://t.me/finvestik" target="_blank" rel="noopener noreferrer" class="social-icon telegram-icon"><i class="fa fa-telegram"></i></a>
+        </div>
+        <p class="text-xs mt-1" style="color: var(--text-secondary);">© <span id="current-year"></span> Finvestik. All Rights Reserved.</p>
+        <div class="text-xs mt-2" style="color: var(--text-secondary);">
+            <a href="/education/Terms & Conditions.html" class="hover:underline">Terms & Conditions</a> | <a href="/education/Privacy & Policy.html" class="hover:underline">Privacy & Policy</a>
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js" defer></script>
+</body>
+</html>
