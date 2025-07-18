@@ -5,19 +5,19 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Finvestik - Custom Index Tool</title>
+    <title>Finvestik - Custom Index </title>
     
     <meta name="description" content="Simple powerful tools that cut through the noise and help you make smarter trading decisions." />
-    <meta name="keywords" content="Stock,Position Sizing Calculator,Stock Market,Sector Rotation,Stock Universe,Custom Index,Risk Management, Trading, Stocks, Finvestik" />
+    <meta name="keywords" content="Stock,Position Sizing Calculator,Stock Scanner,Sector Rotation,Stock Universe,Custom Index,Risk Management, Trading, Stocks, Finvestik" />
     <meta name="author" content="Finvestik" />
     <meta name="robots" content="index, follow" />
-    <meta property="og:title" content="Finvestik - Custom Index Tool" />
+    <meta property="og:title" content="Finvestik - Custom Index" />
     <meta property="og:description" content="Simple powerful tools that cut through the noise and help you make smarter trading decisions." />
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.finvestik.com/custom-index" />
     <meta property="og:image" content="/static/images/Financial Growth Vector Logo.png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Finvestik - Custom Index Tool" />
+    <meta name="twitter:title" content="Finvestik - Custom Index" />
     <meta name="twitter:description" content="Simple powerful tools that cut through the noise and help you make smarter trading decisions." />
     <meta name="twitter:image" content="/static/images/Financial Growth Vector Logo.png" />
 
@@ -30,6 +30,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/static/css/style.css">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q06244YWW6"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Q06244YWW6');
+    </script>
+
 </head>
 <body class="min-h-screen flex flex-col antialiased">
     <header id="app-header" class="sticky top-0 z-50 w-full shadow-md" role="banner">
@@ -39,6 +50,7 @@
             </div>
             
             <nav class="hidden sm:flex flex-grow justify-center px-2 space-x-2" aria-label="Main navigation">
+                 <!-- <a href="/education/" class="nav-link active">Education</a> -->
                 <a href="/" class="nav-link active">Position Calculator</a>
                 <a href="/stock-universe" class="nav-link">Stock Universe</a>
                 <a href="/custom-index" class="nav-link">Custom Index</a>
@@ -97,7 +109,9 @@
     </div>
 
     <footer class="w-full text-center mt-auto pt-6 pb-4" style="opacity:0.8;" role="contentinfo">
-        <div class="flex justify-center space-x-4 sm:space-x-6 mb-3"><a href="https://x.com/harshbhut5" target="_blank" rel="noopener noreferrer" class="social-icon x-icon"><i class="fa fa-twitter"></i></a><a href="https://youtube.com/@finvestik?si=im2OcEY7GE-qDHBP" target="_blank" rel="noopener noreferrer" class="social-icon youtube-icon"><i class="fa fa-youtube-play"></i></a><a href="https://t.me/finvestik" target="_blank" rel="noopener noreferrer" class="social-icon telegram-icon"><i class="fa fa-telegram"></i></a></div><p class="text-xs mt-1" style="color: var(--text-secondary);">© <span id="current-year"></span> Finvestik. All Rights Reserved.</p>
+        <div class="flex justify-center space-x-4 sm:space-x-6 mb-3"><a href="https://x.com/harshbhut5" target="_blank" rel="noopener noreferrer" class="social-icon x-icon"><i class="fa fa-twitter"></i></a><a href="https://youtube.com/@finvestik?si=im2OcEY7GE-qDHBP" target="_blank" rel="noopener noreferrer" class="social-icon youtube-icon"><i class="fa fa-youtube-play"></i></a><a href="https://t.me/finvestik" target="_blank" rel="noopener noreferrer" class="social-icon telegram-icon"><i class="fa fa-telegram"></i></a></div><p class="text-xs mt-1" style="color: var(--text-secondary);">© <span id="current-year"></span> Finvestik. All Rights Reserved.</p><div class="text-xs mt-2" style="color: var(--text-secondary);">
+            <a href="/education/Terms & Conditions.html" class="hover:underline">Terms & Conditions</a> | <a href="/education/Privacy & Policy.html" class="hover:underline">Privacy & Policy</a>
+        </div>
     </footer>
     
     <script src="/static/js/main.js" defer></script>
