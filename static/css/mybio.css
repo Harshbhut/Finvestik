@@ -1,0 +1,193 @@
+/* --- MAIN PAGE LAYOUT --- */
+.page-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+}
+
+
+/* --- LEFT COLUMN: PROFILE --- */
+.profile-column {
+    flex: 1;
+    min-width: 300px;
+}
+.profile-content {
+    padding: 1rem;
+}
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid var(--card-bg);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+}
+.profile-name {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+.bio-text p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+.bio-text p + p {
+    margin-top: 1.25rem;
+}
+
+
+/* --- CALL TO ACTION (CTA) CARD --- */
+.cta-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+    padding: 1.25rem;
+    border-radius: 1rem;
+    border: 1px solid var(--border-color);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, border-color 0.2s ease-out;
+    background: radial-gradient(circle at 0% 0%, #eef2ff 0%, var(--card-bg) 15%);
+}
+.cta-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.1);
+    border-color: rgba(99, 102, 241, 0.5);
+}
+.cta-content .cta-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.cta-content .cta-text {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+.cta-arrow {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--accent-primary);
+    transition: transform 0.2s ease;
+}
+.cta-card:hover .cta-arrow {
+    transform: translateX(5px);
+}
+
+/* Specific CTA visibility classes */
+.cta-mobile {
+    margin-top: 2.5rem;
+}
+.cta-desktop {
+    display: none; /* Hidden by default (on mobile) */
+}
+
+
+/* --- RIGHT COLUMN: CARDS --- */
+.cards-column {
+    flex: 2;
+}
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Base Card Style */
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+    text-decoration: none;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* THIS IS THE FIX: Reverted back to min-height for dynamic sizing */
+    min-height: 200px; 
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    border-color: var(--accent-primary);
+}
+.card-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 0.75rem;
+}
+.card-text {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin: 1rem 0;
+    flex-grow: 1; /* This is important: it makes the text area expand to fill space */
+}
+.card-link {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+/* Card Color Variants */
+.twitter-card { background: radial-gradient(circle at 0% 0%, #e3f2fd 0%, var(--card-bg) 70%); }
+.telegram-card { background: radial-gradient(circle at 0% 0%, #e0f2fe 0%, var(--card-bg) 70%); }
+.youtube-card { background: radial-gradient(circle at 0% 0%, #ffebee 0%, var(--card-bg) 70%); }
+.tradingview-card { background: radial-gradient(circle at 0% 0%, #e8eaf6 0%, var(--card-bg) 70%); }
+.chartink-card { background: radial-gradient(circle at 0% 0%, #fff8e1 0%, var(--card-bg) 70%); }
+
+
+/* --- DESKTOP LAYOUT (900px and up) --- */
+@media (min-width: 900px) {
+    .page-container {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+    .cards-column {
+        padding-top: 1rem;
+    }
+    .cta-desktop {
+        display: flex;
+        margin-bottom: 1.5rem;
+    }
+    .cta-mobile {
+        display: none;
+    }
+}
+
+/* --- MOBILE LAYOUT (640px and down) --- */
+@media (max-width: 640px) {
+    .profile-name {
+        font-size: 2rem;
+    }
+    .bio-text p {
+        font-size: 0.95rem;
+    }
+    .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    .card {
+        /* Reverted for MOBILE as well */
+        min-height: 180px;
+        padding: 1rem;
+        border-radius: 1rem;
+    }
+    .card-logo {
+        width: 36px;
+        height: 36px;
+    }
+    .card-text {
+        font-size: 0.9rem;
+    }
+    .card-link {
+        font-size: 0.8rem;
+    }
+}

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finvestik - Simplifying the Edge</title>
+    
+    <!-- SEO and Social Media Meta Tags -->
+    <meta name="description" content="Simple powerful tools that cut through the noise and help you make smarter trading decisions." />
+    <meta name="keywords" content="Stock Market,Stock Universe, Stock Scanner,Sector Rotation,Postion Sizing Calculator, Custom Index, Risk Management,Trading" />
+    <meta name="author" content="Finvestik" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:title" content="Finvestik - Simplifying the Edge" />
+    <meta property="og:description" content="Simple powerful tools that cut through the noise and help you make smarter trading decisions." />
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.finvestik.com/" />
+    <meta property="og:image" content="static/images/Financial Growth Vector Logo.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@harshbhut5">
+    <meta name="twitter:title" content="Finvestik - Simplifying the Edge" />
+    <meta name="twitter:description" content="Simple powerful tools that cut through the noise and help you make smarter trading decisions." />
+    <meta name="twitter:image" content="https://www.finvestik.com/static/images/Financial%20Growth%20Vector%20Logo.png" />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="static/images/Financial Growth Vector Logo.png">
+    <link rel="apple-touch-icon" href="static/images/Financial Growth Vector Logo.png">
+
+    <!-- CHANGE: Add a prefetch link to start downloading the data for the next page -->
+    <link rel="prefetch" href="../static/data/stock_universe.json" as="fetch">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+        <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q06244YWW6"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Q06244YWW6');
+    </script>
+
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+    <header id="app-header" class="sticky top-0 z-50 w-full shadow-md" role="banner">
+        <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16 sm:h-20">
+            <div class="flex-shrink-0">
+                 <a href="/"><img src="/static/images/Financial%20Growth%20Vector%20Logo.png" alt="Finvestik Logo" id="finvestik-logo" class="h-[40px] w-[40px] sm:h-12 sm:w-12 md:h-16 md:w-16 rounded-md object-contain cursor-pointer"/></a>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden sm:flex flex-grow justify-center px-2 space-x-2" aria-label="Main navigation">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/education" class="nav-link">Education</a>
+                <a href="/stock-universe" class="nav-link">Stock Universe</a>
+                <a href="/position-calculator" class="nav-link">Position Calculator</a>
+                <a href="/custom-index" class="nav-link">Custom Index</a>
+            </nav>
+
+            <div class="flex items-center">
+                <!-- Theme Toggle -->
+                <div id="theme-toggle-container" class="flex-shrink-0 sm:order-last">
+                    <button id="theme-toggle" title="Toggle theme" aria-label="Toggle color theme" class="w-10 h-10 rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 text-lg">
+                        <!-- Icon will be injected by JS -->
+                    </button>
+                </div>
+
+                <!-- Hamburger Menu Button - Mobile Only -->
+                <div id="hamburger-menu-button-container" class="sm:hidden ml-3">
+                    <button id="hamburger-menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" 
+                            aria-controls="mobile-menu" aria-expanded="false" style="color: var(--text-primary);">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="sm:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="mobile-nav-link block w-full text-left">Home</a>
+                <a href="/education" class="mobile-nav-link block w-full text-left">Education</a>            
+                <a href="/stock-universe" class="mobile-nav-link block w-full text-left">Stock Universe</a>
+                <a href="/position-calculator" class="mobile-nav-link block w-full text-left">Position Calculator</a>
+                <a href="/custom-index" class="mobile-nav-link block w-full text-left">Custom Index</a>
+            </div>
+        </div>
+    </header>
+
+    <div id="main-content-area" class="w-full max-w-7xl mx-auto flex flex-col flex-grow items-center p-4">
+
+        <div class="w-full max-w-5xl"> 
+            <div class="w-full mt-2 mb-4 py-2" role="region" aria-labelledby="capital-heading">
+                 <div class="flex flex-col items-end">
+                    <div class="flex items-center space-x-2 w-full justify-end sm:w-auto">
+                        <label for="capital" id="capital-heading" class="text-sm font-medium whitespace-nowrap" style="color: var(--text-secondary);">Trading Capital (₹):</label>
+                        <div class="w-32 xs:w-36 sm:w-[150px]">
+                            <input type="text" name="capital" id="capital" placeholder="e.g. 100000" inputmode="decimal" class="form-input w-full pl-3 pr-3 text-base text-right" aria-describedby="capital-error">
+                        </div>
+                    </div>
+                    <p id="capital-error" class="input-error-text mt-1 text-xs text-right w-32 xs:w-36 sm:w-[150px] self-end" style="padding-right: 0;" aria-live="polite"></p>
+                </div>
+            </div>
+            <main class="w-full grid md:grid-cols-2 gap-4 sm:gap-6 flex-grow" role="main">
+                <section id="risk-calculator" class="content-card p-4 sm:p-6" role="region" aria-labelledby="risk-calculator-heading">
+                    <h2 id="risk-calculator-heading" class="text-xl sm:text-2xl font-semibold mb-4 text-center text-transparent bg-clip-text" style="background-image: linear-gradient(to right, var(--accent-primary), var(--accent-secondary)); color: var(--text-primary);">Risk-Based Sizing</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="risk_riskPercent" class="mb-1 text-xs sm:text-sm font-medium block" style="color: var(--text-secondary);">Risk on Capital (%)</label>
+                            <input type="text" name="risk_riskPercent" id="risk_riskPercent" placeholder="e.g., 0.5" inputmode="decimal" class="form-input pl-3 pr-3" aria-describedby="risk_riskPercent-error" list="risk-percent-options">
+                            <datalist id="risk-percent-options">
+                                <option value="0.1"></option>
+                                <option value="0.2"></option>
+                                <option value="0.3"></option>
+                                <option value="0.4"></option>
+                                <option value="0.5"></option>
+                                <option value="0.6"></option>
+                                <option value="0.7"></option>
+                                <option value="0.8"></option>
+                                <option value="0.9"></option>
+                                <option value="1.0"></option>
+                            </datalist>
+                            <p id="risk_riskPercent-error" class="input-error-text" aria-live="polite"></p>
+                        </div>
+                        <div> <label for="risk_entryPrice" class="mb-1 text-xs sm:text-sm font-medium block" style="color: var(--text-secondary);">Entry Price (₹)</label> <input type="text" name="risk_entryPrice" id="risk_entryPrice" placeholder="e.g., 305" inputmode="decimal" class="form-input pl-3 pr-3" aria-describedby="risk_entryPrice-error"> <p id="risk_entryPrice-error" class="input-error-text" aria-live="polite"></p> </div> <div> <label for="risk_slPrice" class="mb-1 text-xs sm:text-sm font-medium block" style="color: var(--text-secondary);">Stop Loss (SL) Price (₹)</label> <input type="text" name="risk_slPrice" id="risk_slPrice" placeholder="e.g., 300" inputmode="decimal" class="form-input pl-3 pr-3" aria-describedby="risk_slPrice-error"> <p id="risk_slPrice-error" class="input-error-text" aria-live="polite"></p> </div>
+                    </div>
+                    <div id="risk_results_container" class="mt-6 pt-4 space-y-2 border-t" style="border-color: var(--border-color);" aria-live="polite">
+                        <h3 class="text-md sm:text-lg font-semibold mb-2 text-center" style="color: var(--text-primary);">Results</h3>
+                        <div id="risk_calculation_warning" class="hidden mb-2 p-2 warning-message text-xs rounded-md border" role="alert"></div>
+                        <p class="flex justify-between items-center"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Quantity to Buy:</span> 
+                            <span class="flex items-center gap-2">
+                                <span id="risk_result_qty" class="result-value green text-xl sm:text-2xl md:text-3xl font-bold">0</span>
+                                <button id="copy-risk-qty-button" class="copy-qty-button" title="Copy Quantity"><i class="fa fa-copy"></i></button>
+                            </span>
+                        </p>
+                        <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Risk Amount:</span> <span id="risk_result_riskAmount" class="result-value red text-md sm:text-lg md:text-xl font-medium">₹0.00</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Stop Loss %:</span> <span id="risk_result_slPercent" class="result-value red text-md sm:text-lg md:text-xl font-medium">0.00%</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Capital Allocation:</span> <span id="risk_result_allocationPercent" class="result-value neutral text-md sm:text-lg md:text-xl font-medium">0.00%</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Total Trade Value:</span> <span id="risk_result_totalCost" class="result-value neutral text-md sm:text-lg md:text-xl font-medium">₹0.00</span></p>
+                    </div>
+                </section>
+                <section id="allocation-calculator" class="content-card p-4 sm:p-6" role="region" aria-labelledby="allocation-calculator-heading">
+                    <h2 id="allocation-calculator-heading" class="text-xl sm:text-2xl font-semibold mb-4 text-center text-transparent bg-clip-text" style="background-image: linear-gradient(to right, var(--accent-primary), var(--accent-secondary)); color: var(--text-primary);">Allocation-Based Sizing</h2>
+                    <div class="space-y-4">
+                        <div> <label for="alloc_allocationPercent" class="mb-1 text-xs sm:text-sm font-medium block" style="color: var(--text-secondary);">Target Allocation (%)</label> <input type="text" name="alloc_allocationPercent" id="alloc_allocationPercent" placeholder="e.g., 20" inputmode="decimal" class="form-input pl-3 pr-3" aria-describedby="alloc_allocationPercent-error"> <p id="alloc_allocationPercent-error" class="input-error-text" aria-live="polite"></p> </div> <div> <label for="alloc_entryPrice" class="mb-1 text-xs sm:text-sm font-medium block" style="color: var(--text-secondary);">Entry Price (₹)</label> <input type="text" name="alloc_entryPrice" id="alloc_entryPrice" placeholder="e.g., 305" inputmode="decimal" class="form-input pl-3 pr-3" aria-describedby="alloc_entryPrice-error"> <p id="alloc_entryPrice-error" class="input-error-text" aria-live="polite"></p> </div> <div> <label for="alloc_slPrice" class="mb-1 text-xs sm:text-sm font-medium block" style="color: var(--text-secondary);">Stop Loss (SL) Price (₹)</label> <input type="text" name="alloc_slPrice" id="alloc_slPrice" placeholder="e.g., 300" inputmode="decimal" class="form-input pl-3 pr-3" aria-describedby="alloc_slPrice-error"> <p id="alloc_slPrice-error" class="input-error-text" aria-live="polite"></p> </div>
+                    </div>
+                    <div id="alloc_results_container" class="mt-6 pt-4 space-y-2 border-t" style="border-color: var(--border-color);" aria-live="polite">
+                        <h3 class="text-md sm:text-lg font-semibold mb-2 text-center" style="color: var(--text-primary);">Results</h3>
+                        <div id="alloc_calculation_warning" class="hidden mb-2 p-2 warning-message text-xs rounded-md border" role="alert"></div>
+                        <p class="flex justify-between items-center"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Quantity to Buy:</span>
+                            <span class="flex items-center gap-2">
+                                <span id="alloc_result_qty" class="result-value green text-xl sm:text-2xl md:text-3xl font-bold">0</span>
+                                <button id="copy-alloc-qty-button" class="copy-qty-button" title="Copy Quantity"><i class="fa fa-copy"></i></button>
+                            </span>
+                        </p>
+                        <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Actual Risk on Capital:</span> <span id="alloc_result_riskOnCapitalPercent" class="result-value red text-md sm:text-lg md:text-xl font-medium">0.00%</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Risk Amount:</span> <span id="alloc_result_riskAmount" class="result-value red text-md sm:text-lg md:text-xl font-medium">₹0.00</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Stop Loss %:</span> <span id="alloc_result_slPercent" class="result-value red text-md sm:text-lg md:text-xl font-medium">0.00%</span></p> <p class="flex justify-between items-baseline"><span style="color: var(--text-secondary);" class="text-xs sm:text-sm">Total Trade Value:</span> <span id="alloc_result_totalCost" class="result-value neutral text-md sm:text-lg md:text-xl font-medium">₹0.00</span></p>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+    </div>
+
+    <footer class="w-full text-center mt-auto pt-6 pb-4" style="opacity:0.8;" role="contentinfo">
+        <div class="flex justify-center space-x-4 sm:space-x-6 mb-3">
+            <a href="https://x.com/harshbhut5" target="_blank" rel="noopener noreferrer" class="social-icon x-icon"><i class="fa fa-twitter"></i></a>
+            <a href="https://youtube.com/@finvestik?si=im2OcEY7GE-qDHBP" target="_blank" rel="noopener noreferrer" class="social-icon youtube-icon"><i class="fa fa-youtube-play"></i></a>
+            <a href="https://t.me/finvestik" target="_blank" rel="noopener noreferrer" class="social-icon telegram-icon"><i class="fa fa-telegram"></i></a>
+        </div>
+        <p class="text-xs mt-1" style="color: var(--text-secondary);">© <span id="current-year"></span> Finvestik. All Rights Reserved.</p>
+        <div class="text-xs mt-2" style="color: var(--text-secondary);">
+            <a href="/education/Terms & Conditions.html" class="hover:underline">Terms & Conditions</a> | <a href="/education/Privacy & Policy.html" class="hover:underline">Privacy & Policy</a>
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js" defer></script>
+    <script>
+        // --- CALCULATOR-SPECIFIC SCRIPT ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- CONSTANTS ---
+            const APP_SETTINGS_KEY = 'finvestikCalculatorSettings';
+
+            // --- DOM ELEMENTS ---
+            const capitalInput = document.getElementById('capital');
+            const capitalError = document.getElementById('capital-error');
+            const riskRiskPercentInput = document.getElementById('risk_riskPercent');
+            const riskEntryPriceInput = document.getElementById('risk_entryPrice');
+            const riskSlPriceInput = document.getElementById('risk_slPrice');
+            const riskRiskPercentError = document.getElementById('risk_riskPercent-error');
+            const riskEntryPriceError = document.getElementById('risk_entryPrice-error');
+            const riskSlPriceError = document.getElementById('risk_slPrice-error');
+            const allocAllocationPercentInput = document.getElementById('alloc_allocationPercent');
+            const allocEntryPriceInput = document.getElementById('alloc_entryPrice');
+            const allocSlPriceInput = document.getElementById('alloc_slPrice');
+            const allocAllocationPercentError = document.getElementById('alloc_allocationPercent-error');
+            const allocEntryPriceError = document.getElementById('alloc_entryPrice-error');
+            const allocSlPriceError = document.getElementById('alloc_slPrice-error');
+
+            const riskResultQty = document.getElementById('risk_result_qty');
+            const riskResultRiskAmount = document.getElementById('risk_result_riskAmount');
+            const riskResultSlPercent = document.getElementById('risk_result_slPercent');
+            const riskResultAllocationPercent = document.getElementById('risk_result_allocationPercent');
+            const riskResultTotalCost = document.getElementById('risk_result_totalCost');
+            
+            const allocResultQty = document.getElementById('alloc_result_qty');
+            const allocResultRiskOnCapitalPercent = document.getElementById('alloc_result_riskOnCapitalPercent');
+            const allocResultRiskAmount = document.getElementById('alloc_result_riskAmount');
+            const allocResultSlPercent = document.getElementById('alloc_result_slPercent');
+            const allocResultTotalCost = document.getElementById('alloc_result_totalCost');
+
+            const copyRiskQtyButton = document.getElementById('copy-risk-qty-button');
+            const copyAllocQtyButton = document.getElementById('copy-alloc-qty-button');
+            
+            const allCalculatorInputs = [capitalInput, riskRiskPercentInput, riskEntryPriceInput, riskSlPriceInput, allocAllocationPercentInput, allocEntryPriceInput, allocSlPriceInput];
+
+            // --- HELPERS ---
+            const safeParseFloat = (str) => { if(typeof str !== 'string' && typeof str !== 'number') return 0; const num = parseFloat(String(str).replace(/,/g, '')); return isNaN(num) ? 0 : num; };
+            const formatCurrency = (value, symbol = '₹') => { if (isNaN(value) || !isFinite(value)) return `${symbol}0.00`; return `${symbol}${value.toLocaleString('en-IN', {minimumFractionDigits:2, maximumFractionDigits:2})}`; };
+            const formatPercentage = (value) => { if(isNaN(value) || !isFinite(value)) return '0.00%'; return `${value.toFixed(2)}%`; };
+            const formatNumber = (value) => { if(isNaN(value) || !isFinite(value)) return '0'; return Math.floor(value).toLocaleString('en-IN'); };
+
+            // --- FUNCTIONS ---
+            function loadCalculatorSettings(){
+                try{
+                    const sS = localStorage.getItem(APP_SETTINGS_KEY);
+                    const defaultSettings = {capital:'100000',risk_riskPercent:'0.5',risk_entryPrice:'305',risk_slPrice:'300',alloc_allocationPercent:'20',alloc_entryPrice:'305',alloc_slPrice:'300'};
+                    const s = sS ? JSON.parse(sS) : {...defaultSettings};
+                    if(capitalInput) capitalInput.value = s.capital || defaultSettings.capital;
+                    if(riskRiskPercentInput) riskRiskPercentInput.value = s.risk_riskPercent || defaultSettings.risk_riskPercent;
+                    if(riskEntryPriceInput) riskEntryPriceInput.value = s.risk_entryPrice || defaultSettings.risk_entryPrice;
+                    if(riskSlPriceInput) riskSlPriceInput.value = s.risk_slPrice || defaultSettings.risk_slPrice;
+                    if(allocAllocationPercentInput) allocAllocationPercentInput.value = s.alloc_allocationPercent || defaultSettings.alloc_allocationPercent;
+                    if(allocEntryPriceInput) allocEntryPriceInput.value = s.alloc_entryPrice || defaultSettings.alloc_entryPrice;
+                    if(allocSlPriceInput) allocSlPriceInput.value = s.alloc_slPrice || defaultSettings.alloc_slPrice;
+                } catch(e) {}
+            }
+            
+            function saveCalculatorSettings(){
+                if(!capitalInput) return;
+                const cS = {capital: capitalInput.value, risk_riskPercent: riskRiskPercentInput.value, risk_entryPrice: riskEntryPriceInput.value, risk_slPrice: riskSlPriceInput.value, alloc_allocationPercent: allocAllocationPercentInput.value, alloc_entryPrice: allocEntryPriceInput.value, alloc_slPrice: allocSlPriceInput.value};
+                try { localStorage.setItem(APP_SETTINGS_KEY,JSON.stringify(cS)); } catch(e){}
+            }
+
+            function sanitizeNumericInput(iE, options = { allowDecimal: true, allowNegative: false }) {
+                if (!iE) return; let v = iE.value; let pattern = options.allowDecimal ? (options.allowNegative ? /[^0-9.-]/g : /[^0-9.]/g) : (options.allowNegative ? /[^0-9-]/g : /[^0-9]/g);
+                let sV = v.replace(pattern, '');
+                if (options.allowNegative) { const minus = sV.match(/-/g) || []; if (minus.length > 1 || (minus.length === 1 && sV.indexOf('-') !== 0)) { sV = v.substring(0, v.length - 1); } }
+                if (options.allowDecimal) { const p = sV.split('.'); if (p.length > 2) { sV = p[0] + '.' + p.slice(1).join(''); } if (sV === '.') sV = '0.'; if (sV === '-.') sV = '-0.'; }
+                if(sV.length > 1 && sV.startsWith('0') && !sV.startsWith('0.')) { sV = sV.substring(1); } if(sV.length > 2 && sV.startsWith('-0') && !sV.startsWith('-0.')) { sV = '-' + sV.substring(2); }
+                if (sV !== v) { iE.value = sV; }
+            }
+            
+            function calculateRiskBased() {
+                if (!riskRiskPercentError) return;
+                [riskRiskPercentInput, riskEntryPriceInput, riskSlPriceInput, capitalInput].forEach(el => el?.classList.remove('error'));
+                [riskRiskPercentError, riskEntryPriceError, riskSlPriceError, capitalError].forEach(e => { if (e) e.textContent = ''; });
+                let hasError = false;
+                const cap = safeParseFloat(capitalInput.value), rP = safeParseFloat(riskRiskPercentInput.value), eP = safeParseFloat(riskEntryPriceInput.value), sP = safeParseFloat(riskSlPriceInput.value);
+                if (cap <= 0) { if (capitalError) capitalError.textContent = 'Must be > 0.'; if (capitalInput) capitalInput.classList.add('error'); hasError = true; }
+                if (rP <= 0) { if (riskRiskPercentError) riskRiskPercentError.textContent = 'Must be > 0.'; if (riskRiskPercentInput) riskRiskPercentInput.classList.add('error'); hasError = true; }
+                if (eP <= 0) { if (riskEntryPriceError) riskEntryPriceError.textContent = 'Must be > 0.'; if (riskEntryPriceInput) riskEntryPriceInput.classList.add('error'); hasError = true; }
+                if (sP < 0 || eP > 0 && sP >= eP) { if (riskSlPriceError) riskSlPriceError.textContent = 'SL must be < Entry.'; if (riskSlPriceInput) riskSlPriceInput.classList.add('error'); hasError = true; }
+                if (hasError || !riskResultQty) { riskResultQty.textContent = '0'; riskResultRiskAmount.textContent = '₹0.00'; riskResultSlPercent.textContent = '0.00%'; riskResultAllocationPercent.textContent = '0.00%'; riskResultTotalCost.textContent = '₹0.00'; return; }
+                const rAA = cap * (rP / 100), rPS = eP - sP, qty = rPS > 0 ? Math.floor(rAA / rPS) : 0;
+                riskResultQty.textContent = formatNumber(qty); riskResultRiskAmount.textContent = formatCurrency(rAA); riskResultSlPercent.textContent = formatPercentage(eP > 0 && rPS > 0 ? (rPS / eP) * 100 : 0); riskResultAllocationPercent.textContent = formatPercentage(cap > 0 ? (qty * eP / cap) * 100 : 0); riskResultTotalCost.textContent = formatCurrency(qty * eP);
+            }
+            
+            function calculateAllocationBased() {
+                if (!allocAllocationPercentError) return;
+                [allocAllocationPercentInput, allocEntryPriceInput, allocSlPriceInput, capitalInput].forEach(el => el?.classList.remove('error'));
+                [allocAllocationPercentError, allocEntryPriceError, allocSlPriceError, capitalError].forEach(eL => { if (eL) eL.textContent = ''; });
+                let hasError = false;
+                const cap = safeParseFloat(capitalInput.value), alloPT = safeParseFloat(allocAllocationPercentInput.value), eP = safeParseFloat(allocEntryPriceInput.value), sP = safeParseFloat(allocSlPriceInput.value);
+                if (cap <= 0) { if (capitalError) capitalError.textContent = 'Must be > 0.'; if (capitalInput) capitalInput.classList.add('error'); hasError = true; }
+                if (alloPT <= 0) { if (allocAllocationPercentError) allocAllocationPercentError.textContent = 'Must be > 0.'; if (allocAllocationPercentInput) allocAllocationPercentInput.classList.add('error'); hasError = true; }
+                if (eP <= 0) { if (allocEntryPriceError) allocEntryPriceError.textContent = 'Must be > 0.'; if (allocEntryPriceInput) allocEntryPriceInput.classList.add('error'); hasError = true; }
+                if (sP < 0 || eP > 0 && sP >= eP) { if (allocSlPriceError) allocSlPriceError.textContent = 'SL must be < Entry.'; if (allocSlPriceInput) allocSlPriceInput.classList.add('error'); hasError = true; }
+                if (hasError || !allocResultQty) { allocResultQty.textContent = '0'; allocResultRiskOnCapitalPercent.textContent = '0.00%'; allocResultRiskAmount.textContent = '₹0.00'; allocResultSlPercent.textContent = '0.00%'; allocResultTotalCost.textContent = '₹0.00'; return; }
+                const alloA = cap * (alloPT / 100), qty = eP > 0 ? Math.floor(alloA / eP) : 0, rPS = eP - sP, tARA = (rPS > 0 && sP >= 0) ? qty * rPS : 0, aROCP = (cap > 0 && tARA > 0) ? (tARA / cap) * 100 : 0, aSP = (eP > 0 && rPS > 0 && sP >= 0) ? (rPS / eP) * 100 : 0, tC = qty * eP;
+                allocResultQty.textContent = formatNumber(qty); allocResultRiskOnCapitalPercent.textContent = formatPercentage(aROCP); allocResultRiskAmount.textContent = formatCurrency(tARA); allocResultSlPercent.textContent = formatPercentage(aSP); allocResultTotalCost.textContent = formatCurrency(tC);
+            }
+
+            function updateAllCalculationsAndSave() {
+                if(capitalInput && !capitalInput.classList.contains('error') && capitalError) { capitalError.textContent=''; }
+                calculateRiskBased();
+                calculateAllocationBased();
+                saveCalculatorSettings();
+            }
+
+            function copyQtyToClipboard(elementId, buttonElement) {
+                const qtyElement = document.getElementById(elementId);
+                if (!qtyElement || !navigator.clipboard) return;
+                const qty = qtyElement.textContent.replace(/,/g, '');
+                navigator.clipboard.writeText(qty).then(() => {
+                    const originalIcon = buttonElement.innerHTML;
+                    buttonElement.innerHTML = `<i class="fa fa-check"></i>`;
+                    buttonElement.classList.add('copied');
+                    setTimeout(() => {
+                        buttonElement.innerHTML = originalIcon;
+                        buttonElement.classList.remove('copied');
+                    }, 1500);
+                }).catch(() => { alert('Failed to copy text.'); });
+            }
+
+            // --- INITIALIZATION ---
+            allCalculatorInputs.forEach(i => {
+                if(i) {
+                    i.addEventListener('input', () => { sanitizeNumericInput(i); updateAllCalculationsAndSave(); });
+                    i.addEventListener('blur', () => { sanitizeNumericInput(i); if(i.value.endsWith('.')) { i.value=i.value.slice(0,-1); } updateAllCalculationsAndSave(); });
+                }
+            });
+
+            if(copyRiskQtyButton) copyRiskQtyButton.addEventListener('click', (e) => copyQtyToClipboard('risk_result_qty', e.currentTarget));
+            if(copyAllocQtyButton) copyAllocQtyButton.addEventListener('click', (e) => copyQtyToClipboard('alloc_result_qty', e.currentTarget));
+
+            if(riskRiskPercentInput) {
+                riskRiskPercentInput.addEventListener('focus', (e) => {
+                    const input = e.currentTarget;
+                    const originalValue = input.value;
+                    input.value = '';
+                    setTimeout(() => { input.value = originalValue; }, 1);
+                });
+            }
+
+            loadCalculatorSettings();
+            updateAllCalculationsAndSave();
+        });
+    </script>
+</body>
+</html>
