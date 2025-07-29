@@ -1,0 +1,46 @@
+name: Update Weekly Sector & Industry Data
+
+permissions:
+  contents: write  # ✅ allows git push via GitHub Actions
+
+on:
+  schedule:
+    # Every Sunday at 11:00 AM IST (i.e., 05:30 UTC)
+    - cron: '30 5 * * 0'
+  workflow_dispatch:
+
+jobs:
+  update-sector-industry:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: scripts  # Your script and files are inside scripts/
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install requests
+
+      - name: Run Sector_Industry.py
+        run: |
+          python Sector_Industry.py
+
+      - name: Commit & Push updated Sector_Industry.json
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add Sector_Industry.json
+
+          git diff --staged --quiet || git commit -m "📈 Weekly auto-update Sector_Industry.json at $(TZ='Asia/Kolkata' date '+%Y-%m-%d %H:%M:%S IST')"
+
+          git push
