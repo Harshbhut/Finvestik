@@ -1,14 +1,12 @@
 name: Update Weekly Sector & Industry Data
 
 permissions:
-  contents: write
+  contents: write  # ✅ allows git push via GitHub Actions
 
 on:
   schedule:
-    # Mon to Fri at 11:00 PM IST (17:30 UTC)
-    - cron: '30 17 * * 1-5'
-    # Saturday at 11:00 PM IST (17:30 UTC)
-    - cron: '30 17 * * 6'
+    # Every day at 5:30 PM UTC (11:00 PM IST)
+    - cron: '30 17 * * 1-6'  # Monday to Saturday
   workflow_dispatch:
     inputs:
       run_mode:
@@ -22,7 +20,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: scripts
+        working-directory: scripts  # Your script and files are inside scripts/
 
     steps:
       - name: Checkout repository
@@ -41,24 +39,34 @@ jobs:
         id: set_mode
         run: |
           if [ "${{ github.event_name }}" = "schedule" ]; then
-            # Check if it's Saturday (day 6)
-            if [ "$(date -u '+%u')" -eq 6 ]; then
+            DAY_OF_WEEK=$(date -u '+%u')
+            if [ "$DAY_OF_WEEK" -eq 6 ]; then
+              echo "🔄 Scheduled run on Saturday → mode=full"
               echo "mode=full" >> $GITHUB_OUTPUT
             else
+              echo "🔄 Scheduled run on weekday → mode=mcap"
               echo "mode=mcap" >> $GITHUB_OUTPUT
             fi
           else
+            echo "🧑‍💻 Manual run with input: ${{ github.event.inputs.run_mode }}"
             echo "mode=${{ github.event.inputs.run_mode }}" >> $GITHUB_OUTPUT
-          fi
 
       - name: Run Sector_Industry.py with mode
         run: |
+          echo "🚀 Running Sector_Industry.py with mode: ${{ steps.set_mode.outputs.mode }}"
           python Sector_Industry.py ${{ steps.set_mode.outputs.mode }}
 
       - name: Commit & Push updated Sector_Industry.json
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
           git add Sector_Industry.json
-          git diff --staged --quiet || git commit -m "📊 Auto-update (${{ steps.set_mode.outputs.mode }}) Sector_Industry.json at $(TZ='Asia/Kolkata' date '+%Y-%m-%d %H:%M:%S IST')"
-          git push
+
+          if git diff --staged --quiet; then
+            echo "✅ No changes to commit."
+          else
+            COMMIT_MSG="📈 Auto-update Sector_Industry.json at $(TZ='Asia/Kolkata' date '+%Y-%m-%d %H:%M:%S IST')"
+            git commit -m "$COMMIT_MSG"
+            git push
+          fi
