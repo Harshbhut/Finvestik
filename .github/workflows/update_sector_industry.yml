@@ -5,14 +5,16 @@ permissions:
 
 on:
   schedule:
-    # Every day at 5:30 PM UTC (11:00 PM IST)
-    - cron: '30 17 * * 1-6'  # Monday to Saturday
+    # Weekdays (Mon-Fri) at 11:00 PM IST → 17:30 UTC
+    - cron: '30 17 * * 1-5'
+    # Saturday at 11:00 PM IST → 17:30 UTC
+    - cron: '30 17 * * 6'
   workflow_dispatch:
     inputs:
       run_mode:
-        description: 'Select mode (mcap or full)'
+        description: "Select mode: 'mcap' or 'full'"
         required: true
-        default: 'mcap'
+        default: mcap
 
 jobs:
   update-sector-industry:
@@ -20,7 +22,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: scripts  # Your script and files are inside scripts/
+        working-directory: scripts  # Assumes script + JSON are inside scripts/
 
     steps:
       - name: Checkout repository
@@ -50,10 +52,10 @@ jobs:
           else
             echo "🧑‍💻 Manual run with input: ${{ github.event.inputs.run_mode }}"
             echo "mode=${{ github.event.inputs.run_mode }}" >> $GITHUB_OUTPUT
+          fi
 
-      - name: Run Sector_Industry.py with mode
+      - name: Run Sector_Industry.py with correct mode
         run: |
-          echo "🚀 Running Sector_Industry.py with mode: ${{ steps.set_mode.outputs.mode }}"
           python Sector_Industry.py ${{ steps.set_mode.outputs.mode }}
 
       - name: Commit & Push updated Sector_Industry.json
@@ -63,10 +65,6 @@ jobs:
 
           git add Sector_Industry.json
 
-          if git diff --staged --quiet; then
-            echo "✅ No changes to commit."
-          else
-            COMMIT_MSG="📈 Auto-update Sector_Industry.json at $(TZ='Asia/Kolkata' date '+%Y-%m-%d %H:%M:%S IST')"
-            git commit -m "$COMMIT_MSG"
-            git push
-          fi
+          git diff --staged --quiet || git commit -m "📈 Auto-update Sector_Industry.json (mode=${{ steps.set_mode.outputs.mode }}) at $(TZ='Asia/Kolkata' date '+%Y-%m-%d %H:%M:%S IST')"
+
+          git push
