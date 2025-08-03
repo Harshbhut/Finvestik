@@ -160,3 +160,135 @@ print(f"🚀 Starting FULL update from API1+API2+API3...")
 # No changes needed after this line.
 
 # (Rest of your original full mode logic is kept as-is and unchanged)
+
+
+
+
+# -------------------------------
+# Main Execution: Sector_Industry.py
+# -------------------------------
+print(f"🚀 Starting script: Sector_Industry.py")
+print(f"Output will be incrementally saved to: {OUTPUT_JSON_FILE}\n")
+
+
+
+all_stocks_data = load_json_file(OUTPUT_JSON_FILE)
+processed_security_ids = {stock.get("SecurityID") for stock in all_stocks_data if stock.get("SecurityID")}
+print(f"Found {len(processed_security_ids)} already processed SecurityIDs in {OUTPUT_JSON_FILE}.")
+
+sectors_data = fetch_json_data(API1_URL, "Sectors (API1)")
+time.sleep(API_CALL_DELAY)
+
+if not sectors_data:
+    print("❌ No sectors found from API1. Aborting."); exit()
+
+total_new_stocks_added_this_run = 0
+
+for sector in sectors_data:
+    sector_name = sector.get("Name", "N/A")
+    print(f"🔍 Processing Sector: {sector_name}")
+    
+    current_sector_stocks_added = False
+
+    for industry in sector.get("IndustriesForSector", []):
+        industry_id = industry.get("ID")
+        industry_name = industry.get("Name", "N/A")
+        if not industry_id: 
+            print(f"  ⚠️ Skipping industry with no ID in sector {sector_name}.")
+            continue
+        print(f"  🏭 Processing Industry: {industry_name} (ID: {industry_id})")
+        page_num = 1
+
+        while True:
+            api2_url = API2_BASE_URL.format(industry_id=industry_id, page_num=page_num)
+            stocks_page_summary = fetch_json_data(api2_url, f"Industry Peers (API2) for {industry_name}, Page {page_num}")
+            time.sleep(API_CALL_DELAY)
+            
+            if not stocks_page_summary: 
+                print(f"    ⚠️ No more stocks found for Industry {industry_name} on page {page_num} or fetch failed.")
+                break
+
+            for stock_summary in stocks_page_summary:
+                if stock_summary.get("Exchange", "NSE") == "BSE": 
+                    continue
+                
+                security_id_val = stock_summary.get("SecurityID")
+                stock_name_val = stock_summary.get("Name", "N/A")
+                mcap_val = stock_summary.get("MCAP", "N/A")
+
+                if not security_id_val:
+                    print(f"    ⚠️ Skipping stock with no SecurityID in Industry {industry_name}.")
+                    continue
+
+                if security_id_val in processed_security_ids:
+                    continue
+                
+                print(f"      ➕ Processing New Stock: {stock_name_val} (SecurityID: {security_id_val})")
+
+                listing_id_val = "N/A" # Initialize
+                symbol_val = "N/A"
+                sme_stock_val = "N/A"
+
+                api3_url = API3_SECURITY_INFO_URL.format(security_id=security_id_val)
+                security_info = fetch_json_data(api3_url, f"Security Info (API3) for {security_id_val}")
+                time.sleep(API_CALL_DELAY)
+
+                if security_info:
+                    listings_array = security_info.get("Listings", [])
+                    if listings_array:
+                        first_listing = listings_array[0] 
+                        symbol_val = first_listing.get("ListingSymbol", "N/A")
+                        sme_stock_val = "Yes" if first_listing.get("IsSME") else "No" # Or N/A if IsSME is not present
+                        if first_listing.get("IsSME") is None:
+                            sme_stock_val = "N/A"
+
+                        # CORRECTED: Use "ListingID" key as per user feedback and original script's intent
+                        temp_listing_id = first_listing.get("ListingID") 
+                        if temp_listing_id is not None:
+                            listing_id_val = str(temp_listing_id)
+                            # print(f"        Found ListingID: {listing_id_val}.")
+                        # else:
+                            # print(f"        No 'ListingID' field in first listing for SecurityID {security_id_val}.")
+                
+                stock_data_entry = {
+                    "SecurityID": security_id_val,
+                    "ListingID": listing_id_val, # This is now the primary ID for API4
+                    "SME Stock?": sme_stock_val,
+                    "Sector Name": sector_name,
+                    "Industry Name": industry_name,
+                    "Industry ID": industry_id,
+                    "Symbol": symbol_val,
+                    "Stock Name": stock_name_val,
+                    "Market Cap": mcap_val
+                }
+                
+                all_stocks_data.append(stock_data_entry)
+                processed_security_ids.add(security_id_val)
+                total_new_stocks_added_this_run += 1
+                current_sector_stocks_added = True
+            
+            if not stocks_page_summary or len(stocks_page_summary) < 20 : 
+                 break
+            page_num += 1
+            if page_num > 50: 
+                print(f"   ⚠️ Exceeded 50 pages for industry {industry_name}. Moving to next.")
+                break
+
+    if current_sector_stocks_added:
+        save_json_file(all_stocks_data, OUTPUT_JSON_FILE)
+        print(f"  💾 Saved progress to {OUTPUT_JSON_FILE} after Sector: {sector_name}\n")
+    else:
+        print(f"  ✅ No new stocks added for sector: {sector_name}. JSON file not re-saved for this sector.\n")
+
+print(f"\n✅ Sector_Industry.py script completed.")
+print(f"Total new stocks added in this run: {total_new_stocks_added_this_run}.")
+print(f"Total stocks in {OUTPUT_JSON_FILE}: {len(all_stocks_data)}.")
+print(f"File saved at: {OUTPUT_JSON_FILE}")
+
+# -------------------------------
+# Append INECODE from NSE.csv
+# -------------------------------
+
+csv_file_path = os.path.join(os.getcwd(), "NSE.csv")
+all_stocks_data, updated_ine_count = map_inecodes_from_csv(all_stocks_data, csv_file_path)
+save_json_file(all_stocks_data, OUTPUT_JSON_FILE)
