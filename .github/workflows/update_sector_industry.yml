@@ -1,13 +1,20 @@
 name: Update Weekly Sector & Industry Data
 
 permissions:
-  contents: write  # ✅ allows git push via GitHub Actions
+  contents: write
 
 on:
   schedule:
-    # Every Sunday at 11:00 AM IST (i.e., 05:30 UTC)
-    - cron: '30 5 * * 0'
+    # Mon to Fri at 11:00 PM IST (17:30 UTC)
+    - cron: '30 17 * * 1-5'
+    # Saturday at 11:00 PM IST (17:30 UTC)
+    - cron: '30 17 * * 6'
   workflow_dispatch:
+    inputs:
+      run_mode:
+        description: 'Select mode (mcap or full)'
+        required: true
+        default: 'mcap'
 
 jobs:
   update-sector-industry:
@@ -15,7 +22,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: scripts  # Your script and files are inside scripts/
+        working-directory: scripts
 
     steps:
       - name: Checkout repository
@@ -30,17 +37,28 @@ jobs:
         run: |
           pip install requests
 
-      - name: Run Sector_Industry.py
+      - name: Determine run mode
+        id: set_mode
         run: |
-          python Sector_Industry.py
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            # Check if it's Saturday (day 6)
+            if [ "$(date -u '+%u')" -eq 6 ]; then
+              echo "mode=full" >> $GITHUB_OUTPUT
+            else
+              echo "mode=mcap" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "mode=${{ github.event.inputs.run_mode }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run Sector_Industry.py with mode
+        run: |
+          python Sector_Industry.py ${{ steps.set_mode.outputs.mode }}
 
       - name: Commit & Push updated Sector_Industry.json
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
           git add Sector_Industry.json
-
-          git diff --staged --quiet || git commit -m "📈 Weekly auto-update Sector_Industry.json at $(TZ='Asia/Kolkata' date '+%Y-%m-%d %H:%M:%S IST')"
-
+          git diff --staged --quiet || git commit -m "📊 Auto-update (${{ steps.set_mode.outputs.mode }}) Sector_Industry.json at $(TZ='Asia/Kolkata' date '+%Y-%m-%d %H:%M:%S IST')"
           git push
