@@ -1,18 +1,7 @@
 name: Run Historical Data Collector
 
 permissions:
-  contents: write   # ✅ Needed to push commits
-  actions: read
-  checks: read
-  deployments: read
-  issues: read
-  discussions: read
-  packages: read
-  pages: read
-  pull-requests: read
-  repository-projects: read
-  security-events: read
-  statuses: read
+  contents: write   # ✅ Needed to push commit
 
 on:
   schedule:
