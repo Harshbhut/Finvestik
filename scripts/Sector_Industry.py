@@ -103,6 +103,16 @@ security_id_to_stock = {stock["SecurityID"]: stock for stock in all_stocks_data 
 # -------------------------------
 # Market Cap Update Only
 # -------------------------------
+
+
+# -------------------------------
+# Append INECODE from NSE.csv
+# -------------------------------
+
+csv_file_path = os.path.join(os.getcwd(), "NSE.csv")
+all_stocks_data, updated_ine_count = map_inecodes_from_csv(all_stocks_data, csv_file_path)
+save_json_file(all_stocks_data, OUTPUT_JSON_FILE)
+
 if update_mode == 'mcap':
     print("\n🔄 Starting Market Cap update mode...\n")
     industry_map = {}
@@ -284,11 +294,3 @@ print(f"\n✅ Sector_Industry.py script completed.")
 print(f"Total new stocks added in this run: {total_new_stocks_added_this_run}.")
 print(f"Total stocks in {OUTPUT_JSON_FILE}: {len(all_stocks_data)}.")
 print(f"File saved at: {OUTPUT_JSON_FILE}")
-
-# -------------------------------
-# Append INECODE from NSE.csv
-# -------------------------------
-
-csv_file_path = os.path.join(os.getcwd(), "NSE.csv")
-all_stocks_data, updated_ine_count = map_inecodes_from_csv(all_stocks_data, csv_file_path)
-save_json_file(all_stocks_data, OUTPUT_JSON_FILE)
