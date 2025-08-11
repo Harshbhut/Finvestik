@@ -264,7 +264,7 @@ def main():
     current_timestamp_ms = int(time.time() * 1000)
     version_info = {"timestamp": current_timestamp_ms}
     save_json_file(version_info, CONFIG["OUTPUT_VERSION_FILE"])
-    print(f"✅ Version file created at {CONFIG["OUTPUT_VERSION_FILE"]} with timestamp {current_timestamp_ms}")
+    print(f"✅ Version file created at {CONFIG['OUTPUT_VERSION_FILE']} with timestamp {current_timestamp_ms}")
 # -------------------------------
 # ENTRY POINT
 # -------------------------------
