@@ -1,26 +1,39 @@
+# stock_data_pipeline.py
+
 import requests
 import time
 import os
 import random
 import json
+import math
+import logging
+from datetime import datetime
+from typing import List, Dict, Any, Optional
 
 # -------------------------------
-# Configuration & Constants
+# CONFIGURATION
 # -------------------------------
-STRIKE_API_URL = "https://api.strike.money/v1/api/marketdata/current-activity"
-CIRCUIT_API_URL = "https://api-v2.strike.money/v2/api/equity/last-traded-state?securities=EQ%3A*"
 
-STRIKE_DATA_LIST_KEY = "data"
-API_CALL_DELAY = 0.05
+# At the top of your script, after CONFIG:
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))  # Folder where script is located
+STATIC_DATA_DIR = os.path.join(SCRIPT_DIR, "..", "static", "data")  # Go one level up to repo root
 
-INPUT_JSON_FILE = os.path.join("scripts", "Sector_Industry.json")
-# Define output directory to ensure it exists
-OUTPUT_DIR = os.path.join("static", "data")
-OUTPUT_JSON_FILE = os.path.join(OUTPUT_DIR, "stock_universe.json")
-# CHANGE: Define path for the new version file
-OUTPUT_VERSION_FILE = os.path.join(OUTPUT_DIR, "data_version.json")
+CONFIG = {
+    "sector_input_file": "Sector_Industry.json",  # Input file containing stock list with sector & industry
+    "historical_file": "stock_historical_universe.json",  # Input file with historical turnover data
+    "output_file": os.path.join(STATIC_DATA_DIR, "stock_universe.json"),
+    "OUTPUT_VERSION_FILE": os.path.join(STATIC_DATA_DIR, "data_version.json"),
+    "strike_api_url": "https://api.strike.money/v1/api/marketdata/current-activity",  # Live stock data
+    "circuit_api_url": "https://api-v2.strike.money/v2/api/equity/last-traded-state?securities=EQ%3A*",  # Circuit limit data
+    "user_agents": [
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/114.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/111.0.0.0 Safari/537.36"
+    ],
+    "include_internal_fields": False,
+    "internal_fields": ["SecurityID", "ListingID", "SME Stock?"]
+}
 
-STRIKE_API_FULL_FIELD_ORDER = [
+STRIKE_FIELDS = [
     "open", "high", "low", "current_price", "day_open", "day_high", "day_low",
     "previous_close", "change_percentage", "day_volume", "volume", "datetime",
     "symbol", "security_code", "previous_date", "previous_day_open",
@@ -32,184 +45,228 @@ STRIKE_FIELDS_TO_APPEND = [
     "change_percentage", "day_volume", "fifty_two_week_high", "fifty_two_week_low"
 ]
 
-USER_AGENTS = [
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/114.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/111.0.0.0 Safari/537.36"
-]
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # -------------------------------
-# Internal Field Toggle
+# FILE & API HELPERS
 # -------------------------------
-INCLUDE_INTERNAL_FIELDS = False
-INTERNAL_FIELDS = ["SecurityID", "ListingID", "SME Stock?"]
-
-try:
-    SYMBOL_INDEX_IN_STRIKE_API = STRIKE_API_FULL_FIELD_ORDER.index("symbol")
-except ValueError:
-    print("CRITICAL ERROR: 'symbol' not found in STRIKE_API_FULL_FIELD_ORDER.")
-    exit()
-
-
-# -------------------------------
-# Utility Functions
-# -------------------------------
-def fetch_json_data(url, context_message="", max_retries=3, delay_between_retries=1):
+def fetch_json_data(url: str, context_message: str = "", max_retries: int = 3) -> Optional[Dict[str, Any]]:
     for attempt in range(1, max_retries + 1):
         try:
-            headers = {"Accept": "application/json", "User-Agent": random.choice(USER_AGENTS)}
+            headers = {"Accept": "application/json", "User-Agent": random.choice(CONFIG["user_agents"])}
             response = requests.get(url, headers=headers, timeout=30)
             response.raise_for_status()
             return response.json()
         except Exception as e:
-            print(f"⚠️ [{context_message}] Attempt {attempt} failed: {e}")
-            if attempt < max_retries:
-                time.sleep(delay_between_retries * attempt)
-    print(f"❌ Giving up on {context_message} after {max_retries} attempts.")
+            logging.warning(f"[{context_message}] Attempt {attempt} failed: {e}")
+            time.sleep(attempt)
+    logging.error(f"❌ Giving up on {context_message} after {max_retries} attempts.")
     return None
 
-
-def load_json_file(path):
+def load_json_file(path: str) -> Optional[List[Dict[str, Any]]]:
     if not os.path.exists(path):
-        print(f"❌ File not found: {path}")
+        logging.error(f"❌ File not found: {path}")
         return None
     with open(path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
-
-# CHANGE: Modified to accept an indent argument for performance
-def save_json_file(data, path, indent=None):
-    # Ensure the directory exists before saving
-    os.makedirs(os.path.dirname(path), exist_ok=True)
+def save_json_file(data: List[Dict[str, Any]], path: str):
     with open(path, 'w', encoding='utf-8') as f:
-        json.dump(data, f, indent=indent)
+        json.dump(data, f, indent=2)
+    print(f"✅ Saved output to {path} with {len(data)} stocks")
 
+# -------------------------------
+# STEP 1: LOAD & FILTER BASE STOCK DATA
+# -------------------------------
+def filter_base_stocks(raw_data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    return [stock for stock in raw_data if stock.get("SME Stock?", "No") != "Yes" and stock.get("Market Cap", 1) != 0]
 
-def get_circuit_limit_data():
-    print("📡 Fetching circuitLimit data from Strike V2 API...")
-    response = fetch_json_data(CIRCUIT_API_URL, "Circuit Limit")
+# -------------------------------
+# STEP 2: GET LIVE DATA FROM STRIKE
+# -------------------------------
+def parse_strike_data(raw_list: List[List[Any]]) -> Dict[str, Dict[str, Any]]:
+    symbol_index = STRIKE_FIELDS.index("symbol")
+    result = {}
+    for row in raw_list:
+        if not isinstance(row, list) or len(row) != len(STRIKE_FIELDS):
+            continue
+        if row[STRIKE_FIELDS.index("day_volume")] == 0:
+            continue
+        symbol = row[symbol_index].upper()
+        result[symbol] = {k: row[i] for i, k in enumerate(STRIKE_FIELDS)}
+    return result
+
+def fetch_circuit_limits() -> Dict[str, Any]:
+    response = fetch_json_data(CONFIG["circuit_api_url"], "Circuit Limit")
     if not response or "data" not in response:
-        print("❌ 'data' key missing in response.")
         return {}
-
     current_data = response["data"].get("current", {})
     if "fields" not in current_data or "ticks" not in current_data:
-        print("❌ 'fields' or 'ticks' missing in response['data']['current'].")
         return {}
-
     try:
         circuit_index = current_data["fields"].index("circuitLimit")
     except ValueError:
-        print("❌ 'circuitLimit' field not found.")
         return {}
-
-    circuit_map = {}
+    result = {}
     for symbol, values in current_data["ticks"].items():
-        if isinstance(values, list) and len(values) > 0:
+        if isinstance(values, list) and values:
             last_tick = values[-1]
             if isinstance(last_tick, list) and len(last_tick) > circuit_index:
-                circuit_map[symbol.upper()] = last_tick[circuit_index]
-
-    print(f"✅ Got circuitLimit for {len(circuit_map)} symbols.")
-    return circuit_map
-
+                result[symbol.upper()] = last_tick[circuit_index]
+    return result
 
 # -------------------------------
-# START
+# STEP 3: COMBINE BASE & LIVE DATA
 # -------------------------------
-print(f"🚀 Starting Daily_Data.py (Optimized version)")
+def attach_live_data(base_stocks: List[Dict[str, Any]], live_data: Dict[str, Dict[str, Any]], circuit_map: Dict[str, Any]) -> List[Dict[str, Any]]:
+    updated = []
+    for stock in base_stocks:
+        symbol = stock.get("Symbol", "").upper()
+        if not symbol or symbol not in live_data:
+            continue
+        live = live_data[symbol]
+        current_price = live.get("current_price")
+        high_52w = live.get("fifty_two_week_high")
+        low_52w = live.get("fifty_two_week_low")
+        volume = live.get("day_volume")
 
-# Load Sector_Industry and apply filter
-print("📄 Loading Sector_Industry.json and filtering...")
-base_data = load_json_file(INPUT_JSON_FILE)
-if base_data is None:
-    exit()
+        try:
+            down_from_52wh = max(0, round((high_52w - current_price) / high_52w * 100, 2)) if high_52w else 0
+            up_from_52wl = round((current_price - low_52w) / low_52w * 100, 2) if low_52w else 0
+            turnover = round((current_price * volume) / 1e7, 2) if volume and current_price else 0
+        except:
+            down_from_52wh = up_from_52wl = turnover = 0
 
-filtered_base_data = [
-    stock for stock in base_data
-    if stock.get("SME Stock?", "No") != "Yes" and stock.get("Market Cap", 1) != 0
-]
-print(f"✅ Retained {len(filtered_base_data)} out of {len(base_data)} stocks after filtering.")
+        new_entry = {
+            k: v for k, v in stock.items()
+            if CONFIG["include_internal_fields"] or k not in CONFIG["internal_fields"]
+        }
 
-# Fetch Strike API data
-print("🌐 Fetching Strike API data...")
-strike_response = fetch_json_data(STRIKE_API_URL, "Strike Bulk")
-if not strike_response or STRIKE_DATA_LIST_KEY not in strike_response:
-    print("❌ Invalid response from Strike API.")
-    exit()
+        for field in STRIKE_FIELDS_TO_APPEND:
+            new_entry[field] = live.get(field, "N/A")
 
-strike_raw_list = strike_response[STRIKE_DATA_LIST_KEY]
-strike_data_map = {}
-for row in strike_raw_list:
-    if not isinstance(row, list) or len(row) != len(STRIKE_API_FULL_FIELD_ORDER):
-        continue
-    if row[STRIKE_API_FULL_FIELD_ORDER.index("day_volume")] == 0:
-        continue
-    symbol = row[SYMBOL_INDEX_IN_STRIKE_API].upper()
-    stock_data = {k: row[i] for i, k in enumerate(STRIKE_API_FULL_FIELD_ORDER)}
-    strike_data_map[symbol] = stock_data
+        new_entry.update({
+            "Down from 52W High (%)": down_from_52wh,
+            "Up from 52W Low (%)": up_from_52wl,
+            "Turnover": turnover,
+            "circuitLimit": circuit_map.get(symbol, 0)
+        })
 
-print(f"🔍 Processed {len(strike_data_map)} stocks from Strike.")
+        updated.append(new_entry)
+    return updated
 
-# Enrich with circuitLimit
-circuit_limit_map = get_circuit_limit_data()
-for symbol, stock_data in strike_data_map.items():
-    stock_data["circuitLimit"] = circuit_limit_map.get(symbol, 0)
-
-# Merge with static data
-final_data = []
-match_count = 0
-for stock in filtered_base_data:
-    symbol = stock.get("Symbol", "").upper()
-    if not symbol:
-        continue
-    strike_entry = strike_data_map.get(symbol)
-    if not strike_entry:
-        continue
-
-    current_price = strike_entry.get("current_price")
-    high_52w = strike_entry.get("fifty_two_week_high")
-    low_52w = strike_entry.get("fifty_two_week_low")
-    day_volume = strike_entry.get("day_volume")
-
-    down_from_52wh = 0
-    up_from_52wl = 0
-    turnover = 0
-
-    try:
-        if isinstance(current_price, (int, float)) and isinstance(high_52w, (int, float)) and high_52w > 0:
-            down_from_52wh = max(0, round((high_52w - current_price) / high_52w * 100, 2))
-        if isinstance(current_price, (int, float)) and isinstance(low_52w, (int, float)) and low_52w > 0:
-            up_from_52wl = round((current_price - low_52w) / low_52w * 100, 2)
-        if isinstance(current_price, (int, float)) and isinstance(day_volume, (int, float)):
-            turnover = round((current_price * day_volume) / 1e7, 2)
-    except:
-        pass
-
-    new_data = {
-        k: v for k, v in stock.items()
-        if INCLUDE_INTERNAL_FIELDS or k not in INTERNAL_FIELDS
+# -------------------------------
+# STEP 4: HISTORICAL ANALYSIS
+# -------------------------------
+def build_historical_map(historical_data: List[Dict[str, Any]]) -> Dict[str, List[List[Any]]]:
+    return {
+        entry["INECODE"]: entry["candles"]
+        for entry in historical_data
+        if "INECODE" in entry and "candles" in entry
     }
 
-    for field in STRIKE_FIELDS_TO_APPEND:
-        new_data[field] = strike_entry.get(field, "N/A")
+def calculate_sma20(stock_list, historical_map):
+    count = 0
+    today_str = datetime.now().strftime("%Y-%m-%d")  # format to match candle date
 
-    new_data["Down from 52W High (%)"] = down_from_52wh
-    new_data["Up from 52W Low (%)"] = up_from_52wl
-    new_data["Turnover"] = turnover
-    new_data["circuitLimit"] = strike_entry.get("circuitLimit", 0)
+    for stock in stock_list:
+        inecode = stock.get("INECODE", "").strip().upper()
+        base_turnover = stock.get("Turnover", None)
 
-    final_data.append(new_data)
-    match_count += 1
+        if not inecode or base_turnover is None or inecode not in historical_map:
+            stock["TurnoverSMA20"] = 0
+            continue
 
-# Save final JSON - no indentation for smaller file size
-save_json_file(final_data, OUTPUT_JSON_FILE)
-print(f"✅ Done. {match_count} stocks saved to {OUTPUT_JSON_FILE}")
+        candles = historical_map[inecode]
 
-# CHANGE: Add section to create and save the version file
-current_timestamp_ms = int(time.time() * 1000)
-version_info = {"timestamp": current_timestamp_ms}
-save_json_file(version_info, OUTPUT_VERSION_FILE, indent=2) # indent here is okay for readability
-print(f"✅ Version file created at {OUTPUT_VERSION_FILE} with timestamp {current_timestamp_ms}")
+        if not candles or not isinstance(candles[0], list) or len(candles[0]) < 8:
+            stock["TurnoverSMA20"] = 0
+            continue
 
-if not INCLUDE_INTERNAL_FIELDS:
-    print("🧹 Internal fields (e.g., SecurityID, ListingID, SME Stock?) were excluded.")
+        # Extract date from first candle (YYYY-MM-DD part)
+        first_candle_date = str(candles[0][0])[:10]
+
+        # Decide which candles to use based on date check
+        if first_candle_date == today_str:
+            # Today's data already in historical → skip first entry
+            selected_candles = candles[1:20]
+        else:
+            # Today's data not in historical → take from first entry
+            selected_candles = candles[0:19]
+
+        # Build turnover values list: today's turnover + historical turnovers
+        values = [base_turnover] + [
+            c[7] for c in selected_candles
+            if len(c) >= 8 and isinstance(c[7], (int, float)) and c[7] > 0
+        ]
+
+        # Need at least 10 data points to calculate SMA20
+        if len(values) >= 10:
+            stock["TurnoverSMA20"] = round(sum(values) / len(values), 2)
+            count += 1
+        else:
+            stock["TurnoverSMA20"] = 0
+
+    print(f"📊 SMA20 calculated for {count} stocks")
+    return stock_list
+
+def calculate_tomcap(stock_list):
+    count = 0
+    for stock in stock_list:
+        sma20 = stock.get("TurnoverSMA20", 0)
+        mcap = stock.get("Market Cap", 0)
+        if isinstance(sma20, (int, float)) and isinstance(mcap, (int, float)) and mcap > 0:
+            stock["Tomcap"] = math.floor(sma20 * 100 / mcap * 100) / 100
+            count += 1
+        else:
+            stock["Tomcap"] = 0
+    print(f"📈 Tomcap calculated for {count} stocks")
+    return stock_list
+
+# -------------------------------
+# MAIN FUNCTION
+# -------------------------------
+def main():
+    print("🚀 Starting stock data pipeline")
+
+    base_data = load_json_file(CONFIG["sector_input_file"])
+    if base_data is None:
+        return
+    print(f"📦 Fetched {len(base_data)} stocks from Sector_Industry.json")
+
+    filtered = filter_base_stocks(base_data)
+    print(f"✅ Filtered down to {len(filtered)} valid stocks (non-SME & non-zero Mcap)")
+
+    strike_json = fetch_json_data(CONFIG["strike_api_url"], "Strike API")
+    if not strike_json or "data" not in strike_json:
+        return
+    strike_map = parse_strike_data(strike_json["data"])
+    print(f"🌐 Fetched {len(strike_map)} stocks from Strike API")
+
+    circuit_map = fetch_circuit_limits()
+    print(f"📉 Fetched circuit limits for {len(circuit_map)} stocks")
+
+    updated_stocks = attach_live_data(filtered, strike_map, circuit_map)
+    print(f"🔧 Added live market data to {len(updated_stocks)} stocks")
+
+    historical = load_json_file(CONFIG["historical_file"])
+    if historical is None:
+        return
+
+    hist_map = build_historical_map(historical)
+    updated_stocks = calculate_sma20(updated_stocks, hist_map)
+    updated_stocks = calculate_tomcap(updated_stocks)
+
+    save_json_file(updated_stocks, CONFIG["output_file"])
+    print(f"🎯 Process complete. Final count: {len(updated_stocks)} stocks written to {CONFIG['output_file']}")
+
+    current_timestamp_ms = int(time.time() * 1000)
+    version_info = {"timestamp": current_timestamp_ms}
+    save_json_file(version_info, CONFIG["OUTPUT_VERSION_FILE"])
+    print(f"✅ Version file created at {CONFIG["OUTPUT_VERSION_FILE"]} with timestamp {current_timestamp_ms}")
+# -------------------------------
+# ENTRY POINT
+# -------------------------------
+if __name__ == "__main__":
+    main()
