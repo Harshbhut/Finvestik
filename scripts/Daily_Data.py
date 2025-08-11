@@ -19,8 +19,8 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))  # Folder where script i
 STATIC_DATA_DIR = os.path.join(SCRIPT_DIR, "..", "static", "data")  # Go one level up to repo root
 
 CONFIG = {
-    "sector_input_file": "Sector_Industry.json",  # Input file containing stock list with sector & industry
-    "historical_file": "stock_historical_universe.json",  # Input file with historical turnover data
+    "sector_input_file": os.path.join(SCRIPT_DIR, "Sector_Industry.json") ,  # Input file containing stock list with sector & industry
+    "historical_file": os.path.join(SCRIPT_DIR, "stock_historical_universe.json"),  # Input file with historical turnover data
     "output_file": os.path.join(STATIC_DATA_DIR, "stock_universe.json"),
     "OUTPUT_VERSION_FILE": os.path.join(STATIC_DATA_DIR, "data_version.json"),
     "strike_api_url": "https://api.strike.money/v1/api/marketdata/current-activity",  # Live stock data
