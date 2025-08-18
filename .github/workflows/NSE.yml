@@ -1,0 +1,43 @@
+name: Run NSE Data Collector
+
+permissions:
+  contents: write   # ✅ Needed to push commit
+
+on:
+  schedule:
+    - cron: '30 15 * * 1-6'  # 9:00 PM IST Mon–Sat
+  workflow_dispatch:
+
+jobs:
+  run-nse-script:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: scripts
+
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: 📦 Install dependencies
+        run: |
+          pip install requests ijson
+
+      - name: 🚀 Run NSE.py
+        run: python NSE.py
+
+      - name: 💾 Commit & Push updated file
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add NSE.json
+          git diff --staged --quiet || git commit -m "📊 Auto-update NSE data at $(TZ='Asia/Kolkata' date '+%Y-%m-%d %H:%M:%S IST')"
+          git push
