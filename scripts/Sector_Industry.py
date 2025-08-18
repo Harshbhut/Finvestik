@@ -57,35 +57,42 @@ def save_json_file(data, file_path):
     with open(file_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=2)
 
-def map_inecodes_from_csv(stocks_data, csv_file_path):
-    if not os.path.exists(csv_file_path):
-        print(f"\n⚠️ NSE.csv not found at {csv_file_path}. Skipping INECODE mapping.")
+def map_inecodes_from_json(stocks_data, nse_json_file_path):
+    if not os.path.exists(nse_json_file_path):
+        print(f"\n⚠️ NSE.json not found at {nse_json_file_path}. Skipping INECODE mapping.")
         return stocks_data, 0
 
-    print(f"\n📥 NSE.csv found. Starting INECODE mapping...")
+    print(f"\n📥 NSE.json found. Starting INECODE mapping...")
 
+    # Load NSE.json once
+    with open(nse_json_file_path, 'r', encoding='utf-8') as f:
+        nse_data = json.load(f)
+
+    # Build dict: trading_symbol → isin
     symbol_to_inecode = {}
-    with open(csv_file_path, mode='r', encoding='utf-8-sig') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            symbol = row.get("tradingsymbol", "").strip().upper()
-            inecode = row.get("INECODE", "").strip().upper()
-            if symbol and inecode:
-                symbol_to_inecode[symbol] = inecode
+    for row in nse_data:
+        symbol = row.get("trading_symbol", "").strip().upper()
+        isin = row.get("isin", "").strip().upper()
+        if symbol and isin:
+            symbol_to_inecode[symbol] = isin
 
+    # Update Sector_Industry.json stocks
     updated_count = 0
     for stock in stocks_data:
         current_ine = stock.get("INECODE", "").strip().upper()
         symbol = stock.get("Symbol", "").strip().upper()
-        if current_ine.startswith("INE"):
+
+        if current_ine.startswith("INE"):  # already valid
             continue
-        matched_ine = symbol_to_inecode.get(symbol, "XXXXXXXXXX")
-        if current_ine != matched_ine:
+
+        matched_ine = symbol_to_inecode.get(symbol, "")
+        if matched_ine and current_ine != matched_ine:
             stock["INECODE"] = matched_ine
             updated_count += 1
 
     print(f"✅ INECODE mapping complete. Updated {updated_count} entries.")
     return stocks_data, updated_count
+
 
 # -------------------------------
 # Accept command-line mode arg
@@ -106,11 +113,11 @@ security_id_to_stock = {stock["SecurityID"]: stock for stock in all_stocks_data 
 
 
 # -------------------------------
-# Append INECODE from NSE.csv
+# Append INECODE from NSE.json
 # -------------------------------
 
-csv_file_path = os.path.join(os.getcwd(), "NSE.csv")
-all_stocks_data, updated_ine_count = map_inecodes_from_csv(all_stocks_data, csv_file_path)
+csv_file_path = os.path.join(os.getcwd(), "NSE.json")
+all_stocks_data, updated_ine_count = map_inecodes_from_json(all_stocks_data, csv_file_path)
 save_json_file(all_stocks_data, OUTPUT_JSON_FILE)
 
 if update_mode == 'mcap':
