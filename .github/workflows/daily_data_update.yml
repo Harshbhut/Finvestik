@@ -15,6 +15,11 @@ on:
     - cron: '*/5 8 * * 1-5'
     - cron: '*/5 9 * * 1-5'
     - cron: '*/5 10 * * 1-5'  # 10:00–10:05 UTC
+  workflow_run:
+    workflows: ["Update Weekly Sector & Industry Data"]
+    types:
+      - completed
+
   workflow_dispatch:
 
 jobs:
