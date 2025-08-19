@@ -635,7 +635,7 @@ oldDataMap.clear(); // Clear map after use
     function exportStockUniverseAsSingleFile(){
         if(!currentlyDisplayedSUData||!currentlyDisplayedSUData.length){alert("No data to export.");return}
         if(typeof saveAs==='undefined'){return} const inds={};
-        currentlyDisplayedSUData.forEach(s=>{const ind=s['Industry Name'],sym=s['Symbol'];if(!ind)return;if(!inds[ind]){inds[ind]=[];}inds[ind].push(sym);});
+        currentlyDisplayedSUData.forEach(s=>{const ind=s['Sector Name'],sym=s['Symbol'];if(!ind)return;if(!inds[ind]){inds[ind]=[];}inds[ind].push(sym);});
         let fc=''; Object.keys(inds).sort().forEach(inm=>{const syms=inds[inm].join(',');fc+=`###${inm},${syms},\n`;});
         const blob=new Blob([fc.trim()],{type:"text/plain;charset=utf-8"});
         saveAs(blob,"Finvestik_Stocks.txt");
