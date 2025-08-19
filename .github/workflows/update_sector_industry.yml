@@ -1,56 +1,43 @@
 name: Update Weekly Sector & Industry Data
 
 permissions:
-  contents: write  # ✅ allows git push via GitHub Actions
+  contents: write # ✅ allows git push via GitHub Actions
 
 on:
+  # Scheduled run: 5:00 AM IST, Monday to Saturday (i.e., 23:30 UTC, Sunday-Thursday)
   schedule:
-    # Weekdays (Mon-Fri) at 11:00 PM IST → 17:30 UTC
-    - cron: '30 17 * * 1-5'
-    # Saturday at 11:00 PM IST → 17:30 UTC
-    - cron: '30 17 * * 6'
+    - cron: '30 23 * * 0-4'
   workflow_dispatch:
     inputs:
       run_mode:
         description: "Select mode: 'mcap' or 'full'"
         required: true
-        default: mcap
+        default: full
 
 jobs:
   update-sector-industry:
     runs-on: ubuntu-latest
-
     defaults:
       run:
-        working-directory: scripts  # Assumes script + JSON are inside scripts/
-
+        working-directory: scripts # Assumes script + JSON are inside scripts/
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-
       - name: Install dependencies
         run: |
           pip install requests
 
-      - name: Determine run mode
+      # Always run in 'full' mode for scheduled triggers, allow custom mode for manual runs
+      - name: Set mode for update
         id: set_mode
         run: |
           if [ "${{ github.event_name }}" = "schedule" ]; then
-            DAY_OF_WEEK=$(date -u '+%u')
-            if [ "$DAY_OF_WEEK" -eq 6 ]; then
-              echo "🔄 Scheduled run on Saturday → mode=full"
-              echo "mode=full" >> $GITHUB_OUTPUT
-            else
-              echo "🔄 Scheduled run on weekday → mode=mcap"
-              echo "mode=mcap" >> $GITHUB_OUTPUT
-            fi
+            echo "mode=full" >> $GITHUB_OUTPUT
           else
-            echo "🧑‍💻 Manual run with input: ${{ github.event.inputs.run_mode }}"
             echo "mode=${{ github.event.inputs.run_mode }}" >> $GITHUB_OUTPUT
           fi
 
@@ -62,9 +49,6 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
           git add Sector_Industry.json
-
           git diff --staged --quiet || git commit -m "📈 Auto-update Sector_Industry.json (mode=${{ steps.set_mode.outputs.mode }}) at $(TZ='Asia/Kolkata' date '+%Y-%m-%d %H:%M:%S IST')"
-
           git push
