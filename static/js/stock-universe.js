@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { key: "day_low", displayName: "Low", isVisible: false, isSortable: true, formatter: formatPrice, defaultWidth: '90px', cellClass: 'text-right' },
         { key: "day_volume", displayName: "Volume", isVisible: true, isSortable: true, formatter: formatIntlNumber, defaultWidth: '110px', cellClass: 'text-right', isFilterable: true, filterType: 'text', placeholder: '>30000' }, 
         { key: "Market Cap", displayName: "Market Cap (Cr.)", isVisible: true, isSortable: true, formatter: formatIntlNumber, defaultWidth: '120px', cellClass: 'text-right', isFilterable: true, filterType: 'text', placeholder: '>500,<20000' }, 
-        { key: "Turnover", displayName: "Turnover (Cr.)", isVisible: true, isSortable: true, formatter: formatIntlNumber, defaultWidth: '120px', cellClass: 'text-right', isFilterable: true, filterType: 'text',placeholder: '>5,>100' }, 
+        { key: "TurnoverSMA20", displayName: "20MA Turnover", isVisible: true, isSortable: true, formatter: formatIntlNumber, defaultWidth: '120px', cellClass: 'text-right', isFilterable: true, filterType: 'text',placeholder: '>5,>100' }, 
         { key: "fifty_two_week_high", displayName: "52W High", isVisible: false, isSortable: true, formatter: formatPrice, defaultWidth: '100px', cellClass: 'text-right' },
         { key: "fifty_two_week_low", displayName: "52W Low", isVisible: false, isSortable: true, formatter: formatPrice, defaultWidth: '100px', cellClass: 'text-right' }, 
         { key: "Down from 52W High (%)", displayName: "52WH ↓ ", isVisible: true, isSortable: true,isFilterable: true, filterType: 'text', formatter: formatPrice, defaultWidth: '100px', cellClass: 'text-right', placeholder: '<25' },
