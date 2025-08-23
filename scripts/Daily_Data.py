@@ -233,6 +233,97 @@ def calculate_tomcap(stock_list):
     print(f"📈 Tomcap calculated for {count} stocks")
     return stock_list
 
+from typing import List, Dict, Any
+
+def rsrating(stock_list: List[Dict[str, Any]], historical_map: Dict[str, List[List[Any]]], trade_date: str):
+    """
+    Calculates 3M and 6M Relative Strength (RS) percentile for each stock.
+    Uses weighted returns:
+      - RS_3M = 0.5*(1M) + 0.3*(2M) + 0.2*(3M)
+      - RS_6M = 0.4*(1M) + 0.35*(3M) + 0.25*(6M)
+    Ensures first candle is always from Stock_universe (today's data), then historical candles.
+    """
+
+    rs_values_3m = []
+    rs_values_6m = []
+
+    for stock in stock_list:
+        inecode = stock.get("INECODE", "").strip().upper()
+        if not inecode or inecode not in historical_map:
+            stock["RS_3M"] = "IPO"
+            stock["RS_6M"] = "IPO"
+            continue
+
+        candles = historical_map[inecode]
+        if not candles or len(candles[0]) < 5:
+            stock["RS_3M"] = "IPO"
+            stock["RS_6M"] = "IPO"
+            continue
+
+        # ------------------- Determine starting point -------------------
+        first_hist_date = str(candles[0][0])[:10]
+        if first_hist_date == trade_date:
+            # Today's data already included in historical → skip first candle
+            historical_slice = candles[1:]
+        else:
+            # Today's data not in historical → take all
+            historical_slice = candles
+
+        # Collect closing prices for RS calculation
+        # First price comes from Stock_universe (today's data)
+        stock_close_today = stock.get("current_price", None)
+        if stock_close_today is None:
+            stock["RS_3M"] = "IPO"
+            stock["RS_6M"] = "IPO"
+            continue
+
+        closes = [stock_close_today] + [c[3] for c in historical_slice if isinstance(c[3], (int, float))]
+
+        # ------------------- 3M Weighted RS -------------------
+        days_1m = 20   # Approx 1 month = 20 trading days
+        days_2m = 40   # Approx 2 months = 40 trading days
+        days_3m = 60   # Approx 3 months = 60 trading days
+
+        if len(closes) >= days_3m:
+            ret_1m = (closes[0] / closes[days_1m] - 1) * 100
+            ret_2m = (closes[0] / closes[days_2m] - 1) * 100
+            ret_3m = (closes[0] / closes[days_3m] - 1) * 100
+            rs_3m = 0.45 * ret_1m + 0.3 * ret_2m + 0.25 * ret_3m
+            stock["_RS_3M_value"] = rs_3m
+            rs_values_3m.append(rs_3m)
+        else:
+            stock["RS_3M"] = "IPO"
+
+        # ------------------- 6M Weighted RS -------------------
+        days_6m = 120  # Approx 6 months = 120 trading days
+        if len(closes) >= days_6m:
+            #ret_1m_6 = (closes[0] / closes[days_1m] - 1) * 100
+            #ret_3m_6 = (closes[0] / closes[days_3m] - 1) * 100
+            ret_6m = (closes[0] / closes[days_6m] - 1) * 100
+            rs_6m = 0.4 * ret_1m + 0.35 * ret_3m + 0.25 * ret_6m
+            stock["_RS_6M_value"] = rs_6m
+            rs_values_6m.append(rs_6m)
+        else:
+            stock["RS_6M"] = "IPO"
+
+    # ------------------- Calculate Percentiles -------------------
+    rs_values_3m.sort()
+    rs_values_6m.sort()
+    total_3m = len(rs_values_3m)
+    total_6m = len(rs_values_6m)
+
+    for stock in stock_list:
+        if "_RS_3M_value" in stock:
+            rank = rs_values_3m.index(stock["_RS_3M_value"])
+            stock["RS_3M"] = round(rank / (total_3m - 1) * 99)  # scale 0-99
+        if "_RS_6M_value" in stock:
+            rank = rs_values_6m.index(stock["_RS_6M_value"])
+            stock["RS_6M"] = round(rank / (total_6m - 1)* 99)
+
+    print(f"📊 RS Rating calculated for 3M ({total_3m} stocks) and 6M ({total_6m} stocks)")
+    return stock_list
+
+
 # -------------------------------
 # MAIN FUNCTION
 # -------------------------------
@@ -269,6 +360,10 @@ def main():
     hist_map = build_historical_map(historical)
     updated_stocks = calculate_sma20(updated_stocks, hist_map, trade_date)
     updated_stocks = calculate_tomcap(updated_stocks)
+
+    # 1️⃣1️⃣ Calculate RS Ratings (3M & 6M) — NEW
+    updated_stocks = rsrating(updated_stocks, hist_map, trade_date)
+    print(f"📈 RS Rating (3M & 6M) added to stocks")
 
     save_json_file(updated_stocks, CONFIG["output_file"])
     print(f"🎯 Process complete. Final count: {len(updated_stocks)} stocks written to {CONFIG['output_file']}")

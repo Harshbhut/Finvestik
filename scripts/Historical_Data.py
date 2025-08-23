@@ -22,7 +22,7 @@ API_BASE = "https://api.upstox.com/v3/historical-candle"
 API_DELAY_SECONDS = 0.2
 RETRY_COUNT = 3
 RETRY_BACKOFF = 2
-MAX_CANDLES = 55
+MAX_CANDLES = 200
 FORCE_FULL_FETCH = "N"  # Set to "Y" to force full fetch on any day
 
 today = datetime.today().date()
