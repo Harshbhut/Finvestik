@@ -211,7 +211,7 @@ def calculate_sma20(stock_list, historical_map, trade_date):
         ]
 
         # Need at least 10 data points to calculate SMA20
-        if len(values) >= 5:
+        if len(values) >= 1:
             stock["TurnoverSMA20"] = round(sum(values) / len(values), 2)
             count += 1
         else:
