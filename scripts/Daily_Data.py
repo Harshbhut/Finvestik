@@ -250,14 +250,14 @@ def rsrating(stock_list: List[Dict[str, Any]], historical_map: Dict[str, List[Li
     for stock in stock_list:
         inecode = stock.get("INECODE", "").strip().upper()
         if not inecode or inecode not in historical_map:
-            stock["RS_3M"] = "IPO"
-            stock["RS_6M"] = "IPO"
+            stock["RS_3M"] = 100
+            stock["RS_6M"] = 100
             continue
 
         candles = historical_map[inecode]
         if not candles or len(candles[0]) < 5:
-            stock["RS_3M"] = "IPO"
-            stock["RS_6M"] = "IPO"
+            stock["RS_3M"] =  100
+            stock["RS_6M"] =  100
             continue
 
         # ------------------- Determine starting point -------------------
@@ -273,8 +273,8 @@ def rsrating(stock_list: List[Dict[str, Any]], historical_map: Dict[str, List[Li
         # First price comes from Stock_universe (today's data)
         stock_close_today = stock.get("current_price", None)
         if stock_close_today is None:
-            stock["RS_3M"] = "IPO"
-            stock["RS_6M"] = "IPO"
+            stock["RS_3M"] =  100
+            stock["RS_6M"] =  100
             continue
 
         closes = [stock_close_today] + [c[3] for c in historical_slice if isinstance(c[3], (int, float))]
@@ -292,7 +292,7 @@ def rsrating(stock_list: List[Dict[str, Any]], historical_map: Dict[str, List[Li
             stock["_RS_3M_value"] = rs_3m
             rs_values_3m.append(rs_3m)
         else:
-            stock["RS_3M"] = "IPO"
+            stock["RS_3M"] =  100
 
         # ------------------- 6M Weighted RS -------------------
         days_6m = 120  # Approx 6 months = 120 trading days
@@ -304,7 +304,7 @@ def rsrating(stock_list: List[Dict[str, Any]], historical_map: Dict[str, List[Li
             stock["_RS_6M_value"] = rs_6m
             rs_values_6m.append(rs_6m)
         else:
-            stock["RS_6M"] = "IPO"
+            stock["RS_6M"] =  100
 
     # ------------------- Calculate Percentiles -------------------
     rs_values_3m.sort()
