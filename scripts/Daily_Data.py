@@ -166,10 +166,19 @@ def build_historical_map(historical_data: List[Dict[str, Any]]) -> Dict[str, Lis
         if "INECODE" in entry and "candles" in entry
     }
 
-def calculate_sma20(stock_list, historical_map):
-    count = 0
-    today_str = datetime.now().strftime("%Y-%m-%d")  # format to match candle date
+def get_latest_trade_date(live_data: Dict[str, Dict[str, Any]]) -> str:
+    """
+    Pick one datetime from live_data and return as YYYY-MM-DD
+    Assumes all strike API entries are for the same trading date.
+    """
+    for stock in live_data.values():
+        dt_str = stock.get("datetime")
+        if dt_str:
+            return datetime.fromisoformat(dt_str.replace("Z", "")).strftime("%Y-%m-%d")
+    return None
 
+def calculate_sma20(stock_list, historical_map, trade_date):
+    count = 0
     for stock in stock_list:
         inecode = stock.get("INECODE", "").strip().upper()
         base_turnover = stock.get("Turnover", None)
@@ -188,7 +197,7 @@ def calculate_sma20(stock_list, historical_map):
         first_candle_date = str(candles[0][0])[:10]
 
         # Decide which candles to use based on date check
-        if first_candle_date == today_str:
+        if first_candle_date == trade_date:
             # Today's data already in historical → skip first entry
             selected_candles = candles[1:20]
         else:
@@ -244,6 +253,9 @@ def main():
     strike_map = parse_strike_data(strike_json["data"])
     print(f"🌐 Fetched {len(strike_map)} stocks from Strike API")
 
+    trade_date = get_latest_trade_date(strike_map)
+    print(f"📅 Using trade date {trade_date} from Strike API")
+
     circuit_map = fetch_circuit_limits()
     print(f"📉 Fetched circuit limits for {len(circuit_map)} stocks")
 
@@ -255,7 +267,7 @@ def main():
         return
 
     hist_map = build_historical_map(historical)
-    updated_stocks = calculate_sma20(updated_stocks, hist_map)
+    updated_stocks = calculate_sma20(updated_stocks, hist_map, trade_date)
     updated_stocks = calculate_tomcap(updated_stocks)
 
     save_json_file(updated_stocks, CONFIG["output_file"])
