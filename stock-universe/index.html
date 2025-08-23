@@ -99,16 +99,22 @@
                     <p id="su-error" class="text-red-500 hidden"></p>
                     <p id="su-last-updated" class="text-xs ml-2 hidden"></p>
                 </div>
-                <div class="flex flex-wrap items-center justify-end gap-2 sm:gap-4">
+                <div class="flex flex-wrap items-center justify-end gap-2 sm:gap-4 relative">
                     <p id="su-row-count" class="text-xs sm:text-sm"></p>
+                    <div id="su-filters-button-container" class="relative">
+                        <button id="su-filters-button" class="btn btn-secondary" title="Filter stocks"><i class="fa fa-filter"></i><span class="hidden sm:inline ml-2">Filters</span></button>
+                        <div id="su-filters-panel" class="hidden"></div>
+                    </div>
+                    <div id="su-columns-button-container" class="relative">
+                        <button id="su-columns-button" class="btn btn-secondary" title="Show/Hide Columns"><i class="fa fa-columns"></i><span class="hidden sm:inline ml-2">Columns</span></button>
+                        <div id="su-columns-panel" class="hidden"></div>
+                    </div>
                     <button id="su-clear-filters-button" class="btn btn-secondary" title="Clear all filters and sorting"><i class="fa fa-eraser"></i><span class="hidden sm:inline ml-2">Clear</span></button>
                     <button id="su-insights-toggle-button" class="btn btn-primary" title="Toggle Insights Panel"><i class="fa fa-bar-chart"></i><span class="hidden sm:inline ml-2">Analyze</span></button>
-                    <!-- <button id="su-export-button" class="btn btn-primary" title="Export data as a ZIP with one file per sector"><i class="fa fa-download"></i><span class="hidden sm:inline ml-2">Download</span></button> -->
                     <button id="su-export-single-button" class="btn btn-primary" title="Export data as a single .txt file for all industries"><i class="fa fa-download"></i><span class="hidden sm:inline ml-2">Download</span></button>
                 </div>
             </div>
             
-            <!-- Skeleton Loader: Shown on initial load if no cache exists -->
             <div id="su-skeleton-loader">
                 <div class="table-container">
                     <table class="data-table min-w-full">
@@ -126,14 +132,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
                             <tr class="animate-pulse"><script>for(let i=0;i<15;i++){document.write(`<tr><td><div class="h-4 bg-slate-700 rounded w-3/4"></div></td><td><div class="h-4 bg-slate-700 rounded w-full"></div></td><td><div class="h-4 bg-slate-700 rounded w-1/2 ml-auto"></div></td><td><div class="h-4 bg-slate-700 rounded w-2/3 ml-auto"></div></td><td><div class="h-4 bg-slate-700 rounded w-3/4 ml-auto"></div></td><td><div class="h-4 bg-slate-700 rounded w-5/6 ml-auto"></div></td><td><div class="h-4 bg-slate-700 rounded w-1/2 ml-auto"></div></td><td><div class="h-4 bg-slate-700 rounded w-full"></div></td><td><div class="h-4 bg-slate-700 rounded w-full"></div></td></tr>`)}</script></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Main Container: Hidden until data is loaded -->
             <div id="su-container" class="su-container flex w-full hidden">
                 <div id="su-table-container" class="table-container flex-grow">
                     <table id="su-table" class="data-table min-w-full">
@@ -172,7 +176,6 @@
     <script src="/static/js/main.js" defer></script>
     <script src="/static/js/stock-universe.js" defer></script>
 
-    <!-- Chart Popup is common but loaded on SU page only for now -->
     <div id="chart-popup" class="hidden fixed content-card p-1 shadow-2xl z-50 w-[400px] h-[300px]"><div id="chart-popup-container" class="w-full h-full"></div></div>
 </body>
 </html>

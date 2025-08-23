@@ -243,9 +243,84 @@
       width: 100%; height: 36px; padding: 0 0.5rem; font-size: 0.75rem;
       background-color: var(--bg-primary);
   }
+  
+  /* Column Resizing */
   th.resizable { position: relative; }
   .resize-handle { position: absolute; top: 0; right: -4px; width: 8px; height: 100%; cursor: col-resize; z-index: 20; }
   .resize-handle.active { background-color: var(--accent-primary); opacity: 0.3; }
+
+  /* Columns Dropdown Panel */
+  #su-columns-panel {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    z-index: 60;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    max-height: 350px;
+    overflow-y: auto;
+    width: 220px;
+  }
+  .su-columns-item {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      user-select: none;
+  }
+  .su-columns-item:hover {
+      background-color: var(--bg-primary);
+  }
+  .su-columns-item input[type="checkbox"] {
+      margin-right: 0.75rem;
+      width: 1rem;
+      height: 1rem;
+      accent-color: var(--accent-primary);
+  }
+  .su-columns-item label {
+      cursor: pointer;
+  }
+
+  /* NEW: Filters Panel */
+  #su-filters-panel {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    z-index: 60;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    width: 500px;
+    max-width: 90vw;
+  }
+  .su-filters-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .su-filters-group label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+  }
+  .su-filters-footer {
+    padding-top: 1rem;
+    margin-top: 1rem;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+  }
   
   /* Insights Panel */
   #su-container {
@@ -285,7 +360,6 @@
       transition: width 0.3s ease-in-out, min-width 0.3s ease-in-out, padding 0.3s ease-in-out, opacity 0.2s ease-in-out;
   }
 
-  /* Define the 'closed' state for the panel and its resizer */
   #su-chart-panel.is-closed {
       width: 0px;
       min-width: 0px;
@@ -369,8 +443,6 @@
   .result-value.red { color: var(--text-negative); }
   .result-value.neutral { color: var(--text-secondary); }
   
-  
-  /* --- Fix for Mobile View: Hide Insights Panel --- */
   @media (max-width: 639px) { 
     #su-chart-panel, #su-panel-resizer {
       display: none !important;
