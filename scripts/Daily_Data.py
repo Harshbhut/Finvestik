@@ -288,7 +288,7 @@ def rsrating(stock_list: List[Dict[str, Any]], historical_map: Dict[str, List[Li
             ret_1m = (closes[0] / closes[days_1m] - 1) * 100
             ret_2m = (closes[0] / closes[days_2m] - 1) * 100
             ret_3m = (closes[0] / closes[days_3m] - 1) * 100
-            rs_3m = 0.45 * ret_1m + 0.3 * ret_2m + 0.25 * ret_3m
+            rs_3m = 0.40 * ret_1m + 0.35 * ret_2m + 0.25 * ret_3m
             stock["_RS_3M_value"] = rs_3m
             rs_values_3m.append(rs_3m)
         else:
@@ -297,10 +297,10 @@ def rsrating(stock_list: List[Dict[str, Any]], historical_map: Dict[str, List[Li
         # ------------------- 6M Weighted RS -------------------
         days_6m = 120  # Approx 6 months = 120 trading days
         if len(closes) >= days_6m:
-            #ret_1m_6 = (closes[0] / closes[days_1m] - 1) * 100
-            #ret_3m_6 = (closes[0] / closes[days_3m] - 1) * 100
+            ret_1m_6 = (closes[0] / closes[days_1m] - 1) * 100
+            ret_3m_6 = (closes[0] / closes[days_3m] - 1) * 100
             ret_6m = (closes[0] / closes[days_6m] - 1) * 100
-            rs_6m = 0.4 * ret_1m + 0.35 * ret_3m + 0.25 * ret_6m
+            rs_6m = 0.4 * ret_1m_6 + 0.35 *  ret_3m_6 + 0.25 * ret_6m
             stock["_RS_6M_value"] = rs_6m
             rs_values_6m.append(rs_6m)
         else:

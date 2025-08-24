@@ -44,8 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
         { key: "Down from 52W High (%)", displayName: "52WH ↓ ", isVisible: true, isSortable: true,isFilterable: true, filterType: 'text', formatter: formatPrice, defaultWidth: '100px', cellClass: 'text-right', placeholder: '<25' },
         { key: "Up from 52W Low (%)", displayName: "52WL ↑", isVisible: false, isSortable: true,isFilterable: true, filterType: 'text', formatter: formatPrice, defaultWidth: '100px', cellClass: 'text-right', placeholder: '>50' },
         { key: "Tomcap", displayName: "Tomcap %", isVisible: false, isSortable: true,isFilterable: true, filterType: 'text', formatter: formatPrice, defaultWidth: '100px', cellClass: 'text-right', placeholder: '<1,>0.3' },
-        { key: "RS_3M", displayName: "RS 3M", isVisible: true, isSortable: true,isFilterable: true, filterType: 'text', formatter: formatPrice, defaultWidth: '100px', cellClass: 'text-right', placeholder: '>70' },
-        // { key: "RS_6M", displayName: "RS 6M", isVisible: true, isSortable: true,isFilterable: true, filterType: 'text', formatter: formatPrice, defaultWidth: '100px', cellClass: 'text-right', placeholder: '>50' },
+        { key: "RS_3M", displayName: "RS 3M", isVisible: true, isSortable: true,isFilterable: true, filterType: 'text', formatter: formatPrice, defaultWidth: '100px', cellClass: 'text-right', placeholder: '>70,>80' },
+        { key: "RS_6M", displayName: "RS 6M", isVisible: true, isSortable: true,isFilterable: true, filterType: 'text', formatter: formatPrice, defaultWidth: '100px', cellClass: 'text-right', placeholder: '>70,>30' },
         { key: "Sector Name", displayName: "Sector Name", isVisible: true, isSortable: true, isFilterable: true, filterType: 'dropdown', defaultWidth: '160px' }, 
         { key: "Industry Name", displayName: "Industry Name", isVisible: true, isSortable: true, isFilterable: true, filterType: 'dropdown', defaultWidth: '180px' },
     ];
