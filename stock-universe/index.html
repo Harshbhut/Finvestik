@@ -160,6 +160,14 @@
                         <div class="accordion-item"><button class="accordion-header" aria-expanded="false"><h3>A/D Ratio</h3><i class="fa fa-chevron-down accordion-icon"></i></button><div class="accordion-content"><div class="grid grid-cols-5 gap-x-2 items-center text-xs p-2 rounded-md mb-2" style="background-color: var(--bg-secondary);"><label class="chart-panel-label col-span-2" for="su-chart-min-up">Min Up % (>=):</label><label class="chart-panel-label col-span-2" for="su-chart-min-down">Min Down % (<=):</label><div class="col-span-1"></div><input type="text" id="su-chart-min-up" inputmode="decimal" class="chart-panel-input text-center w-full col-span-2" placeholder="Any" aria-label="Minimum Up Percentage"><input type="text" id="su-chart-min-down" inputmode="decimal" class="chart-panel-input text-center w-full col-span-2" placeholder="Any" aria-label="Minimum Down Percentage"><button id="su-chart-ad-clear-button" class="local-clear-button" aria-label="Clear Min Up/Down filters"><i class="fa fa-eraser"></i></button></div><div id="su-chart-ad-ratio" class="chart-container"></div></div></div>
                         <div class="accordion-item"><button class="accordion-header" aria-expanded="false"><h3>Market Movers</h3><i class="fa fa-chevron-down accordion-icon"></i></button><div class="accordion-content"><div id="su-chart-avg-gain" class="chart-container"></div></div></div>
                         <div class="accordion-item"><button class="accordion-header" aria-expanded="false"><h3>52W High Range</h3><i class="fa fa-chevron-down accordion-icon"></i></button><div class="accordion-content"><div class="grid grid-cols-5 gap-x-2 items-center text-xs p-2 rounded-md mb-2" style="background-color: var(--bg-secondary);"><label class="chart-panel-label col-span-2" for="su-chart-wh-range">% From High (<=):</label><div class="col-span-3"><input type="text" id="su-chart-wh-range" inputmode="decimal" class="chart-panel-input text-center w-full" placeholder="e.g. 25" aria-label="Percentage from 52-week high filter"></div></div><div id="su-chart-52w-high" class="chart-container"></div></div></div>
+                        <div class="accordion-item">
+                            <button class="accordion-header" aria-expanded="false">
+                                <h3>RS Rank</h3><i class="fa fa-chevron-down accordion-icon"></i>
+                            </button>
+                            <div class="accordion-content">
+                                <div id="su-chart-rs-rank" class="chart-container"></div>
+                            </div>
+                        </div>
                     </div>
                 </aside>
             </div>

@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     suFiltersButton, suFiltersPanel, suColumnsButton, suColumnsPanel,
     suChartGroupBy, suChartWhRange, suChartMinStocks, suChartMinUp, suChartMinDown, suChartADClearButton,
     suChartAccordionContainer, chart52wHighContainer, chartAvgGainContainer, chartAdRatioContainer,
-    chartPopup, chartPopupContainer;
+    chartPopup, chartPopupContainer,chartRsRankContainer;
         
     let fullStockData = [], suCurrentColumnOrder = [], suColumnWidths = {}, suColumnVisibility = {}, currentlyDisplayedSUData = [], isStockDataLoaded = false;
     let suCurrentSort = { key: 'Market Cap', order: 'desc' };
@@ -420,9 +420,20 @@ const initializeSortable = () => {
         const tableGroups = groupData(tableData, groupBy);
         let chartGroups = Object.values(tableGroups).filter(g => g.stocks.length >= (minStocks || 0));
         chartGroups.forEach(g => {
-            g.totalInTable = g.stocks.length; g.sumChange = 0; g.advancers = 0; g.decliners = 0; g.nearHigh = 0;
-            g.stocks.forEach(s => { const change = s['change_percentage']; const down52w = s['Down from 52W High (%)']; if (typeof change === 'number') { g.sumChange += change; if (change >= (minUp !== null ? minUp : 0.0001)) g.advancers++; if (change <= (minDown !== null ? minDown : -0.0001)) g.decliners++; } if (typeof down52w === 'number' && (whRange === null || down52w <= whRange)) g.nearHigh++; });
+            g.totalInTable = g.stocks.length; g.sumChange = 0; g.advancers = 0; g.decliners = 0; g.nearHigh = 0; g.sumRsRank = 0;
+            g.stocks.forEach(s => { const change = s['change_percentage']; const down52w = s['Down from 52W High (%)']; const rsRank = s['RS_3M']; if (typeof change === 'number') { g.sumChange += change; if (change >= (minUp !== null ? minUp : 0.0001)) g.advancers++; if (change <= (minDown !== null ? minDown : -0.0001)) g.decliners++; } if (typeof down52w === 'number' && (whRange === null || down52w <= whRange)) g.nearHigh++; if (typeof rsRank === 'number') g.sumRsRank += rsRank;  });
             g.avgChange = g.totalInTable > 0 ? g.sumChange / g.totalInTable : 0; g.adRatio = g.decliners > 0 ? g.advancers / g.decliners : (g.advancers > 0 ? Infinity : 1); g.nearHighPercent = g.totalInTable > 0 ? (g.nearHigh / g.totalInTable) * 100 : 0;
+            // --- MODIFIED RS LOGIC STARTS HERE ---
+            // 1. Create a new list of stocks, excluding any where RS_3M is 100.
+            const rsStocks = g.stocks.filter(s => typeof s['RS_3M'] === 'number' && s['RS_3M'] !== 100);
+            
+            // 2. Get the count and sum from this new, filtered list.
+            g.rsStockCount = rsStocks.length;
+            g.sumRsRank = rsStocks.reduce((sum, s) => sum + s['RS_3M'], 0);
+            
+            // 3. Calculate the average using the new count and sum.
+            g.avgRsRank = g.rsStockCount > 0 ? g.sumRsRank / g.rsStockCount : 0;
+            // --- MODIFIED RS LOGIC ENDS HERE ---
         });
         const adData = [...chartGroups].sort((a, b) => b.adRatio - a.adRatio); const maxAdRatio = Math.max(1, ...adData.filter(d => isFinite(d.adRatio)).map(d => d.adRatio));
         adData.forEach(d => { d.percentageWidth = d.adRatio === Infinity ? 100 : Math.min(100, 10 + (d.adRatio / (maxAdRatio || 1)) * 90) });
@@ -432,6 +443,13 @@ const initializeSortable = () => {
         renderBarChart(chartAvgGainContainer, avgGainData, { valueFormatter: d => `${d.avgChange.toFixed(2)}%`, titleFormatter: d => `${d.name}: Avg. Change ${d.avgChange.toFixed(2)}%`, subLabelFormatter: d => `(${d.totalInTable})` });
         const high52wData = [...chartGroups].sort((a, b) => b.nearHighPercent - a.nearHighPercent); high52wData.forEach(d => d.percentageWidth = d.nearHighPercent);
         renderBarChart(chart52wHighContainer, high52wData, { valueFormatter: d => whRange === null ? 'N/A' : `${d.nearHighPercent.toFixed(1)}%`, titleFormatter: d => whRange === null ? 'Enter a "% From High" value' : `${d.name}: ${d.nearHigh} of ${d.totalInTable} stocks (${d.nearHighPercent.toFixed(2)}%)`, subLabelFormatter: d => whRange === null ? '' : `(${d.nearHigh}/${d.totalInTable})` });
+        const rsRankData = [...chartGroups].sort((a, b) => b.avgRsRank - a.avgRsRank);
+        rsRankData.forEach(d => d.percentageWidth = d.avgRsRank); 
+        renderBarChart(chartRsRankContainer, rsRankData, {
+        valueFormatter: d => d.avgRsRank.toFixed(1),
+        titleFormatter: d => `${d.name}: Avg. RS Rank ${d.avgRsRank.toFixed(2)} (${d.rsStockCount} stocks)`,
+        subLabelFormatter: d => `(${d.rsStockCount})`
+        });
     };
     const renderBarChart = (container, chartData, { valueFormatter, titleFormatter, subLabelFormatter }) => {
         container.innerHTML = '';
@@ -564,7 +582,7 @@ const initializeSortable = () => {
         suFiltersButton=document.getElementById('su-filters-button');suFiltersPanel=document.getElementById('su-filters-panel');suColumnsButton=document.getElementById('su-columns-button');suColumnsPanel=document.getElementById('su-columns-panel');
         suChartGroupBy=document.getElementById('su-chart-group-by');suChartMinStocks=document.getElementById('su-chart-min-stocks');
         suChartWhRange=document.getElementById('su-chart-wh-range'); suChartMinUp=document.getElementById('su-chart-min-up'); suChartMinDown=document.getElementById('su-chart-min-down'); suChartADClearButton = document.getElementById('su-chart-ad-clear-button');
-        suChartAccordionContainer = document.getElementById('su-chart-accordion-container'); chart52wHighContainer = document.getElementById('su-chart-52w-high'); chartAvgGainContainer = document.getElementById('su-chart-avg-gain'); chartAdRatioContainer = document.getElementById('su-chart-ad-ratio');
+        suChartAccordionContainer = document.getElementById('su-chart-accordion-container'); chart52wHighContainer = document.getElementById('su-chart-52w-high'); chartAvgGainContainer = document.getElementById('su-chart-avg-gain'); chartAdRatioContainer = document.getElementById('su-chart-ad-ratio');chartRsRankContainer = document.getElementById('su-chart-rs-rank');
         chartPopup=document.getElementById('chart-popup');chartPopupContainer=document.getElementById('chart-popup-container');
         suSkeletonLoader = document.getElementById('su-skeleton-loader'); suLastUpdated = document.getElementById('su-last-updated');
 
