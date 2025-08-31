@@ -492,14 +492,63 @@ const initializeSortable = () => {
             else { header.classList.remove('active'); header.setAttribute('aria-expanded', 'false'); content.style.maxHeight = null; content.classList.remove('open'); }
         });
     };
+    // const exportStockUniverseAsSingleFile = () => {
+    //     if(!currentlyDisplayedSUData||!currentlyDisplayedSUData.length){alert("No data to export.");return}
+    //     if(typeof saveAs==='undefined'){return} const inds={};
+    //     currentlyDisplayedSUData.forEach(s=>{const ind=s['Sector Name'],sym=s['Symbol'];if(!ind)return;if(!inds[ind]){inds[ind]=[];}inds[ind].push(sym);});
+    //     let fc=''; Object.keys(inds).sort().forEach(inm=>{const syms=inds[inm].join(',');fc+=`###${inm},${syms},\n`;});
+    //     const blob=new Blob([fc.trim()],{type:"text/plain;charset=utf-8"});
+    //     saveAs(blob,"Finvestik_Stocks.txt");
+    // };
+
     const exportStockUniverseAsSingleFile = () => {
-        if(!currentlyDisplayedSUData||!currentlyDisplayedSUData.length){alert("No data to export.");return}
-        if(typeof saveAs==='undefined'){return} const inds={};
-        currentlyDisplayedSUData.forEach(s=>{const ind=s['Sector Name'],sym=s['Symbol'];if(!ind)return;if(!inds[ind]){inds[ind]=[];}inds[ind].push(sym);});
-        let fc=''; Object.keys(inds).sort().forEach(inm=>{const syms=inds[inm].join(',');fc+=`###${inm},${syms},\n`;});
-        const blob=new Blob([fc.trim()],{type:"text/plain;charset=utf-8"});
-        saveAs(blob,"Finvestik_Stocks.txt");
+        if(!currentlyDisplayedSUData || !currentlyDisplayedSUData.length){
+            alert("No data to export.");
+            return;
+        }
+        // Also check if JSZip is loaded, as it's now required
+        if(typeof saveAs === 'undefined' || typeof JSZip === 'undefined'){
+            alert("A required library has not loaded yet. Please wait a moment and try again.");
+            return;
+        }
+
+        // --- 1. Content for the FIRST file: Grouped by Sector (Existing Logic) ---
+        const sectors = {};
+        currentlyDisplayedSUData.forEach(s => {
+            const sector = s['Sector Name'];
+            const sym = s['Symbol'];
+            if(!sector) return;
+            if(!sectors[sector]) { sectors[sector] = []; }
+            sectors[sector].push(sym);
+        });
+
+        let sectorFileContent = ''; 
+        Object.keys(sectors).sort().forEach(sectorName => {
+            const syms = sectors[sectorName].join(',');
+            sectorFileContent += `###${sectorName},${syms},\n`;
+        });
+
+
+        // --- 2. Content for the NEW file: Simple Comma-Separated List ---
+        const allSymbolsList = currentlyDisplayedSUData.map(stock => stock['Symbol']);
+        const simpleFileContent = allSymbolsList.join(',');
+
+
+        // --- 3. Create a ZIP file and add both files to it ---
+        const zip = new JSZip();
+
+        // Add the sector-grouped file
+        zip.file("Stocks_By_Sector.txt", sectorFileContent.trim());
+        
+        // Add the simple list file
+        zip.file("All_Stocks_List.txt", simpleFileContent);
+
+        // --- 4. Generate the ZIP and trigger the download ---
+        zip.generateAsync({type:"blob"}).then(function(content) {
+            saveAs(content, "Finvestik_Stock_Lists.zip");
+        });
     };
+    
     const handleChartBarClick = (event) => {
         const bar = event.target.closest('.chart-bar-item'); if(!bar||!bar.dataset.groupKey)return;
         const groupKeyName = suFilters.chart.groupBy; const groupValue = bar.dataset.groupKey;
