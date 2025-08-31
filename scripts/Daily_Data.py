@@ -24,7 +24,7 @@ CONFIG = {
     "output_file": os.path.join(STATIC_DATA_DIR, "stock_universe.json"),
     "OUTPUT_VERSION_FILE": os.path.join(STATIC_DATA_DIR, "data_version.json"),
     # "strike_api_url": "https://api.strike.money/v1/api/marketdata/current-activity", 
-    "strike_api_url": "https://api.strike.money/v1/api/marketdata/current-activity?lastTradedTime=2025-08-29T10:49:59" # Live stock data
+    "strike_api_url": "https://api.strike.money/v1/api/marketdata/current-activity?lastTradedTime=2025-08-29T10:49:59", # Live stock data
     "circuit_api_url": "https://api-v2.strike.money/v2/api/equity/last-traded-state?securities=EQ%3A*",  # Circuit limit data
     "user_agents": [
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/114.0.0.0 Safari/537.36",
