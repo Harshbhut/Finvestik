@@ -285,7 +285,7 @@ def rsrating(stock_list: List[Dict[str, Any]], historical_map: Dict[str, List[Li
         days_2m = 42   # Approx 2 months = 40 trading days
         days_3m = 65   # Approx 3 months = 60 trading days
 
-        if len(closes) >= days_3m:
+        if len(closes) > days_3m:
             ret_1m = (closes[0] / closes[days_1m] - 1) * 100
             ret_2m = (closes[0] / closes[days_2m] - 1) * 100
             ret_3m = (closes[0] / closes[days_3m] - 1) * 100
@@ -297,7 +297,7 @@ def rsrating(stock_list: List[Dict[str, Any]], historical_map: Dict[str, List[Li
 
         # ------------------- 6M Weighted RS -------------------
         days_6m = 120  # Approx 6 months = 120 trading days
-        if len(closes) >= days_6m:
+        if len(closes) > days_6m:
             ret_1m_6 = (closes[0] / closes[days_1m] - 1) * 100
             ret_3m_6 = (closes[0] / closes[days_3m] - 1) * 100
             ret_6m = (closes[0] / closes[days_6m] - 1) * 100
