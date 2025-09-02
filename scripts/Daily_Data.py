@@ -187,12 +187,12 @@ def calculate_change_percentage(stock_list: List[Dict[str, Any]], historical_map
         today_price = stock.get("current_price")
 
         if not inecode or today_price is None or inecode not in historical_map:
-            stock["change_percentage"] = None
+            stock["change_percentage"] = 0.00
             continue
 
         candles = historical_map[inecode]
         if not candles or not isinstance(candles[0], list) or len(candles[0]) < 5:
-            stock["change_percentage"] = None
+            stock["change_percentage"] = 0.00
             continue
         
         # Historical candle date
@@ -211,7 +211,7 @@ def calculate_change_percentage(stock_list: List[Dict[str, Any]], historical_map
             stock["change_percentage"] = change_pct
             count += 1
         else:
-            stock["change_percentage"] = None
+            stock["change_percentage"] = 0.00
 
     print(f"📊 Change % calculated for {count} stocks")
     return stock_list
