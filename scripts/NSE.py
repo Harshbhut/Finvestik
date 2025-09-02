@@ -27,7 +27,7 @@ with gzip.GzipFile(fileobj=response.raw) as gz, open(output_path, "w", encoding=
         if (
             obj.get("exchange") == "NSE"
             and obj.get("lot_size") == 1
-            and (obj.get("instrument_type") == "EQ" or obj.get("instrument_type") == "BE")
+            and (obj.get("instrument_type") == "EQ" or obj.get("instrument_type") == "BE" or obj.get("instrument_type") == "BZ")
         ):
             if not first:
                 out_file.write(",\n")
