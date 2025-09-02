@@ -14,7 +14,9 @@ API2_BASE_URL = "https://api.stockedge.com/Api/industryDashboardApi/GetIndustryP
 API3_SECURITY_INFO_URL = "https://api.stockedge.com/Api/SecurityDashboardApi/GetLatestSecurityInfo/{security_id}?lang=en"
 
 API_CALL_DELAY = 0.1
-OUTPUT_JSON_FILE = os.path.join(os.getcwd(), "Sector_Industry.json")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+OUTPUT_JSON_FILE = os.path.join(BASE_DIR, "Sector_Industry.json")
 
 USER_AGENTS = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/114.0.0.0 Safari/537.36",
@@ -85,6 +87,9 @@ def map_inecodes_from_json(stocks_data, nse_json_file_path):
         if matched_ine and current_ine != matched_ine:
             stock["INECODE"] = matched_ine
             updated_count += 1
+        else:
+            # Not found in NSE.json → set to placeholder
+            stock["INECODE"] = "XXXXXXXXXXXX"
 
     print(f"✅ INECODE mapping complete. Updated {updated_count} entries.")
     return stocks_data, updated_count
@@ -112,7 +117,7 @@ security_id_to_stock = {stock["SecurityID"]: stock for stock in all_stocks_data 
 # Append INECODE from NSE.json
 # -------------------------------
 
-csv_file_path = os.path.join(os.getcwd(), "NSE.json")
+csv_file_path = os.path.join(BASE_DIR, "NSE.json")
 all_stocks_data, updated_ine_count = map_inecodes_from_json(all_stocks_data, csv_file_path)
 save_json_file(all_stocks_data, OUTPUT_JSON_FILE)
 
