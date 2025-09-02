@@ -191,20 +191,20 @@ def calculate_change_percentage(stock_list: List[Dict[str, Any]], historical_map
             continue
 
         candles = historical_map[inecode]
-        if not candles or not isinstance(candles[0], list) or len(candles[0]) < 4:
+        if not candles or not isinstance(candles[0], list) or len(candles[0]) < 5:
             stock["change_percentage"] = None
             continue
-
+        
         # Historical candle date
         first_candle_date = str(candles[0][0])[:10]
 
         if first_candle_date == trade_date and len(candles) > 1:
             # Today already in historical → yesterday = 2nd candle
-            yesterday_close = candles[1][3]
+            yesterday_close = candles[1][4]
         else:
             # Today not in historical → yesterday = 1st candle
-            yesterday_close = candles[0][3]
-
+            yesterday_close = candles[0][4]
+        
         # Compute change percentage
         if isinstance(yesterday_close, (int, float)) and yesterday_close != 0:
             change_pct = round((today_price - yesterday_close) / yesterday_close * 100, 2)
