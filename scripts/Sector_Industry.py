@@ -88,7 +88,7 @@ def map_inecodes_from_json(stocks_data, nse_json_file_path):
             stock["INECODE"] = matched_ine
             updated_count += 1
         else:
-            # Not found in NSE.json → set to placeholder
+            #Not found in NSE.json → set to placeholder
             stock["INECODE"] = "XXXXXXXXXXXX"
 
     print(f"✅ INECODE mapping complete. Updated {updated_count} entries.")
