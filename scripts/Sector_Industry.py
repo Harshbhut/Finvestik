@@ -81,10 +81,6 @@ def map_inecodes_from_json(stocks_data, nse_json_file_path):
     for stock in stocks_data:
         current_ine = stock.get("INECODE", "").strip().upper()
         symbol = stock.get("Symbol", "").strip().upper()
-
-        if current_ine.startswith("INE"):  # already valid
-            continue
-
         matched_ine = symbol_to_inecode.get(symbol, "")
         if matched_ine and current_ine != matched_ine:
             stock["INECODE"] = matched_ine
@@ -98,7 +94,7 @@ def map_inecodes_from_json(stocks_data, nse_json_file_path):
 # Accept command-line mode arg
 # -------------------------------
 # [MODIFIED]: Replaced interactive input() with sys.argv
-update_mode = sys.argv[1].strip().lower() if len(sys.argv) > 1 else "mcap"
+update_mode = sys.argv[1].strip().lower() if len(sys.argv) > 1 else "full"
 if update_mode not in ["mcap", "full"]:
     print("❌ Invalid mode. Use 'mcap' or 'full'.")
     exit()
