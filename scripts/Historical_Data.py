@@ -23,7 +23,7 @@ API_DELAY_SECONDS = 0.2
 RETRY_COUNT = 3
 RETRY_BACKOFF = 2
 MAX_CANDLES = 200
-FORCE_FULL_FETCH = "Y"  # Set to "Y" to force full fetch on any day
+FORCE_FULL_FETCH = "N"  # Set to "Y" to force full fetch on any day
 
 today = datetime.today().date()
 #is_sunday = datetime.today().weekday() == 6
@@ -231,4 +231,5 @@ if failures:
     print(f"🔴 Failed: {len(failures)} → {', '.join(failures)}")
 else:
     print("✅ All fetches succeeded.")
+
 
