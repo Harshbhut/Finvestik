@@ -14,18 +14,15 @@ from typing import List, Dict, Any, Optional
 # CONFIGURATION
 # -------------------------------
 
-# At the top of your script, after CONFIG:
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))  # Folder where script is located
 STATIC_DATA_DIR = os.path.join(SCRIPT_DIR, "..", "static", "data")  # Go one level up to repo root
 
 CONFIG = {
-    "sector_input_file": os.path.join(SCRIPT_DIR, "Sector_Industry.json") ,  # Input file containing stock list with sector & industry
-    "historical_file": os.path.join(SCRIPT_DIR, "stock_historical_universe.json"),  # Input file with historical turnover data
+    "sector_input_file": os.path.join(SCRIPT_DIR, "Sector_Industry.json"),
+    "historical_file": os.path.join(SCRIPT_DIR, "stock_historical_universe.json"),
     "output_file": os.path.join(STATIC_DATA_DIR, "stock_universe.json"),
     "OUTPUT_VERSION_FILE": os.path.join(STATIC_DATA_DIR, "data_version.json"),
-    "strike_api_url": "https://api.strike.money/v1/api/marketdata/current-activity", 
-    # "strike_api_url": "https://api.strike.money/v1/api/marketdata/current-activity?lastTradedTime=2025-08-29T10:49:59", # Live stock data
-    "circuit_api_url": "https://api-v2.strike.money/v2/api/equity/last-traded-state?securities=EQ%3A*",  # Circuit limit data
+    "strike_api_url": "https://api-v2a.strike.money/v2/api/equity/last-traded-state?securities=EQ%3A*&onlyFaoStocks=false&",
     "user_agents": [
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/114.0.0.0 Safari/537.36",
         "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/111.0.0.0 Safari/537.36"
@@ -34,24 +31,20 @@ CONFIG = {
     "internal_fields": ["SecurityID", "ListingID", "SME Stock?"]
 }
 
-STRIKE_FIELDS = [
-    "open", "high", "low", "current_price", "day_open", "day_high", "day_low",
-    "previous_close", "change_percentage", "day_volume", "volume", "datetime",
-    "symbol", "security_code", "previous_date", "previous_day_open",
-    "previous_day_high", "previous_day_low", "fifty_two_week_high", "fifty_two_week_low"
-]
-
 STRIKE_FIELDS_TO_APPEND = [
-    "current_price", "day_open", "day_high", "day_low", "previous_close",
-    "change_percentage", "day_volume", "fifty_two_week_high", "fifty_two_week_low"
+    "current_price",
+    "day_open",
+    "day_high",
+    "day_low",
+    "day_volume",
+    "fifty_two_week_high",
+    "fifty_two_week_low",
+    "circuitLimit"
 ]
-
-# Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
 # -------------------------------
 # FILE & API HELPERS
 # -------------------------------
+
 def fetch_json_data(url: str, context_message: str = "", max_retries: int = 3) -> Optional[Dict[str, Any]]:
     for attempt in range(1, max_retries + 1):
         try:
@@ -72,61 +65,71 @@ def load_json_file(path: str) -> Optional[List[Dict[str, Any]]]:
     with open(path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
-def save_json_file(data: List[Dict[str, Any]], path: str):
+def save_json_file(data: Any, path: str):
     with open(path, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=2)
-    print(f"✅ Saved output to {path} with {len(data)} stocks")
+    logging.info(f"✅ Saved output to {path}")
 
 # -------------------------------
 # STEP 1: LOAD & FILTER BASE STOCK DATA
 # -------------------------------
+
 def filter_base_stocks(raw_data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     return [stock for stock in raw_data if stock.get("SME Stock?", "No") != "Yes" and stock.get("Market Cap", 1) != 0]
 
 # -------------------------------
-# STEP 2: GET LIVE DATA FROM STRIKE
+# STEP 2: GET LIVE DATA FROM STRIKE V2A
 # -------------------------------
-def parse_strike_data(raw_list: List[List[Any]]) -> Dict[str, Dict[str, Any]]:
-    symbol_index = STRIKE_FIELDS.index("symbol")
-    result = {}
-    for row in raw_list:
-        if not isinstance(row, list) or len(row) != len(STRIKE_FIELDS):
-            continue
-        if row[STRIKE_FIELDS.index("day_volume")] == 0:
-            continue
-        symbol = row[symbol_index].upper()
-        result[symbol] = {k: row[i] for i, k in enumerate(STRIKE_FIELDS)}
-    return result
 
-def fetch_circuit_limits() -> Dict[str, Any]:
-    response = fetch_json_data(CONFIG["circuit_api_url"], "Circuit Limit")
-    if not response or "data" not in response:
-        return {}
-    current_data = response["data"].get("current", {})
-    if "fields" not in current_data or "ticks" not in current_data:
-        return {}
+def parse_strike_data(raw_json: Dict[str, Any]) -> Dict[str, Dict[str, Any]]:
+    """
+    Parse Strike v2a API response into { SYMBOL: { normalized_fields } }.
+    Normalizes field names to match pipeline expectations.
+    """
     try:
-        circuit_index = current_data["fields"].index("circuitLimit")
-    except ValueError:
+        current = raw_json["data"]["current"]
+        fields = current["fields"]
+        ticks = current["ticks"]
+    except (KeyError, TypeError):
         return {}
+
     result = {}
-    for symbol, values in current_data["ticks"].items():
-        if isinstance(values, list) and values:
-            last_tick = values[-1]
-            if isinstance(last_tick, list) and len(last_tick) > circuit_index:
-                result[symbol.upper()] = last_tick[circuit_index]
+    for symbol, rows in ticks.items():
+        if not rows:
+            continue
+
+        last_row = rows[-1]
+        if not isinstance(last_row, list) or len(last_row) != len(fields):
+            continue
+
+        stock_data = dict(zip(fields, last_row))
+
+        # ✅ DayClose is the actual current price
+        result[symbol.upper()] = {
+            "datetime": stock_data.get("dateTime"),
+            "current_price": stock_data.get("dayClose"),
+            "day_open": stock_data.get("dayOpen"),
+            "day_high": stock_data.get("dayHigh"),
+            "day_low": stock_data.get("dayLow"),
+            "day_volume": stock_data.get("dayVolume"),
+            "fifty_two_week_high": stock_data.get("fiftyTwoWeekHigh"),
+            "fifty_two_week_low": stock_data.get("fiftyTwoWeekLow"),
+            "circuitLimit": stock_data.get("circuitLimit"),
+        }
     return result
 
 # -------------------------------
 # STEP 3: COMBINE BASE & LIVE DATA
 # -------------------------------
-def attach_live_data(base_stocks: List[Dict[str, Any]], live_data: Dict[str, Dict[str, Any]], circuit_map: Dict[str, Any]) -> List[Dict[str, Any]]:
+
+def attach_live_data(base_stocks: List[Dict[str, Any]], live_data: Dict[str, Dict[str, Any]]) -> List[Dict[str, Any]]:
     updated = []
     for stock in base_stocks:
         symbol = stock.get("Symbol", "").upper()
         if not symbol or symbol not in live_data:
             continue
         live = live_data[symbol]
+
         current_price = live.get("current_price")
         high_52w = live.get("fifty_two_week_high")
         low_52w = live.get("fifty_two_week_low")
@@ -150,8 +153,7 @@ def attach_live_data(base_stocks: List[Dict[str, Any]], live_data: Dict[str, Dic
         new_entry.update({
             "Down from 52W High (%)": down_from_52wh,
             "Up from 52W Low (%)": up_from_52wl,
-            "Turnover": turnover,
-            "circuitLimit": circuit_map.get(symbol, 0)
+            "Turnover": turnover
         })
 
         updated.append(new_entry)
@@ -177,6 +179,43 @@ def get_latest_trade_date(live_data: Dict[str, Dict[str, Any]]) -> str:
         if dt_str:
             return datetime.fromisoformat(dt_str.replace("Z", "")).strftime("%Y-%m-%d")
     return None
+
+def calculate_change_percentage(stock_list: List[Dict[str, Any]], historical_map: Dict[str, List[List[Any]]], trade_date: str):
+    count = 0
+    for stock in stock_list:
+        inecode = stock.get("INECODE", "").strip().upper()
+        today_price = stock.get("current_price")
+
+        if not inecode or today_price is None or inecode not in historical_map:
+            stock["change_percentage"] = None
+            continue
+
+        candles = historical_map[inecode]
+        if not candles or not isinstance(candles[0], list) or len(candles[0]) < 4:
+            stock["change_percentage"] = None
+            continue
+
+        # Historical candle date
+        first_candle_date = str(candles[0][0])[:10]
+
+        if first_candle_date == trade_date and len(candles) > 1:
+            # Today already in historical → yesterday = 2nd candle
+            yesterday_close = candles[1][3]
+        else:
+            # Today not in historical → yesterday = 1st candle
+            yesterday_close = candles[0][3]
+
+        # Compute change percentage
+        if isinstance(yesterday_close, (int, float)) and yesterday_close != 0:
+            change_pct = round((today_price - yesterday_close) / yesterday_close * 100, 2)
+            stock["change_percentage"] = change_pct
+            count += 1
+        else:
+            stock["change_percentage"] = None
+
+    print(f"📊 Change % calculated for {count} stocks")
+    return stock_list
+
 
 def calculate_sma20(stock_list, historical_map, trade_date):
     count = 0
@@ -342,28 +381,27 @@ def main():
     strike_json = fetch_json_data(CONFIG["strike_api_url"], "Strike API")
     if not strike_json or "data" not in strike_json:
         return
-    strike_map = parse_strike_data(strike_json["data"])
-    print(f"🌐 Fetched {len(strike_map)} stocks from Strike API")
+    strike_map = parse_strike_data(strike_json)
+    print(f"🌐 Parsed {len(strike_map)} stocks from Strike API")
+
+    updated_stocks = attach_live_data(filtered, strike_map)
+    print(f"🔧 Added live market data to {len(updated_stocks)} stocks")
 
     trade_date = get_latest_trade_date(strike_map)
     print(f"📅 Using trade date {trade_date} from Strike API")
 
-    circuit_map = fetch_circuit_limits()
-    print(f"📉 Fetched circuit limits for {len(circuit_map)} stocks")
-
-    updated_stocks = attach_live_data(filtered, strike_map, circuit_map)
-    print(f"🔧 Added live market data to {len(updated_stocks)} stocks")
-
-    historical = load_json_file(CONFIG["historical_file"])
-    if historical is None:
+    # Historical + analytics functions stay as-is...
+    historical = load_json_file(CONFIG["historical_file"]) 
+    if historical is None: 
         return
-
-    hist_map = build_historical_map(historical)
-    updated_stocks = calculate_sma20(updated_stocks, hist_map, trade_date)
+    
+    hist_map = build_historical_map(historical) 
+    updated_stocks = calculate_sma20(updated_stocks, hist_map, trade_date) 
     updated_stocks = calculate_tomcap(updated_stocks)
+    updated_stocks = calculate_change_percentage(updated_stocks, hist_map, trade_date)
 
-    # 1️⃣1️⃣ Calculate RS Ratings (3M & 6M) — NEW
-    updated_stocks = rsrating(updated_stocks, hist_map, trade_date)
+    # 1️⃣1️⃣ Calculate RS Ratings (3M & 6M) — NEW 
+    updated_stocks = rsrating(updated_stocks, hist_map, trade_date) 
     print(f"📈 RS Rating (3M & 6M) added to stocks")
 
     save_json_file(updated_stocks, CONFIG["output_file"])
@@ -373,8 +411,10 @@ def main():
     version_info = {"timestamp": current_timestamp_ms}
     save_json_file(version_info, CONFIG["OUTPUT_VERSION_FILE"])
     print(f"✅ Version file created at {CONFIG['OUTPUT_VERSION_FILE']} with timestamp {current_timestamp_ms}")
+
 # -------------------------------
 # ENTRY POINT
 # -------------------------------
+
 if __name__ == "__main__":
     main()
