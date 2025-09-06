@@ -14,7 +14,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # INPUT_JSON = "stock_universe.json"
 # OUTPUT_JSON = "stock_historical_universe.json"
 
-INPUT_JSON = os.path.join(BASE_DIR, "../static/data/stock_universe.json")
+#INPUT_JSON = os.path.join(BASE_DIR, "../static/data/stock_universe.json")
+INPUT_JSON = os.path.join(BASE_DIR, "Sector_Industry.json")
 OUTPUT_JSON = os.path.join(BASE_DIR, "stock_historical_universe.json")
 
 
@@ -110,10 +111,34 @@ def add_turnover(candle_list):
 print(f"🚀 Starting Historical_Data.py")
 # print(f"📆 Today: {today} | Mode: {'FORCED FULL' if force_mode else 'FULL (Sunday)' if is_sunday else 'INCREMENTAL'}\n")
 
-universe_data = load_json_file(INPUT_JSON)
-if universe_data is None:
-    print("❌ stock_universe.json not found.")
+universe_raw = load_json_file(INPUT_JSON)
+if universe_raw is None:
+    print(f"❌ {INPUT_JSON} not found or unreadable.")
     exit()
+
+# Normalize and filter entries: keep only valid Symbol + INECODE, skip placeholders like "XXXXXXXXXXXX"
+universe_data = []
+seen_symbols = set()
+for rec in universe_raw:
+    symbol = (rec.get("Symbol") or "").strip().upper()
+    inecode = (rec.get("INECODE") or "").strip().upper()
+
+    # Skip if missing symbol or inecode
+    if not symbol or not inecode:
+        continue
+
+    # Explicitly skip placeholder INECODEs (e.g., "XXXXXXXXXXXX") or non-INE codes
+    if inecode == "XXXXXXXXXXXX" or not inecode.startswith("INE"):
+        continue
+
+    # Deduplicate by symbol
+    if symbol in seen_symbols:
+        continue
+    seen_symbols.add(symbol)
+
+    universe_data.append({"Symbol": symbol, "INECODE": inecode})
+
+print(f"📥 Loaded {len(universe_data)} valid symbols from {INPUT_JSON} (skipped placeholders/invalid INECODEs).")
 
 historical_data = load_json_file(OUTPUT_JSON) or []
 historical_map = build_existing_candle_map(historical_data)
