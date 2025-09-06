@@ -128,7 +128,7 @@ for rec in universe_raw:
         continue
 
     # Explicitly skip placeholder INECODEs (e.g., "XXXXXXXXXXXX") or non-INE codes
-    if inecode == "XXXXXXXXXXXX" or not inecode.startswith("INE"):
+    if inecode == "XXXXXXXXXXXX":
         continue
 
     # Deduplicate by symbol
@@ -152,7 +152,7 @@ test_latest_date = None
 
 if not full_mode:
     for entry in historical_data:
-        if entry.get("INECODE", "").startswith("INE") and entry.get("candles"):
+        if entry.get("INECODE", "") and entry.get("candles"):
             test_ine = entry["INECODE"]
             test_latest_date = get_latest_date_from_existing(entry["candles"])
             break
@@ -181,7 +181,7 @@ for idx, stock in enumerate(universe_data, start=1):
     symbol = stock.get("Symbol", "").strip().upper()
     inecode = stock.get("INECODE", "").strip().upper()
 
-    if not inecode.startswith("INE"):
+    if not inecode :
         print(f"{idx}/{len(universe_data)} ⏭️ Skipping {symbol} (invalid INECODE)")
         skipped += 1
         continue

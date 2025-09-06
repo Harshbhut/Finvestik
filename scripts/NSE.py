@@ -1,41 +1,61 @@
 import requests
-import gzip
-import ijson
+import csv
 import json
-from decimal import Decimal
 import os
+import time
 
-# Custom encoder to handle Decimal
-class DecimalEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, Decimal):
-            return float(o)
-        return super().default(o)
+URL = "https://nsearchives.nseindia.com/content/equities/EQUITY_L.csv"
+OUTPUT = os.path.join(os.path.dirname(__file__), "NSE.json")
+TIMEOUT = (10, 60)  # (connect, read) seconds
 
-# Path to save in same folder as this script
-output_path = os.path.join(os.path.dirname(__file__), "NSE.json")
+# Browser-like headers so server treats request like a browser
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                  "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Accept": "text/csv, */*; q=0.01",
+}
 
-url = "https://assets.upstox.com/market-quote/instruments/exchange/NSE.json.gz"
-response = requests.get(url, stream=True)
-response.raise_for_status()
+def stream_csv_to_json(url, output_file):
+    print("Downloading (browser-like):", url)
+    resp = requests.get(url, stream=True, headers=HEADERS, timeout=TIMEOUT)
+    resp.raise_for_status()
 
-with gzip.GzipFile(fileobj=response.raw) as gz, open(output_path, "w", encoding="utf-8") as out_file:
-    out_file.write("[")
-    first = True
+    lines = resp.iter_lines(decode_unicode=True)
+    reader = csv.DictReader(lines)
 
-    for obj in ijson.items(gz, "item"):
-        if (
-            obj.get("exchange") == "NSE"
-            and obj.get("lot_size") == 1
-            and obj.get("isin","").startswith("INE")
-            and not obj.get("instrument_type", "").startswith(("N","Y","Z"))
-            #and (obj.get("instrument_type") == "EQ" or obj.get("instrument_type") == "BE" or obj.get("instrument_type") == "BZ")
-        ):
+    total = 0
+    with open(output_file, "w", encoding="utf-8") as out:
+        out.write("[")
+        first = True
+        for row in reader:
+            record = {}
+            for key, value in row.items():
+                if key is None:
+                    continue
+                val = (value or "").strip()
+                ku = key.strip().upper()
+                if ku == "SYMBOL":
+                    record["trading_symbol"] = val
+                elif ku == "ISIN NUMBER":
+                    record["isin"] = val
+                else:
+                    record[key.strip().lower().replace(" ", "_")] = val
+
             if not first:
-                out_file.write(",\n")
-            json.dump(obj, out_file, ensure_ascii=False, cls=DecimalEncoder)
+                out.write(",\n")
+            json.dump(record, out, ensure_ascii=False)
             first = False
+            total += 1
 
-    out_file.write("]")
+        out.write("]")
 
-print(f"✅ Filtered instruments saved to {output_path}")
+    resp.close()
+    print(f"✅ Done — processed {total} rows. Saved: {os.path.abspath(output_file)}")
+
+if __name__ == "__main__":
+    start = time.time()
+    try:
+        stream_csv_to_json(URL, OUTPUT)
+    except Exception as e:
+        print("ERROR:", e)
+    print(f"Time elapsed: {time.time() - start:.2f}s")

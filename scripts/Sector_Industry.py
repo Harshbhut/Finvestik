@@ -300,7 +300,12 @@ for sector in sectors_data:
     else:
         print(f"  ✅ No new stocks added for sector: {sector_name}. JSON file not re-saved for this sector.\n")
 
+    
+
 print(f"\n✅ Sector_Industry.py script completed.")
 print(f"Total new stocks added in this run: {total_new_stocks_added_this_run}.")
+csv_file_path = os.path.join(BASE_DIR, "NSE.json")
+all_stocks_data, updated_ine_count = map_inecodes_from_json(all_stocks_data, csv_file_path)
+save_json_file(all_stocks_data, OUTPUT_JSON_FILE)
 print(f"Total stocks in {OUTPUT_JSON_FILE}: {len(all_stocks_data)}.")
 print(f"File saved at: {OUTPUT_JSON_FILE}")
