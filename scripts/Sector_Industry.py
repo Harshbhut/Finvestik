@@ -101,96 +101,20 @@ def map_inecodes_from_json(stocks_data, nse_json_file_path):
 # Accept command-line mode arg
 # -------------------------------
 # [MODIFIED]: Replaced interactive input() with sys.argv
-update_mode = sys.argv[1].strip().lower() if len(sys.argv) > 1 else "full"
-if update_mode not in ["mcap", "full"]:
-    print("❌ Invalid mode. Use 'mcap' or 'full'.")
-    exit()
-
+update_mode = "full"
 print(f"\n🚀 Running Sector_Industry.py in mode: {update_mode.upper()}")
 all_stocks_data = load_json_file(OUTPUT_JSON_FILE)
 security_id_to_stock = {stock["SecurityID"]: stock for stock in all_stocks_data if stock.get("SecurityID")}
-
-# -------------------------------
-# Market Cap Update Only
-# -------------------------------
-
-
-# -------------------------------
-# Append INECODE from NSE.json
-# -------------------------------
 
 csv_file_path = os.path.join(BASE_DIR, "NSE.json")
 all_stocks_data, updated_ine_count = map_inecodes_from_json(all_stocks_data, csv_file_path)
 save_json_file(all_stocks_data, OUTPUT_JSON_FILE)
 
-if update_mode == 'mcap':
-    print("\n🔄 Starting Market Cap update mode...\n")
-    industry_map = {}
-    for entry in all_stocks_data:
-        industry_id = entry.get("Industry ID")
-        if not industry_id:
-            continue
-        if industry_id not in industry_map:
-            industry_map[industry_id] = []
-        industry_map[industry_id].append(entry)
-
-    updated_count = 0
-    for industry_id, entries in industry_map.items():
-        new_mcap_data = {}
-        page_num = 1
-        while True:
-            api2_url = API2_BASE_URL.format(industry_id=industry_id, page_num=page_num)
-            stock_page = fetch_json_data(api2_url, f"Industry ID {industry_id} Page {page_num}")
-            time.sleep(API_CALL_DELAY)
-
-            if not stock_page:
-                break
-            for stock in stock_page:
-                sid = stock.get("SecurityID")
-                mcap = stock.get("MCAP")
-                if sid and mcap is not None:
-                    new_mcap_data[sid] = mcap
-            if len(stock_page) < 20:
-                break
-            page_num += 1
-
-        if not new_mcap_data:
-            print(f"⚠️ No Market Cap data fetched for Industry {industry_id}\n")
-            continue
-
-        changes = 0
-        for stock in entries:
-            sid = stock.get("SecurityID")
-            if sid in new_mcap_data:
-                old_mcap = stock.get("Market Cap", "N/A")
-                stock["Market Cap"] = new_mcap_data[sid]
-                changes += 1
-
-        save_json_file(all_stocks_data, OUTPUT_JSON_FILE)
-        updated_count += changes
-
-    print(f"\n✅ Market Cap update completed. Total stocks updated: {updated_count}")
-    exit()
 
 # -------------------------------
 # Full Update Mode
 # -------------------------------
 print(f"🚀 Starting FULL update from API1+API2+API3...")
-# [Original full data extraction logic continues here as-is...]
-# No changes needed after this line.
-
-# (Rest of your original full mode logic is kept as-is and unchanged)
-
-
-
-
-# -------------------------------
-# Main Execution: Sector_Industry.py
-# -------------------------------
-print(f"🚀 Starting script: Sector_Industry.py")
-print(f"Output will be incrementally saved to: {OUTPUT_JSON_FILE}\n")
-
-
 
 all_stocks_data = load_json_file(OUTPUT_JSON_FILE)
 processed_security_ids = {stock.get("SecurityID") for stock in all_stocks_data if stock.get("SecurityID")}
