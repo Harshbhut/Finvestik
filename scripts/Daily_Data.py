@@ -317,7 +317,7 @@ def rsrating(stock_list: List[Dict[str, Any]], historical_map: Dict[str, List[Li
             stock["RS_6M"] =  100
             continue
 
-        closes = [stock_close_today] + [c[3] for c in historical_slice if isinstance(c[3], (int, float))]
+        closes = [stock_close_today] + [c[4] for c in historical_slice if isinstance(c[4], (int, float))]
 
         # ------------------- 3M Weighted RS -------------------
         days_1m = 21   # Approx 1 month = 20 trading days
