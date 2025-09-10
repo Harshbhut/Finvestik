@@ -12,8 +12,8 @@ on:
   # Runs on a schedule every 10 minutes during Indian market hours (Mon-Fri)
   # IST is UTC+5:30. Market hours 09:15-15:30 IST correspond to 03:45-10:00 UTC.
   schedule:
-    - cron: '*/10 3-9 * * 1-5'  # Every 10 min from 03:00 to 09:59 UTC
-    - cron: '0-10/10 10 * * 1-5' # Every 10 min from 10:00 to 10:10 UTC
+    #- cron: '*/10 3-9 * * 1-5'  # Every 10 min from 03:00 to 09:59 UTC
+    #- cron: '0-10/10 10 * * 1-5' # Every 10 min from 10:00 to 10:10 UTC
 
 jobs:
   build:
