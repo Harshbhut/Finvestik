@@ -34,7 +34,7 @@ jobs:
 
       - name: Run Chartink Script
         run: |
-          python scripts/chartink.py
+          python scripts/Chartink.py
 
       - name: Commit and Push Data File
         run: |
