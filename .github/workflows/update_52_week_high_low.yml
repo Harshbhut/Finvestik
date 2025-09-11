@@ -4,24 +4,24 @@ permissions:
   contents: write
 
 on:
-  # --- THIS IS THE CRITICAL CHANGE ---
-  # This workflow is now triggered by another workflow
+  # Trigger 1: When the other workflow completes
   workflow_run:
-    # Specifies which workflow to listen to by its 'name'
     workflows: ["Update Circuit Limit Data"]
-    # Specifies the event type to trigger on
     types:
       - completed
-  # --- END OF CHANGE ---
   
-  # We keep this so you can still run it manually for testing
+  # Trigger 2: Allows you to run it manually from the Actions tab
   workflow_dispatch:
 
 jobs:
   run-52-week-script:
-    # This 'if' condition is a best practice: it ensures the job only runs
-    # if the triggering workflow was successful.
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    # --- THIS IS THE CRITICAL CHANGE ---
+    # This job will now run if:
+    #   1. The event is 'workflow_dispatch' (a manual run)
+    #   OR
+    #   2. The triggering workflow ('workflow_run') was successful.
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    # --- END OF CHANGE ---
     
     runs-on: ubuntu-latest
     defaults:
