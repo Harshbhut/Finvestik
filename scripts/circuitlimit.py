@@ -8,12 +8,13 @@ from io import StringIO
 def download_and_process_band_data():
     """
     Downloads the NSE security list (circuit limits) CSV.
-    Uses a requests.Session to handle cookies and avoid being blocked.
+    Uses a robust requests.Session with default headers (including Referer)
+    to avoid being blocked by the server.
     """
     # --- Configuration ---
     BASE_URL = "https://nsearchives.nseindia.com/content/equities/sec_list_{date}.csv"
     MAX_RETRIES = 5
-    NSE_HOMEPAGE = "https://www.nseindia.com"
+    NSE_HOMEPAGE = "https://www.nseindia.com/" # The page we will claim to be "coming from"
 
     # --- Define Output Path ---
     try:
@@ -23,11 +24,14 @@ def download_and_process_band_data():
     
     output_file = os.path.join(script_dir, "Circuit_Limits.json")
 
-    # --- Headers ---
+    # --- UPDATED: More comprehensive headers to mimic a real browser ---
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.75 Safari/537.36',
+        'Accept': 'application/json, text/plain, */*',
         'Accept-Language': 'en-US,en;q=0.9',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Referer': NSE_HOMEPAGE, # <-- THE CRITICAL ADDITION
+        'Connection': 'keep-alive',
     }
     
     csv_content = None
@@ -35,12 +39,16 @@ def download_and_process_band_data():
 
     print("Attempting to download NSE security band data...")
 
-    # --- Use a Session object to persist cookies ---
+    # --- Use a Session object to persist cookies and headers ---
     with requests.Session() as s:
+        # THE FIX: Update the session with these headers.
+        # Every subsequent request made with 's' will now use them automatically.
+        s.headers.update(headers)
+
         # Step 1: "Warm up" the session by visiting the homepage to get cookies.
         try:
             print(f"Visiting NSE homepage to establish a session...")
-            s.get(NSE_HOMEPAGE, headers=headers, timeout=15)
+            s.get(NSE_HOMEPAGE, timeout=20)
             print("Session established successfully.")
         except requests.exceptions.RequestException as e:
             print(f"Could not visit NSE homepage to get cookies. Error: {e}")
@@ -54,7 +62,8 @@ def download_and_process_band_data():
             
             try:
                 print(f"Trying URL for {current_date.strftime('%Y-%m-%d')}: {url}")
-                response = s.get(url, headers=headers, timeout=15)
+                # We no longer need to pass headers here; the session handles it.
+                response = s.get(url, timeout=20) 
                 
                 if response.status_code == 200 and 'html' not in response.headers.get('Content-Type', ''):
                     print(f"Success! File found for date: {current_date.strftime('%Y-%m-%d')}")
@@ -76,15 +85,12 @@ def download_and_process_band_data():
             df = pd.read_csv(csv_file)
 
             df.columns = df.columns.str.strip().str.upper()
-            
             if 'SYMBOL' not in df.columns or 'BAND' not in df.columns:
-                raise ValueError("The required 'SYMBOL' or 'BAND' columns were not found in the CSV.")
+                raise ValueError("The required 'SYMBOL' or 'BAND' columns were not found.")
 
             df = df[['SYMBOL', 'BAND']]
             df['SYMBOL'] = df['SYMBOL'].str.strip()
-            df['BAND'] = df['BAND'].astype(str).str.strip()
-            
-            df['BAND'] = df['BAND'].replace('No Band', '0')
+            df['BAND'] = df['BAND'].astype(str).str.strip().replace('No Band', '0')
             df['BAND'] = pd.to_numeric(df['BAND'], errors='coerce')
 
             initial_rows = len(df)
@@ -92,7 +98,6 @@ def download_and_process_band_data():
             final_rows = len(df)
             print(f"Removed {initial_rows - final_rows} records with missing data.")
             
-            print("Converting final data to JSON...")
             records = df.to_dict(orient="records")
             output_data = {
                 "source_date": found_date_str,
