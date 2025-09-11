@@ -5,7 +5,8 @@ permissions:
 
 on:
   schedule:
-    - cron: '30 15 * * 1-6'  # 9:00 PM IST Mon–Sat
+    - cron: '30 15 * * 1-6' # 9:00 PM IST Mon–Sat
+    - cron: '0 3 * * 1-6' # 8:30 AM IST, Mon–Sat
   workflow_dispatch:
 
 jobs:
