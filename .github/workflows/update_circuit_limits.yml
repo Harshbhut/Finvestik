@@ -30,7 +30,7 @@ jobs:
 
       - name: 📦 Install dependencies
         run: |
-          pip install requests pandas numpy fake-useragent
+          pip install requests pandas numpy
 
       - name: 🚀 Run circuitlimit.py
         run: python circuitlimit.py
