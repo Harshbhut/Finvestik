@@ -30,7 +30,7 @@ jobs:
 
       - name: 📦 Install dependencies
         run: |
-          pip install requests ijson
+          pip install requests ijson pytz
 
       - name: 🚀 Run circuitlimit.py
         run: python circuitlimit.py
