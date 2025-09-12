@@ -30,7 +30,7 @@ jobs:
 
       - name: 📦 Install dependencies
         run: |
-          pip install requests ijson pytz
+          pip install nse datetime
 
       - name: 🚀 Run circuitlimit.py
         run: python circuitlimit.py
