@@ -30,7 +30,7 @@ jobs:
 
       - name: 📦 Install dependencies
         run: |
-          pip install nse datetime
+          pip install nse[server]
 
       - name: 🚀 Run circuitlimit.py
         run: python circuitlimit.py
