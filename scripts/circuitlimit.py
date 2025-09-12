@@ -4,16 +4,21 @@ import requests
 import pandas as pd
 from datetime import datetime, timedelta
 from io import StringIO
+from time import sleep
+from numpy import random
+from fake_useragent import UserAgent
 
 def download_and_process_band_data():
     """
-    Downloads the NSE security list CSV using a robust, two-header handshake
-    method to mimic a real browser and defeat advanced server protection.
+    Downloads the NSE security list using a robust, multi-pronged approach
+    to mimic a real browser and defeat advanced server protection.
     """
-    # --- Configuration ---
-    BASE_URL = "https://nsearchives.nseindia.com/content/equities/sec_list_{date}.csv"
+    # --- CRITICAL CONFIGURATION (from your reference code) ---
+    # 1. Using the correct LEGACY server URL
+    BASE_URL = "https://www1.nseindia.com/content/equities/sec_list_{date}.csv"
+    # 2. A legitimate page to visit to get initial cookies
+    NSE_INITIAL_URL = "https://www1.nseindia.com/products/content/equities/equities/eq_security.htm"
     MAX_RETRIES = 5
-    NSE_HOME_URL = "https://www.nseindia.com/"
 
     # --- Define Output Path ---
     try:
@@ -22,46 +27,44 @@ def download_and_process_band_data():
         script_dir = os.getcwd()
     output_file = os.path.join(script_dir, "Circuit_Limits.json")
 
-    # --- Header Sets (Inspired by your nselib reference code) ---
-    # A simple header to get the initial cookies
-    initial_header = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
-    }
-    
-    # A comprehensive header for the actual data download request
-    data_header = {
-        "Referer": "https://www.nseindia.com/",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-        "Accept-Language": "en-US,en;q=0.9,hi;q=0.8"
-    }
-
     csv_content = None
     found_date_str = ""
+    ua = UserAgent()
 
-    print("Attempting to download NSE security band data...")
-
-    # Use a Session object to persist cookies
+    # Create a session that will persist cookies and settings
     with requests.Session() as s:
-        # Step 1: "Warm up" the session by visiting the homepage with the simple header
+        # Step 1: "Warm-up" the session with a simple header to get initial cookies
+        initial_headers = {'User-Agent': ua.random}
         try:
-            print("Visiting NSE homepage to establish a session and get initial cookies...")
-            s.get(NSE_HOME_URL, headers=initial_header, timeout=20)
+            print("Visiting NSE page to establish a valid session...")
+            s.get(NSE_INITIAL_URL, headers=initial_headers, timeout=20)
             print("Session established successfully.")
         except requests.exceptions.RequestException as e:
-            print(f"Could not establish a valid session. Error: {e}")
-            return # Exit if we can't get cookies
+            print(f"Could not establish a session. Error: {e}")
+            return
 
-        # Step 2: Now, loop and try to download the data file using the COMPREHENSIVE header
+        # Step 2: Now try to download the file using the established session and advanced headers
+        print("\nAttempting to download NSE security band data...")
         for i in range(MAX_RETRIES):
+            # 3. Add a small, random delay to mimic human behavior
+            sleep(random.uniform(1, 2))
+            
             current_date = datetime.now() - timedelta(days=i)
-            date_str = current_date.strftime("%d%m%Y")
+            # The legacy server uses YY format (2-digit year)
+            date_str = current_date.strftime("%d%m%y") 
             url = BASE_URL.format(date=date_str)
             
             try:
+                # 4. Use a comprehensive header for the actual data request
+                data_header = {
+                    'User-Agent': ua.random,
+                    'Referer': NSE_INITIAL_URL, # Crucial: claim we came from a real page
+                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+                    'Accept-Language': 'en-US,en;q=0.9',
+                }
+                
                 print(f"Trying URL for {current_date.strftime('%Y-%m-%d')}: {url}")
-                # The session 's' has the cookies. Now we use the powerful data_header.
-                response = s.get(url, headers=data_header, timeout=15)
+                response = s.get(url, headers=data_header, timeout=20)
                 
                 if response.status_code == 200 and 'html' not in response.headers.get('Content-Type', ''):
                     print(f"Success! File found for date: {current_date.strftime('%Y-%m-%d')}")
@@ -75,7 +78,7 @@ def download_and_process_band_data():
                 print(f"A network error occurred: {e}")
                 break
 
-    # --- The rest of your processing logic is unchanged ---
+    # --- The rest of your processing logic is unchanged and correct ---
     if csv_content:
         try:
             print("\nProcessing and cleaning CSV data...")
@@ -83,10 +86,16 @@ def download_and_process_band_data():
             df = pd.read_csv(csv_file)
 
             df.columns = df.columns.str.strip().str.upper()
-            if 'SYMBOL' not in df.columns or 'BAND' not in df.columns:
-                raise ValueError("The required 'SYMBOL' or 'BAND' columns were not found in the CSV.")
-
+            
+            # The legacy file uses ' SECURITY BAN' (with a leading space) or similar
+            # We find the correct column name dynamically
+            band_column = next((col for col in df.columns if 'BAN' in col), None)
+            if 'SYMBOL' not in df.columns or not band_column:
+                raise ValueError(f"Required columns not found in CSV. Found: {df.columns.to_list()}")
+            
+            df.rename(columns={band_column: 'BAND'}, inplace=True)
             df = df[['SYMBOL', 'BAND']]
+
             df['SYMBOL'] = df['SYMBOL'].str.strip()
             df['BAND'] = df['BAND'].astype(str).str.strip().replace('No Band', '0')
             df['BAND'] = pd.to_numeric(df['BAND'], errors='coerce')
@@ -102,14 +111,11 @@ def download_and_process_band_data():
                 "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                 "data": records
             }
-
             with open(output_file, "w", encoding="utf-8") as f:
                 json.dump(output_data, f, ensure_ascii=False, indent=2)
-            
             print(f"\nSuccessfully saved {final_rows} complete records to: {output_file}")
-
         except Exception as e:
-            print(f"An error occurred during CSV processing or JSON conversion: {e}")
+            print(f"An error occurred during CSV processing: {e}")
     else:
         print(f"\nCould not download the file after trying for {MAX_RETRIES} days.")
 
