@@ -239,7 +239,7 @@ def calculate_rs_rating(stocks: List[Dict], historical_data: List[Dict], trade_d
                 stock["RS_6M"] = round(rank / (total_6m - 1) * 99)
     logging.info(f"  Calculated RS Rating for {total_3m} (3M) and {total_6m} (6M) of {len(stocks)} stocks.")
 
-def prepare_and_save_data(stocks: List[Dict], timestamp: str):
+def prepare_and_save_data(stocks: List[Dict]):
     """Prepares and saves the final enriched data, formatting it for final output."""
     logging.info("Step 9: Preparing and saving final JSON file...")
     for stock in stocks:
@@ -255,8 +255,7 @@ def prepare_and_save_data(stocks: List[Dict], timestamp: str):
     }
     df.rename(columns=rename_map, inplace=True)
     records = df.where(pd.notnull(df), None).to_dict(orient="records")
-    output_data = {"last_updated": timestamp, "stocks": records}
-    save_json_file(output_data, CONFIG["output_file"])
+    save_json_file(records, CONFIG["output_file"])
     logging.info(f"  Successfully saved {len(records)} stocks.")
 
 # --- 4. MAIN EXECUTION ---
@@ -286,7 +285,7 @@ def main():
         calculate_tomcap(stocks)
         calculate_rs_rating(stocks, historical_data, trade_date)
     
-    prepare_and_save_data(stocks, run_timestamp)
+    prepare_and_save_data(stocks)
 
     current_timestamp_ms = int(time.time() * 1000)
     version_info = {"timestamp": current_timestamp_ms}
