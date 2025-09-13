@@ -1,105 +1,114 @@
 import os
 import json
+import logging
 import requests
-import pandas as pd
-from datetime import datetime, timedelta
-from io import StringIO 
-def download_and_process_band_data():
-    """
-    Downloads the NSE security list CSV, extracts Symbol and Band data,
-    replaces "No Band" with 0, and saves the result as a clean JSON file.
-    This version follows best practices to avoid pandas warnings.
-    """
-    # --- Configuration ---
-    BASE_URL = "https://nsearchives.nseindia.com/content/equities/sec_list_{date}.csv"
-    MAX_RETRIES = 5
+from datetime import datetime
+from typing import Dict, Any, Optional, List
 
-    # --- Define Output Path ---
+# -------------------------------
+# CONFIGURATION
+# -------------------------------
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+OUTPUT_DIR = os.path.join(SCRIPT_DIR)
+
+CONFIG = {
+    "api_url": "https://api-v2.strike.money/v2/api/equity/last-traded-state?securities=EQ%3A*",
+    "output_file": os.path.join(OUTPUT_DIR, "circuit_limits.json"),
+    "request_timeout": 30,
+}
+
+# -------------------------------
+# HELPER FUNCTIONS
+# -------------------------------
+
+def setup_logging():
+    """Configures basic logging to the console for essential output."""
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
+
+def save_json_file(data: Any, path: str):
+    """Saves data to a JSON file, creating the directory if needed."""
     try:
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-    except NameError:
-        script_dir = os.getcwd()
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=2)
+    except IOError as e:
+        logging.error(f"Error: Failed to write to file {path}: {e}")
+        raise  # Re-raise the exception to stop the script if saving fails
 
-    output_file = os.path.join(script_dir, "Circuit_Limits.json")
+# -------------------------------
+# CORE LOGIC FUNCTIONS
+# -------------------------------
 
-    # --- Headers ---
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-    }
+def fetch_data_from_api() -> Optional[Dict[str, Any]]:
+    """Fetches raw data from the API endpoint."""
+    try:
+        response = requests.get(CONFIG["api_url"], timeout=CONFIG["request_timeout"])
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        logging.error(f"Error: API request failed: {e}")
+    except json.JSONDecodeError:
+        logging.error("Error: Failed to decode JSON from the API response.")
+    return None
 
-    csv_content = None
-    found_date_str = ""
+def process_api_response(api_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    """Processes the raw API response into the desired final format."""
+    try:
+        current_data = api_data["data"]["current"]
+        fields = current_data["fields"]
+        ticks = current_data["ticks"]
 
-    print("Attempting to download NSE security band data...")
+        band_index = fields.index("circuitLimit")
+        date_index = fields.index("dateTime")
 
-    for i in range(MAX_RETRIES):
-        current_date = datetime.now() - timedelta(days=i)
-        date_str = current_date.strftime("%d%m%Y")
-        url = BASE_URL.format(date=date_str)
+        processed_data_list: List[Dict[str, Any]] = []
+        source_date: Optional[str] = None
+
+        for symbol, values_list in ticks.items():
+            if values_list and values_list[0]:
+                latest_tick = values_list[0]
+                if len(latest_tick) > max(band_index, date_index):
+                    processed_data_list.append({
+                        "SYMBOL": symbol,
+                        "BAND": latest_tick[band_index]
+                    })
+                    if source_date is None:
+                        source_date = latest_tick[date_index]
         
-        try:
-            print(f"Trying URL for {current_date.strftime('%Y-%m-%d')}: {url}")
-            response = requests.get(url, headers=headers, timeout=15)
-            
-            if response.status_code == 200 and 'html' not in response.headers.get('Content-Type', ''):
-                print(f"Success! File found for date: {current_date.strftime('%Y-%m-%d')}")
-                csv_content = response.content
-                found_date_str = current_date.strftime('%Y-%m-%d')
-                break
-            else:
-                print(f"File not found for {current_date.strftime('%Y-%m-%d')} (Status: {response.status_code}).")
+        if not processed_data_list:
+            logging.warning("Warning: No stock data was found in the API response.")
+            return None
 
-        except requests.exceptions.RequestException as e:
-            print(f"A network error occurred: {e}")
-            break
+        # This is the single success message the user wants
+        logging.info(f"Successfully fetched and processed {len(processed_data_list)} stocks.")
 
-    if csv_content:
-        try:
-            print("\nProcessing and cleaning CSV data...")
-            csv_file = StringIO(csv_content.decode('utf-8'))
-            df = pd.read_csv(csv_file)
+        return {
+            "source_date": source_date,
+            "last_updated": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            "data": processed_data_list
+        }
 
-            df.columns = df.columns.str.strip().str.upper()
-            
-            if 'SYMBOL' not in df.columns or 'BAND' not in df.columns:
-                raise ValueError("The required 'Symbol' or 'Band' columns were not found in the CSV.")
+    except (KeyError, IndexError, ValueError) as e:
+        logging.error(f"Error: Failed to process data due to unexpected format: {e}")
+    return None
 
-            df = df[['SYMBOL', 'BAND']]
-            df['SYMBOL'] = df['SYMBOL'].str.strip()
-            df['BAND'] = df['BAND'].astype(str).str.strip()
+# -------------------------------
+# MAIN EXECUTION
+# -------------------------------
 
-            # --- THE FIX IS HERE ---
-            # Replace "No Band" with "0" using the recommended assignment method
-            df['BAND'] = df['BAND'].replace('No Band', '0')
-            
-            
-            df['BAND'] = pd.to_numeric(df['BAND'], errors='coerce')
+def main():
+    """Main function to orchestrate the data fetching and processing pipeline."""
+    setup_logging()
 
-            initial_rows = len(df)
-            # Use assignment for dropna as well for consistency
-            df = df.dropna()
-            final_rows = len(df)
-            print(f"Removed {initial_rows - final_rows} records with missing data.")
-            # --- END OF FIX ---
+    raw_api_data = fetch_data_from_api()
+    if not raw_api_data:
+        return # Error is already logged by the fetch function
 
-            print("Converting final data to JSON...")
-            records = df.to_dict(orient="records")
+    final_data = process_api_response(raw_api_data)
+    if not final_data:
+        return # Error is already logged by the process function
 
-            output_data = {
-                "source_date": found_date_str,
-                "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                "data": records
-            }
-
-            with open(output_file, "w", encoding="utf-8") as f:
-                json.dump(output_data, f, ensure_ascii=False, indent=2)
-            
-            print(f"\nSuccessfully saved {final_rows} complete records to: {output_file}")
-
-        except Exception as e:
-            print(f"An error occurred during CSV processing or JSON conversion: {e}")
-    else:
-        print(f"\nCould not download the file after trying for {MAX_RETRIES} days.")
+    save_json_file(final_data, CONFIG["output_file"])
 
 if __name__ == "__main__":
-    download_and_process_band_data()
+    main()
