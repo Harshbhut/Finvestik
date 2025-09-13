@@ -30,7 +30,7 @@ jobs:
 
       - name: 📦 Install dependencies
         run: |
-          pip install nse[server] httpx
+          pip install nse[server] httpx[http2]
 
       - name: 🚀 Run circuitlimit.py
         run: python circuitlimit.py
