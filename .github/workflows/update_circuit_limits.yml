@@ -1,7 +1,7 @@
 name: Update Circuit Limit Data
 
 permissions:
-  contents: write   # ✅ Needed to push commit
+  contents: write   # needed to push commit
 
 on:
   schedule:
@@ -9,39 +9,97 @@ on:
     - cron: '0 3 * * 1-6'
   workflow_dispatch:
 
+concurrency:
+  group: update-circuit-limits
+  cancel-in-progress: true
+
 jobs:
   run-circuit-limit-script:
     runs-on: ubuntu-latest
-
     defaults:
       run:
         working-directory: scripts
+
+    timeout-minutes: 15
 
     steps:
       - name: ⬇️ Checkout code
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
-      - name: 🐍 Set up Python
+      - name: 🐍 Show Python & runner info (debug)
+        run: |
+          python --version
+          which python
+          echo "workspace: $GITHUB_WORKSPACE"
+          uname -a
+
+      - name: 📦 Setup Python & cache pip
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
+      - name: 📥 Cache pip packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - name: 📦 Install dependencies
         run: |
-          pip install nse[server] httpx[http2]
+          python -m pip install --upgrade pip
+          # quote extras to be safe in some shells
+          pip install "nse[server]" "httpx[http2]"
+          # if you have a requirements.txt, install it as well:
+          # pip install -r ../requirements.txt
 
-      - name: 🚀 Run circuitlimit.py
-        run: python circuitlimit.py
+      - name: 🗂 Create download dir and export env
+        run: |
+          mkdir -p $RUNNER_TEMP/nse_downloads
+          echo "NSE_DOWNLOAD_DIR=$RUNNER_TEMP/nse_downloads" >> $GITHUB_ENV
+
+      - name: 🧾 Show installed packages (debug)
+        run: pip freeze | sed -n '1,200p'
+
+      - name: 🚀 Run circuitlimit.py (with retries)
+        # script runs from scripts/ because of defaults.run. If your script needs repo-root adjust accordingly.
+        env:
+          NSE_DOWNLOAD_DIR: ${{ env.NSE_DOWNLOAD_DIR }}
+          # optional: override server mode if you want to force non-server in CI
+          # NSE_FORCE_SERVER: "false"
+        run: |
+          # basic retry loop to reduce transient HTTP 403 / network issues
+          attempt=0
+          max=3
+          until [ $attempt -ge $max ]
+          do
+            attempt=$((attempt+1))
+            echo "Run attempt $attempt of $max"
+            python circuitlimit.py && break
+            echo "Failed attempt $attempt. sleeping before retry..."
+            sleep $((attempt * 5))
+          done
+          if [ $attempt -ge $max ]; then
+            echo "Script failed after $max attempts"
+            exit 1
+          fi
 
       - name: 💾 Commit & Push updated file
+        # run this step from the repo root to make path handling explicit:
         run: |
+          cd $GITHUB_WORKSPACE
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          # IMPORTANT: Path is from the root of the repo
-          git add Circuit_Limits.json
+          # use the relative path to the file that the script writes.
+          # If the script writes to scripts/Circuit_Limits.json, add that path.
+          # If it writes to repo root, change accordingly.
+          git add scripts/Circuit_Limits.json
 
-          git diff --staged --quiet || git commit -m "⚡️ Auto-update Circuit Limit data at $(TZ='Asia/Kolkata' date '+%Y-%m-%d %H:%M:%S IST')"
+          # if file hasn't changed, do nothing
+          git diff --cached --quiet || git commit -m "⚡️ Auto-update Circuit Limit data at $(TZ='Asia/Kolkata' date '+%Y-%m-%d %H:%M:%S IST')"
           git push
