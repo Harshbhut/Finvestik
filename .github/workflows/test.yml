@@ -4,7 +4,6 @@ on:
   workflow_dispatch:   # manual trigger
   schedule:
     # Runs at 09:00 IST Monday-Friday
-    # Cron is UTC; 09:00 IST = 03:30 UTC (when not DST). Using 03:30 here.
     - cron: "30 3 * * 1-5"
 
 jobs:
@@ -25,6 +24,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install jugaad-data
 
-      - name: Run Test
+      - name: Run fetch_priceband script
         run: |
-          python Test.py
+          python Finvestik/scripts/Test.py
