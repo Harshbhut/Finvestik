@@ -20,7 +20,7 @@ jobs:
           python -m pip install requests cloudscraper selenium
 
       - name: Run no-proxy fetch test
-        run: python tools/fetch_no_proxy.py
+        run: python scripts/fetch_no_proxy.py
         env:
           NSE_DATE: "11092025"
 
