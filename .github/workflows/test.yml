@@ -3,17 +3,19 @@ name: Fetch Price Band
 on:
   workflow_dispatch:   # manual trigger
   schedule:
-    - cron: "30 3 * * 1-5"   # run every weekday at 9:00 AM IST (03:30 UTC)
+    # Runs at 09:00 IST Monday-Friday
+    # Cron is UTC; 09:00 IST = 03:30 UTC (when not DST). Using 03:30 here.
+    - cron: "30 3 * * 1-5"
 
 jobs:
-  run-script:
+  fetch:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -23,13 +25,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install jugaad-data
 
-      - name: Run price band fetch
+      - name: Run fetch_priceband script
         run: |
-          python - <<'EOF'
-          from jugaad_data.nse import NSELive
-
-          n = NSELive()
-          q = n.stock_quote("HDFCBANK")
-          p_price_band = q["priceInfo"].get("pPriceBand")
-          print(f"HDFCBANK pPriceBand: {p_price_band}")
-          EOF
+          python fetch_priceband.py
