@@ -1,15 +1,10 @@
 name: Test
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:   # manual trigger
   schedule:
-    # Runs at 09:00 IST Monday-Friday -> 03:30 UTC
+    # Runs at 09:00 IST Monday-Friday
     - cron: "30 3 * * 1-5"
-
-# Run commands from the Finvestik/ directory so paths are relative to your project folder.
-defaults:
-  run:
-    working-directory: Finvestik
 
 jobs:
   fetch:
@@ -29,18 +24,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install jugaad-data
 
-      - name: Run Test (scripts/Test.py)
+      - name: Run fetch_priceband script
         run: |
-          if [ ! -f "scripts/Test.py" ]; then
-            echo "ERROR: scripts/Test.py not found inside Finvestik/ directory."
-            ls -la || true
-            exit 2
-          fi
-          python scripts/Test.py
-
-      - name: Upload priceband.csv artifact
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: priceband-csv
-          path: scripts/priceband.csv
+          python Finvestik/scripts/Test.py
