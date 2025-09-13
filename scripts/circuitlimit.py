@@ -1,12 +1,9 @@
-from nse import NSE
-from pathlib import Path
-from datetime import datetime, timedelta
 import os
-# Working directory
-script_dir = os.path.dirname(os.path.abspath(__file__))
-DIR = os.path.join(script_dir)
+from nse import NSE
 
-nse = NSE(download_folder=DIR, server=True)
-previous_date = datetime.now() - timedelta(days=1)
-ct = nse.priceband_report(previous_date)
+# safer for GitHub Actions:
+DIR = os.environ.get("NSE_DOWNLOAD_DIR", os.getcwd())  # you can set NSE_DOWNLOAD_DIR in Actions
+os.makedirs(DIR, exist_ok=True)
 
+with NSE(download_folder=DIR, server=True) as nse:
+    ct = nse.priceband_report(previous_date)
