@@ -125,40 +125,70 @@ def map_circuit_limits(stocks: List[Dict], circuit_data: List[Dict]):
     count = 0
     for stock in stocks:
         symbol = stock.get("symbol")
-        band_value = circuit_map.get(symbol)
+        band_value = circuit_map.get(symbol,0)
         if band_value is not None:
             count += 1
         stock["circuitLimit"] = band_value
     logging.info(f"  Mapped circuit limits for {count} of {len(stocks)} stocks.")
 
-def map_52_week_high_low(stocks: List[Dict], high_low_data: List[Dict]):
+def map_52_week_high_low(stocks: List[Dict], high_low_data) -> List[Dict]:
+    
     logging.info("Step 5: Mapping 52-week high/low data...")
-    high_low_map = {item.get("SYMBOL"): item for item in high_low_data if item.get("SYMBOL")}
-    for stock in stocks:
-        day_high, day_low, close_price = stock.get("high"), stock.get("low"), stock.get("close")
-        stored_data = high_low_map.get(stock.get("symbol"), {})
-        
-        high_val = next((stored_data[k] for k in stored_data if 'High' in k), None)
-        low_val = next((stored_data[k] for k in stored_data if 'Low' in k), None)
-        
-        valid_highs = [h for h in [high_val, day_high] if isinstance(h, (int, float))]
-        high_52w = max(valid_highs) if valid_highs else None
-        stock["fifty_two_week_high"] = high_52w
-        
-        valid_lows = [l for l in [low_val, day_low] if isinstance(l, (int, float))]
-        low_52w = min(valid_lows) if valid_lows else None
-        stock["fifty_two_week_low"] = low_52w
 
-        if isinstance(high_52w, (int, float)) and isinstance(close_price, (int, float)) and high_52w != 0:
-            stock["Down from 52W High (%)"] = round(((high_52w - close_price) / high_52w) * 100, 2)
+    # unwrap payload
+    if isinstance(high_low_data, dict) and "data" in high_low_data:
+        hl_list = high_low_data["data"]
+    else:
+        hl_list = high_low_data or []
+
+    # Build lookup map symbol → {"high": ..., "low": ...}
+    hl_map = {}
+    for item in hl_list:
+        if not isinstance(item, dict):
+            continue
+        sym = (item.get("Symbol") or "").strip().upper()
+        if sym:
+            hl_map[sym] = {
+                "high": item.get("52_Weeks_High"),
+                "low": item.get("52_Weeks_Low"),
+            }
+
+    processed = 0
+    for stock in stocks:
+        sym = (stock.get("symbol") or stock.get("Symbol") or "").strip().upper()
+        if not sym:
+            continue
+
+        day_high = stock.get("high")
+        day_low = stock.get("low")
+        close_price = stock.get("close")
+
+        stored = hl_map.get(sym, {})
+        high_candidates = [v for v in (stored.get("high"), day_high) if isinstance(v, (int, float))]
+        low_candidates = [v for v in (stored.get("low"), day_low) if isinstance(v, (int, float))]
+
+        fifty_two_week_high = max(high_candidates) if high_candidates else None
+        fifty_two_week_low = min(low_candidates) if low_candidates else None
+
+        stock["fifty_two_week_high"] = fifty_two_week_high
+        stock["fifty_two_week_low"] = fifty_two_week_low
+
+        if isinstance(fifty_two_week_high, (int, float)) and isinstance(close_price, (int, float)) and fifty_two_week_high != 0:
+            stock["Down from 52W High (%)"] = round(((fifty_two_week_high - close_price) / fifty_two_week_high) * 100, 2)
         else:
             stock["Down from 52W High (%)"] = None
 
-        if isinstance(low_52w, (int, float)) and isinstance(close_price, (int, float)) and low_52w != 0:
-            stock["Up from 52W Low (%)"] = round(((close_price - low_52w) / low_52w) * 100, 2)
+        if isinstance(fifty_two_week_low, (int, float)) and isinstance(close_price, (int, float)) and fifty_two_week_low != 0:
+            stock["Up from 52W Low (%)"] = round(((close_price - fifty_two_week_low) / fifty_two_week_low) * 100, 2)
         else:
             stock["Up from 52W Low (%)"] = None
-    logging.info(f"  Processed 52-week metrics for {len(stocks)} stocks.")
+
+        processed += 1
+
+    logging.info(f"  Processed 52-week metrics for {processed} stocks.")
+    return stocks
+
+
 
 def calculate_turnover_sma20(stocks: List[Dict], historical_data: List[Dict], trade_date: str):
     logging.info("Step 6: Calculating 20-day Turnover SMA...")

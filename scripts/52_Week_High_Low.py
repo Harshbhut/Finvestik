@@ -1,112 +1,156 @@
-import os
-import json
 import requests
-import pandas as pd
-from datetime import datetime, timedelta
-from io import StringIO
+import time
+import os
+import random
+import json
+import sys
+from datetime import datetime
+from zoneinfo import ZoneInfo
+from typing import Optional, List, Dict
 
-def download_and_process_nse_data():
-    """
-    Downloads, cleans, and processes the NSE 52-week high/low CSV.
-    It filters out records with missing high/low values, removes date columns,
-    and saves the result as a clean JSON file.
-    """
-    # --- Configuration ---
-    BASE_URL = "https://nsearchives.nseindia.com/content/CM_52_wk_High_low_{date}.csv"
-    MAX_RETRIES = 5
+# -------------------------
+# Configuration
+# -------------------------
+API_URL = "https://webnodejs.chittorgarh.com/cloud/report/data-read/124/1/9/2025/2025-26/0/mainline"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+OUTPUT_FILE = os.path.join(BASE_DIR, "52_wk_High_Low.json")
 
-    # --- Define Output Path ---
-    try:
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-    except NameError:
-        script_dir = os.getcwd()
-    
-    output_file = os.path.join(script_dir, "52_wk_High_Low.json")
+USER_AGENTS = [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/114.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/111.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 Safari/537.36"
+]
 
-    # --- Headers ---
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-    }
-    
-    csv_content = None
-    found_date_str = ""
+EXCLUDE_EXCHANGES = {"BSE SME", "NSE SME"}
 
-    print("Attempting to download NSE 52-week high/low data...")
+REQUEST_TIMEOUT = 20  # seconds
+MAX_RETRIES = 3
+RETRY_BACKOFF = 1.0  # seconds, multiplied by attempt number
 
-    for i in range(MAX_RETRIES):
-        current_date = datetime.now() - timedelta(days=i)
-        date_str = current_date.strftime("%d%m%Y")
-        url = BASE_URL.format(date=date_str)
-        
+# -------------------------
+# Helpers
+# -------------------------
+def fetch_json_data(url: str, max_retries: int = MAX_RETRIES) -> Optional[dict]:
+    """Fetch JSON data from URL with retries and rotating user-agents."""
+    for attempt in range(1, max_retries + 1):
         try:
-            print(f"Trying URL for {current_date.strftime('%Y-%m-%d')}: {url}")
-            response = requests.get(url, headers=headers, timeout=15)
-            
-            if response.status_code == 200 and 'html' not in response.headers.get('Content-Type', ''):
-                print(f"Success! File found for date: {current_date.strftime('%Y-%m-%d')}")
-                csv_content = response.content
-                found_date_str = current_date.strftime('%Y-%m-%d')
-                break
-            else:
-                print(f"File not found for {current_date.strftime('%Y-%m-%d')} (Status: {response.status_code}).")
-
-        except requests.exceptions.RequestException as e:
-            print(f"A network error occurred: {e}")
-            break
-
-    if csv_content:
-        try:
-            print("\nProcessing and cleaning CSV data...")
-            csv_file = StringIO(csv_content.decode('utf-8'))
-            df = pd.read_csv(csv_file, skiprows=2)
-
-            # 1. Clean column headers
-            df.columns = df.columns.str.strip()
-
-            # 2. Remove date columns
-            columns_to_drop = [col for col in df.columns if 'Date' in col or '_DT' in col]
-            df.drop(columns=columns_to_drop, inplace=True, errors='ignore')
-            
-            # 3. Strip whitespace from all data in remaining string columns
-            for col in df.select_dtypes(include=['object']).columns:
-                df[col] = df[col].str.strip()
-
-            # 4. Identify price columns and convert them to a numeric type
-            price_cols = [col for col in df.columns if 'High' in col or 'Low' in col or 'CLOSE' in col]
-            for col in price_cols:
-                df[col] = pd.to_numeric(df[col], errors='coerce')
-
-            # --- THE FIX IS HERE: Remove rows with missing high/low values ---
-            # Identify the specific high/low columns to check for missing values
-            high_low_check_cols = [col for col in price_cols if 'High' in col or 'Low' in col]
-            initial_rows = len(df)
-            df.dropna(subset=high_low_check_cols, inplace=True)
-            final_rows = len(df)
-            print(f"Removed {initial_rows - final_rows} records with missing 52-week high/low values.")
-            # --- End of fix ---
-
-            # 5. Replace any remaining pandas' 'NaN' with 'None' for proper JSON null values
-            df = df.where(pd.notnull(df), None)
-
-            print("Converting final data to JSON...")
-            records = df.to_dict(orient="records")
-
-            output_data = {
-                "source_date": found_date_str,
-                "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                "data": records
+            headers = {
+                "Accept": "application/json",
+                "User-Agent": random.choice(USER_AGENTS),
+                "Referer": "https://webnodejs.chittorgarh.com/"
             }
+            resp = requests.get(url, headers=headers, timeout=REQUEST_TIMEOUT)
+            resp.raise_for_status()
+            return resp.json()
+        except requests.exceptions.RequestException:
+            if attempt < max_retries:
+                time.sleep(RETRY_BACKOFF * attempt)
+    return None
 
-            with open(output_file, "w", encoding="utf-8") as f:
-                json.dump(output_data, f, ensure_ascii=False, indent=2)
-            
-            print(f"\nSuccessfully saved {final_rows} complete records to: {output_file}")
+def safe_write_json(path: str, data: dict) -> None:
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
 
-        except Exception as e:
-            print(f"An error occurred during CSV processing or JSON conversion: {e}")
-    else:
-        print(f"\nCould not download the file after trying for {MAX_RETRIES} days.")
+def parse_iso_date_get_ymd(iso_str: str) -> Optional[str]:
+    """Extract YYYY-MM-DD from an ISO-like string."""
+    if not iso_str or not isinstance(iso_str, str):
+        return None
+    try:
+        return iso_str.split("T", 1)[0]
+    except Exception:
+        return None
+
+# -------------------------
+# Transform logic
+# -------------------------
+def transform_report(json_payload: dict) -> Dict:
+    rows = json_payload.get("reportTableData") or []
+    total_records = len(rows)
+    excluded_count = 0
+    filtered: List[Dict] = []
+    source_dates: List[str] = []
+
+    for r in rows:
+        exchange = (r.get("Exchange") or "").strip()
+        if exchange in EXCLUDE_EXCHANGES:
+            excluded_count += 1
+            continue
+
+        symbol = (r.get("Symbol") or "").strip()
+        if not symbol:
+            continue
+
+        series = (r.get("Series") or "").strip()
+        high_val = r.get("52 Weeks High")
+        low_val = r.get("52 Weeks Low")
+
+        try:
+            if isinstance(high_val, str) and high_val.strip():
+                high_val = float(high_val)
+        except Exception:
+            high_val = None
+        try:
+            if isinstance(low_val, str) and low_val.strip():
+                low_val = float(low_val)
+        except Exception:
+            low_val = None
+
+        high_dt = r.get("~high_dt") or r.get("52 Weeks High Date")
+        low_dt = r.get("~low_dt") or r.get("52 Weeks Low Date")
+
+        parsed_h = parse_iso_date_get_ymd(high_dt) if isinstance(high_dt, str) else None
+        parsed_l = parse_iso_date_get_ymd(low_dt) if isinstance(low_dt, str) else None
+        if parsed_h:
+            source_dates.append(parsed_h)
+        if parsed_l:
+            source_dates.append(parsed_l)
+
+        filtered.append({
+            "Symbol": symbol,
+            "Exchange": exchange,
+            "Series": series,
+            "52_Weeks_High": high_val,
+            "52_Weeks_Low": low_val
+        })
+
+    source_date = max(source_dates) if source_dates else datetime.utcnow().strftime("%Y-%m-%d")
+    try:
+        tz = ZoneInfo("Asia/Kolkata")
+        last_updated = datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
+    except Exception:
+        last_updated = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    return {
+        "source_date": source_date,
+        "last_updated": last_updated,
+        "data": filtered,
+        "meta": {
+            "total_records": total_records,
+            "excluded": excluded_count,
+            "inserted": len(filtered)
+        }
+    }
+
+# -------------------------
+# Main
+# -------------------------
+def main():
+    print("📡 Starting data fetch...")
+    payload = fetch_json_data(API_URL)
+    if not payload:
+        print("❌ Failed to fetch data.", file=sys.stderr)
+        sys.exit(1)
+
+    transformed = transform_report(payload)
+    meta = transformed.pop("meta")
+
+    print(f"📊 Total records fetched: {meta['total_records']}")
+    print(f"🚫 Excluded (SME): {meta['excluded']}")
+    print(f"✅ Inserted: {meta['inserted']}")
+
+    safe_write_json(OUTPUT_FILE, transformed)
+    print(f"💾 File saved: {OUTPUT_FILE}")
 
 if __name__ == "__main__":
-    download_and_process_nse_data()
+    main()
