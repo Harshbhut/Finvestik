@@ -23,7 +23,7 @@ def get_nse_instance(download_folder, prefer_server=True):
 
     # fallback
     try:
-        return NSE(download_folder=download_folder, server=False)
+        return NSE(download_folder=download_folder, server=True)
     except Exception as e:
         print("NSE(server=False) also failed:", repr(e))
         traceback.print_exc()
