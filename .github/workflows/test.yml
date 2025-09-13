@@ -26,4 +26,4 @@ jobs:
 
       - name: Run fetch_priceband script
         run: |
-          python Finvestik/scripts/Test.py
+          python scripts/Test.py
