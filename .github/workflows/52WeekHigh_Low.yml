@@ -1,9 +1,9 @@
-name: "2. Run 52 Week High-Low Script"
+name: "52 Week High-Low Script"
 
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["1. Run Circuit Limit Script"]
+    workflows: ["Circuit Limit Script"]
     types:
       - completed
 
