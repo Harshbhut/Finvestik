@@ -1,0 +1,50 @@
+name: "2. Run 52 Week High-Low Script"
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["1. Run Circuit Limit Script"]
+    types:
+      - completed
+
+permissions:
+  contents: write
+
+jobs:
+  run-script:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    
+    # ✅ SET THE DEFAULT DIRECTORY FOR ALL 'run' STEPS
+    defaults:
+      run:
+        working-directory: scripts  # ❗️ Assumes your .py file is in a 'scripts' folder
+        
+    steps:
+      - name: "⬇️ Checkout code"
+        uses: actions/checkout@v4
+
+      - name: "🐍 Set up Python"
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: "📦 Install dependencies"
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests pandas
+
+      - name: "🚀 Run 52_Week_High_Low.py"
+        run: python 52_Week_High_Low.py
+
+      - name: "💾 Commit & Push data"
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          # We must use ../ to go up one level to the root for git operations
+          git add .
+
+          git diff --staged --quiet || git commit -m "📊 Auto-update 52-week high/low data at $(TZ='Asia/Kolkata' date '+%Y-%m-%d %H:%M:%S IST')"
+          
+          git push
