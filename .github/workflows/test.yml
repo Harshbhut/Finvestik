@@ -30,7 +30,7 @@ jobs:
 
       - name: 📦 Install dependencies
         run: |
-          pip install requests pandas
+          pip install requests pandas cloudscraper
 
       - name: 🚀 Run test.py
         run: python test.py
