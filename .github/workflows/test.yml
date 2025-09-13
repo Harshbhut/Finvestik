@@ -1,16 +1,13 @@
-name: Test
-
-permissions:
-  contents: write   # ✅ Needed to push commit
+name: Fetch Price Band
 
 on:
+  workflow_dispatch:   # manual trigger
   schedule:
-    # Runs at 3:00 AM UTC = 8:30 AM IST, Mon–Sat
-    - cron: '0 3 * * 1-6'
-  workflow_dispatch:
+    # Runs at 09:00 IST Monday-Friday
+    - cron: "30 3 * * 1-5"
 
 jobs:
-  run-circuit-limit-script:
+  fetch:
     runs-on: ubuntu-latest
 
     defaults:
@@ -18,35 +15,19 @@ jobs:
         working-directory: scripts
 
     steps:
-      - name: ⬇️ Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 🐍 Set up Python
-        uses: actions/setup-python@v4
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
-      - name: 📦 Install dependencies
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install jugaad-data
 
-      - name: 🚀 Run Test.py
-        run: Test.py
-
-      - name: 💾 Commit & Push updated file
+      - name: Run fetch_priceband script
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          # IMPORTANT: File path relative to repo root
-          git add scripts/Circuit_Limits.json
-
-          if git diff --staged --quiet; then
-            echo "No changes to commit."
-          else
-            git commit -m "⚡️ Auto-update Circuit Limit data at $(TZ='Asia/Kolkata' date '+%Y-%m-%d %H:%M:%S IST')"
-            git push
-          fi
+          python Test.py
