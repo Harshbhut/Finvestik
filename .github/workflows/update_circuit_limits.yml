@@ -53,7 +53,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           # quote extras to be safe in some shells
-          pip install "nse[server]" "httpx[http2]"
+          pip install "nse[server]" "httpx[http2]  requests"
           # if you have a requirements.txt, install it as well:
           # pip install -r ../requirements.txt
 
