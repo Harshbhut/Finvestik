@@ -285,8 +285,20 @@ def prepare_and_save_data(stocks: List[Dict]):
     }
     df.rename(columns=rename_map, inplace=True)
     records = df.where(pd.notnull(df), None).to_dict(orient="records")
-    save_json_file(records, CONFIG["output_file"])
-    logging.info(f"  Successfully saved {len(records)} stocks.")
+
+    # --- NEW: Filter out records with INECODE "XXXXXXXXXXXX" ---
+    initial_count = len(records)
+    filtered_records = [rec for rec in records if rec.get("INECODE") != "XXXXXXXXXXXX"]
+    removed_count = initial_count - len(filtered_records)
+    if removed_count > 0:
+        logging.info(f"  Removed {removed_count} records where INECODE is 'XXXXXXXXXXXX'.")
+    else:
+        logging.info("  No records found with INECODE 'XXXXXXXXXXXX' to remove.")
+    # --- END NEW ---
+
+    save_json_file(filtered_records, CONFIG["output_file"])
+    logging.info(f"  Successfully saved {len(filtered_records)} stocks.")
+
 
 # --- 4. MAIN EXECUTION ---
 def main():
