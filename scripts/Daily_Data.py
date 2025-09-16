@@ -57,7 +57,7 @@ def fetch_chartink_data() -> Optional[Dict[str, Any]]:
             "select latest Close as 'Close', latest High as 'High', "
             "latest Low as 'Low', latest Volume as 'Volume', "
             'latest "close - 1 candle ago close / 1 candle ago close * 100" as \'%Change\' '
-            "WHERE ( {cash} ( market cap > 0 ) ) ORDER BY 4 desc"
+            "WHERE ( {cash} 1 = 1 ) ORDER BY 4 desc"
         )
         PAYLOAD = {
             "query": QUERY, "use_live": "1", "limit": "5000",
