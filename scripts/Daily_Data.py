@@ -23,7 +23,7 @@ CONFIG = {
     "output_version_file": os.path.join(STATIC_DATA_DIR, "data_version.json"),
     "sector_file": os.path.join(SCRIPT_DIR, "Sector_Industry.json"),
     "high_low_file": os.path.join(SCRIPT_DIR, "52_wk_High_Low.json"),
-    "circuit_limit_file": os.path.join(SCRIPT_DIR, "Circuit_Limits.json"),
+    "circuit_limit_file": os.path.join(SCRIPT_DIR, "circuit_limits.json"),
     "historical_file": os.path.join(SCRIPT_DIR, "stock_historical_universe.json"),
 }
 
