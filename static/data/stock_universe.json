@@ -1100,7 +1100,7 @@
     "turnover": 346.11,
     "TurnoverSMA20": 325.26,
     "Tomcap": 0.16,
-    "RS_3M": 50.0,
+    "RS_3M": 51.0,
     "RS_6M": 70.0
   },
   {
@@ -2526,7 +2526,7 @@
     "turnover": 132.44,
     "TurnoverSMA20": 145.88,
     "Tomcap": 0.19,
-    "RS_3M": 32.0,
+    "RS_3M": 33.0,
     "RS_6M": 44.0
   },
   {
@@ -6114,7 +6114,7 @@
     "turnover": 10.19,
     "TurnoverSMA20": 2.9,
     "Tomcap": 0.51,
-    "RS_3M": 74.0,
+    "RS_3M": 75.0,
     "RS_6M": 63.0
   },
   {
@@ -6805,7 +6805,7 @@
     "TurnoverSMA20": 18.46,
     "Tomcap": 0.38,
     "RS_3M": 60.0,
-    "RS_6M": 60.0
+    "RS_6M": 59.0
   },
   {
     "Symbol": "SGLTL",
@@ -6924,11 +6924,11 @@
   },
   {
     "Symbol": "ITCHOTELS",
-    "current_price": 245.45,
+    "current_price": 245.09,
     "day_high": 246.0,
     "day_low": 243.37,
-    "day_volume": 1404075,
-    "change_percentage": 0.73,
+    "day_volume": 1404175,
+    "change_percentage": 0.58,
     "Sector Name": "Hospitality",
     "Industry Name": "Hotel, Resort & Restaurants",
     "Stock Name": "ITC Hotels Ltd.",
@@ -6937,9 +6937,9 @@
     "circuitLimit": 20.0,
     "fifty_two_week_high": 261.62,
     "fifty_two_week_low": 155.1,
-    "Down from 52W High (%)": 6.18,
-    "Up from 52W Low (%)": 58.25,
-    "turnover": 34.46,
+    "Down from 52W High (%)": 6.32,
+    "Up from 52W Low (%)": 58.02,
+    "turnover": 34.41,
     "TurnoverSMA20": 65.17,
     "Tomcap": 0.12,
     "RS_3M": 81.0,
@@ -6966,7 +6966,7 @@
     "TurnoverSMA20": 138.72,
     "Tomcap": 0.25,
     "RS_3M": 64.0,
-    "RS_6M": 48.0
+    "RS_6M": 49.0
   },
   {
     "Symbol": "RELIGARE",
@@ -9105,7 +9105,7 @@
     "TurnoverSMA20": 22.65,
     "Tomcap": 0.36,
     "RS_3M": 11.0,
-    "RS_6M": 39.0
+    "RS_6M": 40.0
   },
   {
     "Symbol": "SAKUMA",
@@ -12854,7 +12854,7 @@
     "TurnoverSMA20": 0.37,
     "Tomcap": 0.12,
     "RS_3M": 14.0,
-    "RS_6M": 43.0
+    "RS_6M": 44.0
   },
   {
     "Symbol": "TIINDIA",
@@ -13502,11 +13502,11 @@
   },
   {
     "Symbol": "WEL",
-    "current_price": 159.8,
+    "current_price": 158.88,
     "day_high": 160.09,
     "day_low": 153.82,
-    "day_volume": 474880,
-    "change_percentage": 3.27,
+    "day_volume": 474881,
+    "change_percentage": 2.68,
     "Sector Name": "Consumer Durables",
     "Industry Name": "Consumer Durables - Electronics",
     "Stock Name": "Wonder Electricals Ltd.",
@@ -13515,13 +13515,13 @@
     "circuitLimit": 20.0,
     "fifty_two_week_high": 200.0,
     "fifty_two_week_low": 120.95,
-    "Down from 52W High (%)": 20.1,
-    "Up from 52W Low (%)": 32.12,
-    "turnover": 7.59,
+    "Down from 52W High (%)": 20.56,
+    "Up from 52W Low (%)": 31.36,
+    "turnover": 7.54,
     "TurnoverSMA20": 6.57,
     "Tomcap": 0.36,
-    "RS_3M": 52.0,
-    "RS_6M": 21.0
+    "RS_3M": 49.0,
+    "RS_6M": 19.0
   },
   {
     "Symbol": "DCXINDIA",
@@ -13636,7 +13636,7 @@
     "TurnoverSMA20": 1.16,
     "Tomcap": 0.26,
     "RS_3M": 37.0,
-    "RS_6M": 19.0
+    "RS_6M": 20.0
   },
   {
     "Symbol": "PROTEAN",
@@ -14191,6 +14191,29 @@
     "RS_6M": 2.0
   },
   {
+    "Symbol": "MCLEODRUSS",
+    "current_price": 37.43,
+    "day_high": 37.81,
+    "day_low": 37.1,
+    "day_volume": 438713,
+    "change_percentage": -1.32,
+    "Sector Name": "Agriculture",
+    "Industry Name": "Tea/Coffee",
+    "Stock Name": "Mcleod Russel India Ltd.",
+    "Market Cap": 389.62,
+    "INECODE": "INE942G01012",
+    "circuitLimit": 10.0,
+    "fifty_two_week_high": 51.83,
+    "fifty_two_week_low": 24.11,
+    "Down from 52W High (%)": 27.78,
+    "Up from 52W Low (%)": 55.25,
+    "turnover": 1.64,
+    "TurnoverSMA20": 2.03,
+    "Tomcap": 0.52,
+    "RS_3M": 72.0,
+    "RS_6M": 51.0
+  },
+  {
     "Symbol": "KFINTECH",
     "current_price": 1105.0,
     "day_high": 1109.0,
@@ -14212,29 +14235,6 @@
     "Tomcap": 0.44,
     "RS_3M": 17.0,
     "RS_6M": 31.0
-  },
-  {
-    "Symbol": "MCLEODRUSS",
-    "current_price": 37.55,
-    "day_high": 37.81,
-    "day_low": 37.1,
-    "day_volume": 438313,
-    "change_percentage": -1.0,
-    "Sector Name": "Agriculture",
-    "Industry Name": "Tea/Coffee",
-    "Stock Name": "Mcleod Russel India Ltd.",
-    "Market Cap": 389.62,
-    "INECODE": "INE942G01012",
-    "circuitLimit": 10.0,
-    "fifty_two_week_high": 51.83,
-    "fifty_two_week_low": 24.11,
-    "Down from 52W High (%)": 27.55,
-    "Up from 52W Low (%)": 55.74,
-    "turnover": 1.65,
-    "TurnoverSMA20": 2.03,
-    "Tomcap": 0.52,
-    "RS_3M": 73.0,
-    "RS_6M": 52.0
   },
   {
     "Symbol": "HILINFRA",
@@ -15526,11 +15526,11 @@
   },
   {
     "Symbol": "PRICOLLTD",
-    "current_price": 527.4,
+    "current_price": 527.3,
     "day_high": 535.5,
     "day_low": 521.15,
-    "day_volume": 361936,
-    "change_percentage": -0.9,
+    "day_volume": 361937,
+    "change_percentage": -0.92,
     "Sector Name": "Automobile & Ancillaries",
     "Industry Name": "Auto Ancillary",
     "Stock Name": "Pricol Ltd.",
@@ -15539,9 +15539,9 @@
     "circuitLimit": 20.0,
     "fifty_two_week_high": 598.8,
     "fifty_two_week_low": 367.85,
-    "Down from 52W High (%)": 11.92,
-    "Up from 52W Low (%)": 43.37,
-    "turnover": 19.09,
+    "Down from 52W High (%)": 11.94,
+    "Up from 52W Low (%)": 43.35,
+    "turnover": 19.08,
     "TurnoverSMA20": 27.6,
     "Tomcap": 0.46,
     "RS_3M": 92.0,
@@ -15729,7 +15729,7 @@
     "TurnoverSMA20": 9.98,
     "Tomcap": 0.39,
     "RS_3M": 59.0,
-    "RS_6M": 30.0
+    "RS_6M": 29.0
   },
   {
     "Symbol": "ASAHIINDIA",
@@ -18930,11 +18930,11 @@
   },
   {
     "Symbol": "HINDMOTORS",
-    "current_price": 24.5,
+    "current_price": 24.46,
     "day_high": 24.79,
     "day_low": 24.4,
-    "day_volume": 235716,
-    "change_percentage": -0.08,
+    "day_volume": 235756,
+    "change_percentage": -0.24,
     "Sector Name": "Automobile & Ancillaries",
     "Industry Name": "Automobiles - Passenger Cars",
     "Stock Name": "Hindustan Motors Ltd.",
@@ -18943,8 +18943,8 @@
     "circuitLimit": 5.0,
     "fifty_two_week_high": 35.78,
     "fifty_two_week_low": 20.55,
-    "Down from 52W High (%)": 31.53,
-    "Up from 52W Low (%)": 19.22,
+    "Down from 52W High (%)": 31.64,
+    "Up from 52W Low (%)": 19.03,
     "turnover": 0.58,
     "TurnoverSMA20": 0.65,
     "Tomcap": 0.13,
@@ -21091,6 +21091,29 @@
     "RS_6M": 72.0
   },
   {
+    "Symbol": "SARLAPOLY",
+    "current_price": 105.85,
+    "day_high": 107.9,
+    "day_low": 103.12,
+    "day_volume": 181217,
+    "change_percentage": 2.44,
+    "Sector Name": "Textile",
+    "Industry Name": "Textile - Manmade  Fibres",
+    "Stock Name": "Sarla Performance Fibers Ltd.",
+    "Market Cap": 851.73,
+    "INECODE": "INE453D01025",
+    "circuitLimit": 20.0,
+    "fifty_two_week_high": 132.3,
+    "fifty_two_week_low": 68.7,
+    "Down from 52W High (%)": 19.99,
+    "Up from 52W Low (%)": 54.08,
+    "turnover": 1.92,
+    "TurnoverSMA20": 1.08,
+    "Tomcap": 0.12,
+    "RS_3M": 30.0,
+    "RS_6M": 55.0
+  },
+  {
     "Symbol": "SURANASOL",
     "current_price": 35.1,
     "day_high": 35.22,
@@ -21158,29 +21181,6 @@
     "Tomcap": 0.98,
     "RS_3M": 68.0,
     "RS_6M": 45.0
-  },
-  {
-    "Symbol": "SARLAPOLY",
-    "current_price": 105.9,
-    "day_high": 107.9,
-    "day_low": 103.12,
-    "day_volume": 180859,
-    "change_percentage": 2.49,
-    "Sector Name": "Textile",
-    "Industry Name": "Textile - Manmade  Fibres",
-    "Stock Name": "Sarla Performance Fibers Ltd.",
-    "Market Cap": 851.73,
-    "INECODE": "INE453D01025",
-    "circuitLimit": 20.0,
-    "fifty_two_week_high": 132.3,
-    "fifty_two_week_low": 68.7,
-    "Down from 52W High (%)": 19.95,
-    "Up from 52W Low (%)": 54.15,
-    "turnover": 1.92,
-    "TurnoverSMA20": 1.08,
-    "Tomcap": 0.12,
-    "RS_3M": 30.0,
-    "RS_6M": 55.0
   },
   {
     "Symbol": "ALMONDZ",
@@ -21938,7 +21938,7 @@
     "turnover": 4.25,
     "TurnoverSMA20": 4.62,
     "Tomcap": 0.27,
-    "RS_3M": 37.0,
+    "RS_3M": 38.0,
     "RS_6M": 21.0
   },
   {
@@ -22889,7 +22889,7 @@
     "current_price": 192.89,
     "day_high": 192.89,
     "day_low": 183.0,
-    "day_volume": 144906,
+    "day_volume": 145060,
     "change_percentage": 5.0,
     "Sector Name": "Infrastructure",
     "Industry Name": "Engineering - Construction",
@@ -25163,11 +25163,11 @@
   },
   {
     "Symbol": "REPCOHOME",
-    "current_price": 380.35,
+    "current_price": 380.25,
     "day_high": 382.0,
     "day_low": 372.15,
-    "day_volume": 111095,
-    "change_percentage": 1.63,
+    "day_volume": 111115,
+    "change_percentage": 1.6,
     "Sector Name": "Finance",
     "Industry Name": "Finance - Housing",
     "Stock Name": "Repco Home Finance Ltd.",
@@ -25176,13 +25176,13 @@
     "circuitLimit": 20.0,
     "fifty_two_week_high": 595.0,
     "fifty_two_week_low": 310.0,
-    "Down from 52W High (%)": 36.08,
-    "Up from 52W Low (%)": 22.69,
+    "Down from 52W High (%)": 36.09,
+    "Up from 52W Low (%)": 22.66,
     "turnover": 4.23,
     "TurnoverSMA20": 6.35,
     "Tomcap": 0.28,
     "RS_3M": 23.0,
-    "RS_6M": 40.0
+    "RS_6M": 39.0
   },
   {
     "Symbol": "CLSEL",
@@ -25465,7 +25465,7 @@
     "current_price": 33.9,
     "day_high": 34.09,
     "day_low": 30.8,
-    "day_volume": 107999,
+    "day_volume": 108005,
     "change_percentage": 6.14,
     "Sector Name": "Automobile & Ancillaries",
     "Industry Name": "Bearings",
@@ -26519,6 +26519,29 @@
     "RS_6M": 27.0
   },
   {
+    "Symbol": "DNAMEDIA",
+    "current_price": 5.0,
+    "day_high": 5.15,
+    "day_low": 4.72,
+    "day_volume": 96725,
+    "change_percentage": 0.6,
+    "Sector Name": "Media & Entertainment",
+    "Industry Name": "Printing And Publishing",
+    "Stock Name": "Diligent Media Corporation Ltd.",
+    "Market Cap": 55.09,
+    "INECODE": "INE016M01021",
+    "circuitLimit": 20.0,
+    "fifty_two_week_high": 7.17,
+    "fifty_two_week_low": 4.0,
+    "Down from 52W High (%)": 30.26,
+    "Up from 52W Low (%)": 25.0,
+    "turnover": 0.05,
+    "TurnoverSMA20": 0.1,
+    "Tomcap": 0.18,
+    "RS_3M": 51.0,
+    "RS_6M": 34.0
+  },
+  {
     "Symbol": "FINOPB",
     "current_price": 276.85,
     "day_high": 278.7,
@@ -26540,29 +26563,6 @@
     "Tomcap": 0.36,
     "RS_3M": 66.0,
     "RS_6M": 69.0
-  },
-  {
-    "Symbol": "DNAMEDIA",
-    "current_price": 5.0,
-    "day_high": 5.15,
-    "day_low": 4.72,
-    "day_volume": 96724,
-    "change_percentage": 0.6,
-    "Sector Name": "Media & Entertainment",
-    "Industry Name": "Printing And Publishing",
-    "Stock Name": "Diligent Media Corporation Ltd.",
-    "Market Cap": 55.09,
-    "INECODE": "INE016M01021",
-    "circuitLimit": 20.0,
-    "fifty_two_week_high": 7.17,
-    "fifty_two_week_low": 4.0,
-    "Down from 52W High (%)": 30.26,
-    "Up from 52W Low (%)": 25.0,
-    "turnover": 0.05,
-    "TurnoverSMA20": 0.1,
-    "Tomcap": 0.18,
-    "RS_3M": 51.0,
-    "RS_6M": 34.0
   },
   {
     "Symbol": "MADHUCON",
@@ -26681,11 +26681,11 @@
   },
   {
     "Symbol": "MUTHOOTMF",
-    "current_price": 162.0,
+    "current_price": 161.87,
     "day_high": 164.19,
     "day_low": 161.2,
-    "day_volume": 95179,
-    "change_percentage": 0.1,
+    "day_volume": 95180,
+    "change_percentage": 0.02,
     "Sector Name": "Finance",
     "Industry Name": "Finance - NBFC",
     "Stock Name": "Muthoot Microfin Ltd.",
@@ -26694,13 +26694,13 @@
     "circuitLimit": 20.0,
     "fifty_two_week_high": 239.88,
     "fifty_two_week_low": 119.25,
-    "Down from 52W High (%)": 32.47,
-    "Up from 52W Low (%)": 35.85,
+    "Down from 52W High (%)": 32.52,
+    "Up from 52W Low (%)": 35.74,
     "turnover": 1.54,
     "TurnoverSMA20": 2.28,
     "Tomcap": 0.07,
     "RS_3M": 73.0,
-    "RS_6M": 78.0
+    "RS_6M": 77.0
   },
   {
     "Symbol": "SATIN",
@@ -26746,7 +26746,7 @@
     "TurnoverSMA20": 21.43,
     "Tomcap": 0.1,
     "RS_3M": 47.0,
-    "RS_6M": 77.0
+    "RS_6M": 78.0
   },
   {
     "Symbol": "NUVAMA",
@@ -27022,7 +27022,7 @@
     "TurnoverSMA20": 0.12,
     "Tomcap": 0.08,
     "RS_3M": 19.0,
-    "RS_6M": 29.0
+    "RS_6M": 28.0
   },
   {
     "Symbol": "LAMBODHARA",
@@ -27620,7 +27620,7 @@
     "TurnoverSMA20": 7.04,
     "Tomcap": 0.38,
     "RS_3M": 14.0,
-    "RS_6M": 51.0
+    "RS_6M": 52.0
   },
   {
     "Symbol": "GEEKAYWIRE",
@@ -29022,7 +29022,7 @@
     "turnover": 5.03,
     "TurnoverSMA20": 6.46,
     "Tomcap": 0.11,
-    "RS_3M": 10.0,
+    "RS_3M": 11.0,
     "RS_6M": 6.0
   },
   {
@@ -29142,11 +29142,11 @@
   },
   {
     "Symbol": "INDOAMIN",
-    "current_price": 143.1,
+    "current_price": 143.07,
     "day_high": 146.7,
     "day_low": 142.6,
-    "day_volume": 72498,
-    "change_percentage": -0.57,
+    "day_volume": 72499,
+    "change_percentage": -0.59,
     "Sector Name": "Chemicals",
     "Industry Name": "Chemicals",
     "Stock Name": "Indo Amines Ltd.",
@@ -29155,8 +29155,8 @@
     "circuitLimit": 20.0,
     "fifty_two_week_high": 246.02,
     "fifty_two_week_low": 105.0,
-    "Down from 52W High (%)": 41.83,
-    "Up from 52W Low (%)": 36.29,
+    "Down from 52W High (%)": 41.85,
+    "Up from 52W Low (%)": 36.26,
     "turnover": 1.04,
     "TurnoverSMA20": 2.81,
     "Tomcap": 0.26,
@@ -29206,7 +29206,7 @@
     "turnover": 0.3,
     "TurnoverSMA20": 0.19,
     "Tomcap": 0.09,
-    "RS_3M": 33.0,
+    "RS_3M": 34.0,
     "RS_6M": 34.0
   },
   {
@@ -29896,7 +29896,7 @@
     "turnover": 132.12,
     "TurnoverSMA20": 361.48,
     "Tomcap": 0.43,
-    "RS_3M": 72.0,
+    "RS_3M": 73.0,
     "RS_6M": 87.0
   },
   {
@@ -30495,7 +30495,7 @@
     "TurnoverSMA20": 0.34,
     "Tomcap": 0.52,
     "RS_3M": 40.0,
-    "RS_6M": 44.0
+    "RS_6M": 45.0
   },
   {
     "Symbol": "GICHSGFIN",
@@ -30939,7 +30939,7 @@
     "current_price": 4.99,
     "day_high": 5.08,
     "day_low": 4.9,
-    "day_volume": 59444,
+    "day_volume": 59443,
     "change_percentage": -0.2,
     "Sector Name": "Realty",
     "Industry Name": "Construction - Real Estate",
@@ -32794,7 +32794,7 @@
     "turnover": 1.31,
     "TurnoverSMA20": 0.95,
     "Tomcap": 0.12,
-    "RS_3M": 31.0,
+    "RS_3M": 32.0,
     "RS_6M": 36.0
   },
   {
@@ -32890,6 +32890,29 @@
     "RS_6M": 22.0
   },
   {
+    "Symbol": "ENERGYDEV",
+    "current_price": 20.04,
+    "day_high": 20.14,
+    "day_low": 19.72,
+    "day_volume": 46876,
+    "change_percentage": 0.96,
+    "Sector Name": "Power",
+    "Industry Name": "Power Generation/Distribution",
+    "Stock Name": "Energy Development Company Ltd.",
+    "Market Cap": 95.0,
+    "INECODE": "INE306C01019",
+    "circuitLimit": 5.0,
+    "fifty_two_week_high": 37.9,
+    "fifty_two_week_low": 16.4,
+    "Down from 52W High (%)": 47.12,
+    "Up from 52W Low (%)": 22.2,
+    "turnover": 0.09,
+    "TurnoverSMA20": 0.04,
+    "Tomcap": 0.04,
+    "RS_3M": 9.0,
+    "RS_6M": 10.0
+  },
+  {
     "Symbol": "SATIA",
     "current_price": 83.69,
     "day_high": 84.0,
@@ -32934,29 +32957,6 @@
     "Tomcap": 0.08,
     "RS_3M": 9.0,
     "RS_6M": 4.0
-  },
-  {
-    "Symbol": "ENERGYDEV",
-    "current_price": 20.04,
-    "day_high": 20.14,
-    "day_low": 19.72,
-    "day_volume": 46776,
-    "change_percentage": 0.96,
-    "Sector Name": "Power",
-    "Industry Name": "Power Generation/Distribution",
-    "Stock Name": "Energy Development Company Ltd.",
-    "Market Cap": 95.0,
-    "INECODE": "INE306C01019",
-    "circuitLimit": 5.0,
-    "fifty_two_week_high": 37.9,
-    "fifty_two_week_low": 16.4,
-    "Down from 52W High (%)": 47.12,
-    "Up from 52W Low (%)": 22.2,
-    "turnover": 0.09,
-    "TurnoverSMA20": 0.04,
-    "Tomcap": 0.04,
-    "RS_3M": 9.0,
-    "RS_6M": 10.0
   },
   {
     "Symbol": "IRMENERGY",
@@ -34106,7 +34106,7 @@
     "TurnoverSMA20": 0.13,
     "Tomcap": 0.25,
     "RS_3M": 4.0,
-    "RS_6M": 0.0
+    "RS_6M": 1.0
   },
   {
     "Symbol": "XCHANGING",
@@ -34152,7 +34152,7 @@
     "TurnoverSMA20": 0.38,
     "Tomcap": 0.08,
     "RS_3M": 41.0,
-    "RS_6M": 42.0
+    "RS_6M": 43.0
   },
   {
     "Symbol": "TREEHOUSE",
@@ -35669,7 +35669,7 @@
     "turnover": 0.53,
     "TurnoverSMA20": 2.57,
     "Tomcap": 0.48,
-    "RS_3M": 41.0,
+    "RS_3M": 40.0,
     "RS_6M": 54.0
   },
   {
@@ -36846,6 +36846,29 @@
     "RS_6M": 52.0
   },
   {
+    "Symbol": "NURECA",
+    "current_price": 255.0,
+    "day_high": 268.7,
+    "day_low": 253.0,
+    "day_volume": 26959,
+    "change_percentage": -4.11,
+    "Sector Name": "Healthcare",
+    "Industry Name": "Medical Equipment/Supplies/Accessories",
+    "Stock Name": "Nureca Ltd.",
+    "Market Cap": 256.35,
+    "INECODE": "INE0DSF01015",
+    "circuitLimit": 20.0,
+    "fifty_two_week_high": 447.5,
+    "fifty_two_week_low": 203.62,
+    "Down from 52W High (%)": 43.02,
+    "Up from 52W Low (%)": 25.23,
+    "turnover": 0.69,
+    "TurnoverSMA20": 0.45,
+    "Tomcap": 0.17,
+    "RS_3M": 37.0,
+    "RS_6M": 48.0
+  },
+  {
     "Symbol": "TTKPRESTIG",
     "current_price": 675.25,
     "day_high": 682.85,
@@ -36867,29 +36890,6 @@
     "Tomcap": 0.03,
     "RS_3M": 78.0,
     "RS_6M": 66.0
-  },
-  {
-    "Symbol": "NURECA",
-    "current_price": 255.68,
-    "day_high": 268.7,
-    "day_low": 253.0,
-    "day_volume": 26793,
-    "change_percentage": -3.85,
-    "Sector Name": "Healthcare",
-    "Industry Name": "Medical Equipment/Supplies/Accessories",
-    "Stock Name": "Nureca Ltd.",
-    "Market Cap": 256.35,
-    "INECODE": "INE0DSF01015",
-    "circuitLimit": 20.0,
-    "fifty_two_week_high": 447.5,
-    "fifty_two_week_low": 203.62,
-    "Down from 52W High (%)": 42.86,
-    "Up from 52W Low (%)": 25.57,
-    "turnover": 0.69,
-    "TurnoverSMA20": 0.45,
-    "Tomcap": 0.17,
-    "RS_3M": 39.0,
-    "RS_6M": 49.0
   },
   {
     "Symbol": "CIGNITITEC",
@@ -37813,11 +37813,11 @@
   },
   {
     "Symbol": "SHIVAMILLS",
-    "current_price": 71.56,
+    "current_price": 71.94,
     "day_high": 75.0,
     "day_low": 70.5,
-    "day_volume": 23716,
-    "change_percentage": 1.1,
+    "day_volume": 23718,
+    "change_percentage": 1.64,
     "Sector Name": "Textile",
     "Industry Name": "Textile",
     "Stock Name": "Shiva Mills Ltd.",
@@ -37826,13 +37826,13 @@
     "circuitLimit": 20.0,
     "fifty_two_week_high": 116.19,
     "fifty_two_week_low": 65.35,
-    "Down from 52W High (%)": 38.41,
-    "Up from 52W Low (%)": 9.5,
+    "Down from 52W High (%)": 38.08,
+    "Up from 52W Low (%)": 10.08,
     "turnover": 0.17,
-    "TurnoverSMA20": 0.03,
-    "Tomcap": 0.04,
-    "RS_3M": 38.0,
-    "RS_6M": 28.0
+    "TurnoverSMA20": 0.04,
+    "Tomcap": 0.06,
+    "RS_3M": 41.0,
+    "RS_6M": 30.0
   },
   {
     "Symbol": "TCI",
@@ -37854,7 +37854,7 @@
     "turnover": 2.8,
     "TurnoverSMA20": 2.27,
     "Tomcap": 0.02,
-    "RS_3M": 62.0,
+    "RS_3M": 61.0,
     "RS_6M": 62.0
   },
   {
@@ -38571,6 +38571,29 @@
     "RS_6M": 54.0
   },
   {
+    "Symbol": "DYNAMATECH",
+    "current_price": 7000.5,
+    "day_high": 7200.0,
+    "day_low": 6701.0,
+    "day_volume": 21704,
+    "change_percentage": 3.25,
+    "Sector Name": "Capital Goods",
+    "Industry Name": "Compressors / Pumps",
+    "Stock Name": "Dynamatic Technologies Ltd.",
+    "Market Cap": 4484.56,
+    "INECODE": "INE221B01012",
+    "circuitLimit": 20.0,
+    "fifty_two_week_high": 8937.0,
+    "fifty_two_week_low": 5444.15,
+    "Down from 52W High (%)": 21.67,
+    "Up from 52W Low (%)": 28.59,
+    "turnover": 15.19,
+    "TurnoverSMA20": 3.52,
+    "Tomcap": 0.07,
+    "RS_3M": 62.0,
+    "RS_6M": 60.0
+  },
+  {
     "Symbol": "GVPTECH",
     "current_price": 10.01,
     "day_high": 10.17,
@@ -38592,29 +38615,6 @@
     "Tomcap": 0.02,
     "RS_3M": 45.0,
     "RS_6M": 36.0
-  },
-  {
-    "Symbol": "DYNAMATECH",
-    "current_price": 6985.0,
-    "day_high": 7200.0,
-    "day_low": 6701.0,
-    "day_volume": 21664,
-    "change_percentage": 3.02,
-    "Sector Name": "Capital Goods",
-    "Industry Name": "Compressors / Pumps",
-    "Stock Name": "Dynamatic Technologies Ltd.",
-    "Market Cap": 4484.56,
-    "INECODE": "INE221B01012",
-    "circuitLimit": 20.0,
-    "fifty_two_week_high": 8937.0,
-    "fifty_two_week_low": 5444.15,
-    "Down from 52W High (%)": 21.84,
-    "Up from 52W Low (%)": 28.3,
-    "turnover": 15.13,
-    "TurnoverSMA20": 3.51,
-    "Tomcap": 0.07,
-    "RS_3M": 61.0,
-    "RS_6M": 59.0
   },
   {
     "Symbol": "KDDL",
@@ -39235,7 +39235,7 @@
     "TurnoverSMA20": 1.74,
     "Tomcap": 0.05,
     "RS_3M": 66.0,
-    "RS_6M": 71.0
+    "RS_6M": 72.0
   },
   {
     "Symbol": "CUBEXTUB",
@@ -39676,11 +39676,11 @@
   },
   {
     "Symbol": "CHEMBOND",
-    "current_price": 185.77,
+    "current_price": 184.0,
     "day_high": 196.54,
     "day_low": 180.11,
-    "day_volume": 17740,
-    "change_percentage": 1.25,
+    "day_volume": 17741,
+    "change_percentage": 0.29,
     "Sector Name": "Chemicals",
     "Industry Name": "Chemicals",
     "Stock Name": "Chembond Material Technologies Ltd.",
@@ -39689,13 +39689,13 @@
     "circuitLimit": 20.0,
     "fifty_two_week_high": 637.9,
     "fifty_two_week_low": 168.5,
-    "Down from 52W High (%)": 70.88,
-    "Up from 52W Low (%)": 10.25,
+    "Down from 52W High (%)": 71.16,
+    "Up from 52W Low (%)": 9.2,
     "turnover": 0.33,
     "TurnoverSMA20": 0.3,
     "Tomcap": 0.12,
-    "RS_3M": 11.0,
-    "RS_6M": 1.0
+    "RS_3M": 9.0,
+    "RS_6M": 0.0
   },
   {
     "Symbol": "KSL",
@@ -39740,7 +39740,7 @@
     "turnover": 0.13,
     "TurnoverSMA20": 0.51,
     "Tomcap": 0.26,
-    "RS_3M": 40.0,
+    "RS_3M": 39.0,
     "RS_6M": 31.0
   },
   {
@@ -40461,7 +40461,7 @@
     "current_price": 125.0,
     "day_high": 127.46,
     "day_low": 124.5,
-    "day_volume": 15845,
+    "day_volume": 15850,
     "change_percentage": 0.1,
     "Sector Name": "Textile",
     "Industry Name": "Textile - Manmade  Fibres",
@@ -40688,11 +40688,11 @@
   },
   {
     "Symbol": "ENIL",
-    "current_price": 162.0,
+    "current_price": 161.61,
     "day_high": 162.26,
     "day_low": 159.0,
-    "day_volume": 15356,
-    "change_percentage": 1.53,
+    "day_volume": 15366,
+    "change_percentage": 1.28,
     "Sector Name": "Media & Entertainment",
     "Industry Name": "TV Broadcasting & Software Production",
     "Stock Name": "Entertainment Network (India) Ltd.",
@@ -40701,13 +40701,13 @@
     "circuitLimit": 20.0,
     "fifty_two_week_high": 238.55,
     "fifty_two_week_low": 121.0,
-    "Down from 52W High (%)": 32.09,
-    "Up from 52W Low (%)": 33.88,
+    "Down from 52W High (%)": 32.25,
+    "Up from 52W Low (%)": 33.56,
     "turnover": 0.25,
     "TurnoverSMA20": 0.42,
     "Tomcap": 0.05,
-    "RS_3M": 75.0,
-    "RS_6M": 72.0
+    "RS_3M": 74.0,
+    "RS_6M": 71.0
   },
   {
     "Symbol": "AMRUTANJAN",
@@ -42504,6 +42504,29 @@
     "RS_6M": 6.0
   },
   {
+    "Symbol": "DSSL",
+    "current_price": 971.05,
+    "day_high": 978.4,
+    "day_low": 966.0,
+    "day_volume": 10621,
+    "change_percentage": 0.49,
+    "Sector Name": "Information Technology",
+    "Industry Name": "IT - Software",
+    "Stock Name": "Dynacons Systems & Solutions Ltd.",
+    "Market Cap": 1236.33,
+    "INECODE": "INE417B01040",
+    "circuitLimit": 20.0,
+    "fifty_two_week_high": 1618.2,
+    "fifty_two_week_low": 926.9,
+    "Down from 52W High (%)": 39.99,
+    "Up from 52W Low (%)": 4.76,
+    "turnover": 1.03,
+    "TurnoverSMA20": 2.49,
+    "Tomcap": 0.2,
+    "RS_3M": 14.0,
+    "RS_6M": 11.0
+  },
+  {
     "Symbol": "CALSOFT",
     "current_price": 15.4,
     "day_high": 15.55,
@@ -42525,29 +42548,6 @@
     "Tomcap": 0.04,
     "RS_3M": 71.0,
     "RS_6M": 84.0
-  },
-  {
-    "Symbol": "DSSL",
-    "current_price": 971.05,
-    "day_high": 978.4,
-    "day_low": 966.0,
-    "day_volume": 10589,
-    "change_percentage": 0.49,
-    "Sector Name": "Information Technology",
-    "Industry Name": "IT - Software",
-    "Stock Name": "Dynacons Systems & Solutions Ltd.",
-    "Market Cap": 1236.33,
-    "INECODE": "INE417B01040",
-    "circuitLimit": 20.0,
-    "fifty_two_week_high": 1618.2,
-    "fifty_two_week_low": 926.9,
-    "Down from 52W High (%)": 39.99,
-    "Up from 52W Low (%)": 4.76,
-    "turnover": 1.03,
-    "TurnoverSMA20": 2.49,
-    "Tomcap": 0.2,
-    "RS_3M": 14.0,
-    "RS_6M": 11.0
   },
   {
     "Symbol": "UCAL",
@@ -42731,7 +42731,7 @@
     "TurnoverSMA20": 0.02,
     "Tomcap": 0.1,
     "RS_3M": 4.0,
-    "RS_6M": 20.0
+    "RS_6M": 21.0
   },
   {
     "Symbol": "CONTROLPR",
@@ -43060,7 +43060,7 @@
     "current_price": 1150.4,
     "day_high": 1166.0,
     "day_low": 1141.2,
-    "day_volume": 9421,
+    "day_volume": 9424,
     "change_percentage": 0.25,
     "Sector Name": "Chemicals",
     "Industry Name": "Pesticides & Agrochemicals",
@@ -43125,6 +43125,29 @@
     "RS_6M": 37.0
   },
   {
+    "Symbol": "OAL",
+    "current_price": 339.7,
+    "day_high": 342.95,
+    "day_low": 335.9,
+    "day_volume": 9142,
+    "change_percentage": 0.97,
+    "Sector Name": "Chemicals",
+    "Industry Name": "Chemicals",
+    "Stock Name": "Oriental Aromatics Ltd.",
+    "Market Cap": 1139.01,
+    "INECODE": "INE959C01023",
+    "circuitLimit": 20.0,
+    "fifty_two_week_high": 656.7,
+    "fifty_two_week_low": 261.55,
+    "Down from 52W High (%)": 48.27,
+    "Up from 52W Low (%)": 29.88,
+    "turnover": 0.31,
+    "TurnoverSMA20": 0.31,
+    "Tomcap": 0.02,
+    "RS_3M": 30.0,
+    "RS_6M": 42.0
+  },
+  {
     "Symbol": "GLFL",
     "current_price": 5.76,
     "day_high": 6.16,
@@ -43146,29 +43169,6 @@
     "Tomcap": 0.06,
     "RS_3M": 49.0,
     "RS_6M": 69.0
-  },
-  {
-    "Symbol": "OAL",
-    "current_price": 342.4,
-    "day_high": 342.95,
-    "day_low": 335.9,
-    "day_volume": 9117,
-    "change_percentage": 1.77,
-    "Sector Name": "Chemicals",
-    "Industry Name": "Chemicals",
-    "Stock Name": "Oriental Aromatics Ltd.",
-    "Market Cap": 1139.01,
-    "INECODE": "INE959C01023",
-    "circuitLimit": 20.0,
-    "fifty_two_week_high": 656.7,
-    "fifty_two_week_low": 261.55,
-    "Down from 52W High (%)": 47.86,
-    "Up from 52W Low (%)": 30.91,
-    "turnover": 0.31,
-    "TurnoverSMA20": 0.31,
-    "Tomcap": 0.02,
-    "RS_3M": 34.0,
-    "RS_6M": 45.0
   },
   {
     "Symbol": "JPOLYINVST",
@@ -44156,7 +44156,7 @@
     "turnover": 0.57,
     "TurnoverSMA20": 0.16,
     "Tomcap": 0.05,
-    "RS_3M": 30.0,
+    "RS_3M": 31.0,
     "RS_6M": 19.0
   },
   {
@@ -44367,6 +44367,29 @@
     "RS_6M": 74.0
   },
   {
+    "Symbol": "JAYAGROGN",
+    "current_price": 243.0,
+    "day_high": 244.7,
+    "day_low": 239.5,
+    "day_volume": 6923,
+    "change_percentage": 2.32,
+    "Sector Name": "Chemicals",
+    "Industry Name": "Chemicals",
+    "Stock Name": "Jayant Agro-Organics Ltd.",
+    "Market Cap": 723.3,
+    "INECODE": "INE785A01026",
+    "circuitLimit": 20.0,
+    "fifty_two_week_high": 326.4,
+    "fifty_two_week_low": 201.31,
+    "Down from 52W High (%)": 25.55,
+    "Up from 52W Low (%)": 20.71,
+    "turnover": 0.17,
+    "TurnoverSMA20": 0.21,
+    "Tomcap": 0.02,
+    "RS_3M": 36.0,
+    "RS_6M": 24.0
+  },
+  {
     "Symbol": "ASTEC",
     "current_price": 839.0,
     "day_high": 846.95,
@@ -44388,29 +44411,6 @@
     "Tomcap": 0.14,
     "RS_3M": 53.0,
     "RS_6M": 70.0
-  },
-  {
-    "Symbol": "JAYAGROGN",
-    "current_price": 243.0,
-    "day_high": 244.7,
-    "day_low": 239.5,
-    "day_volume": 6702,
-    "change_percentage": 2.32,
-    "Sector Name": "Chemicals",
-    "Industry Name": "Chemicals",
-    "Stock Name": "Jayant Agro-Organics Ltd.",
-    "Market Cap": 723.3,
-    "INECODE": "INE785A01026",
-    "circuitLimit": 20.0,
-    "fifty_two_week_high": 326.4,
-    "fifty_two_week_low": 201.31,
-    "Down from 52W High (%)": 25.55,
-    "Up from 52W Low (%)": 20.71,
-    "turnover": 0.16,
-    "TurnoverSMA20": 0.21,
-    "Tomcap": 0.02,
-    "RS_3M": 36.0,
-    "RS_6M": 24.0
   },
   {
     "Symbol": "REGENCERAM",
@@ -44984,7 +44984,7 @@
     "turnover": 0.03,
     "TurnoverSMA20": 0.07,
     "Tomcap": 0.01,
-    "RS_3M": 51.0,
+    "RS_3M": 52.0,
     "RS_6M": 50.0
   },
   {
@@ -45904,7 +45904,7 @@
     "turnover": 0.12,
     "TurnoverSMA20": 0.15,
     "Tomcap": 0.05,
-    "RS_3M": 49.0,
+    "RS_3M": 50.0,
     "RS_6M": 32.0
   },
   {
@@ -45973,7 +45973,7 @@
     "turnover": 0.0,
     "TurnoverSMA20": 0.01,
     "Tomcap": 0.06,
-    "RS_3M": 9.0,
+    "RS_3M": 10.0,
     "RS_6M": 9.0
   },
   {
@@ -47637,7 +47637,7 @@
     "current_price": 5269.8999,
     "day_high": 5275.0,
     "day_low": 5201.2002,
-    "day_volume": 1588,
+    "day_volume": 1585,
     "change_percentage": 0.52,
     "Sector Name": "Finance",
     "Industry Name": "Finance - Investment",
