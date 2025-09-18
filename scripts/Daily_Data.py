@@ -285,7 +285,10 @@ def prepare_and_save_data(stocks: List[Dict]):
     }
     df.rename(columns=rename_map, inplace=True)
     records = df.where(pd.notnull(df), None).to_dict(orient="records")
-
+    for rec in records:
+        v = rec.get("change_percentage")
+        if isinstance(v, float) and not math.isfinite(v):
+            rec["change_percentage"] = 0
     # --- NEW: Filter out records with INECODE "XXXXXXXXXXXX" ---
     initial_count = len(records)
     filtered_records = [
