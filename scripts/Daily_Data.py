@@ -65,7 +65,7 @@ def fetch_chartink_data() -> Optional[Dict[str, Any]]:
         }
         HEADERS = {
             "Referer": CONFIG["dashboard_url"], "Origin": "https://chartink.com",
-            "x-requested-with": "XMLHttpRequest", "User-Agent": "python-requests/2.x",
+            "x-requested-with": "XMLHttpRequest", "User-Agent": "python-requests/3.x",
         }
         
         with requests.Session() as s:
