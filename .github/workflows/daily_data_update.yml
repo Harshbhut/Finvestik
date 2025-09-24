@@ -6,15 +6,10 @@ permissions:
 
 on:
   schedule:
-  # 09:15–09:59 IST (03:45 UTC)
-  - cron: "45 3 * * 1-5"
-
-  # 10:00–16:59 IST (04:00–11:29 UTC) → every 15 min
-  - cron: "0,15,30,45 4-10 * * 1-5"
-
-  # 17:00 IST (11:30 UTC)
-  - cron: "30 11 * * 1-5"
-    # 10:00–10:05 UTC
+  # 09:30–15:50 IST → every 20 min
+  - cron: "0,20,40 4-9 * * 1-5"   # full hours 04:00–09:40 UTC => 09:30–15:10 IST
+  - cron: "0,20 10 * * 1-5"       # hour 10 UTC => 15:30 & 15:50 IST
+  
   workflow_run:
     workflows: ["Update Weekly Sector & Industry Data"]
     types:
