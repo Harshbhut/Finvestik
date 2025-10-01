@@ -11,7 +11,7 @@ from typing import Optional, List, Dict
 # -------------------------
 # Configuration
 # -------------------------
-API_URL = "https://webnodejs.chittorgarh.com/cloud/report/data-read/124/1/9/2025/2025-26/0/mainline"
+API_URL = "https://webnodejs.chittorgarh.com/cloud/report/data-read/124/1/10/2025/2025-26/0/mainline"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_FILE = os.path.join(BASE_DIR, "52_wk_High_Low.json")
 
