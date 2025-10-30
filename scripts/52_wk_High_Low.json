@@ -1,34 +1,468 @@
 {
-  "source_date": "2025-10-28",
-  "last_updated": "2025-10-29 09:03:51",
+  "source_date": "2025-10-29",
+  "last_updated": "2025-10-30 08:59:50",
   "data": [
     {
-      "Symbol": "ABCAPITAL",
+      "Symbol": "AUBANK",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
-      "52_Weeks_High": 318.3,
-      "52_Weeks_Low": 149.01
-    },
-    {
-      "Symbol": "ABCAPITAL",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 318.3,
-      "52_Weeks_Low": 149.01
+      "52_Weeks_High": 886.45,
+      "52_Weeks_Low": 478.35
     },
     {
       "Symbol": "SBILIFE",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
-      "52_Weeks_High": 1945.6,
+      "52_Weeks_High": 1975,
       "52_Weeks_Low": 1372.55
     },
     {
       "Symbol": "AMBER",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
-      "52_Weeks_High": 8560,
+      "52_Weeks_High": 8626,
       "52_Weeks_Low": 5235
+    },
+    {
+      "Symbol": "SIRCA",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 515,
+      "52_Weeks_Low": 230.69
+    },
+    {
+      "Symbol": "NORBTEAEXP",
+      "Exchange": "BSE/NSE",
+      "Series": "BE",
+      "52_Weeks_High": 66.48,
+      "52_Weeks_Low": 13.53
+    },
+    {
+      "Symbol": "MTARTECH",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 2385,
+      "52_Weeks_Low": 1155.6
+    },
+    {
+      "Symbol": "AIRTELPP",
+      "Exchange": "BSE/NSE",
+      "Series": "",
+      "52_Weeks_High": 1613.45,
+      "52_Weeks_Low": 1095.85
+    },
+    {
+      "Symbol": "SJS",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 1588.8,
+      "52_Weeks_Low": 808.15
+    },
+    {
+      "Symbol": "RHETAN",
+      "Exchange": "BSE/NSE",
+      "Series": "",
+      "52_Weeks_High": 23.15,
+      "52_Weeks_Low": 20.32
+    },
+    {
+      "Symbol": "INOXGREEN",
+      "Exchange": "BSE/NSE",
+      "Series": "BE",
+      "52_Weeks_High": 271.85,
+      "52_Weeks_Low": 104
+    },
+    {
+      "Symbol": "ABDL",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 654.55,
+      "52_Weeks_Low": 279
+    },
+    {
+      "Symbol": "CPEDU",
+      "Exchange": "BSE/NSE",
+      "Series": "",
+      "52_Weeks_High": 338.75,
+      "52_Weeks_Low": 217.61
+    },
+    {
+      "Symbol": "SHRINGARMS",
+      "Exchange": "BSE/NSE",
+      "Series": "",
+      "52_Weeks_High": 218.08,
+      "52_Weeks_Low": 177.51
+    },
+    {
+      "Symbol": "RUBICON",
+      "Exchange": "BSE/NSE",
+      "Series": "",
+      "52_Weeks_High": 639.7,
+      "52_Weeks_Low": 570.75
+    },
+    {
+      "Symbol": "HINDPETRO",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 470.9,
+      "52_Weeks_Low": 287.55
+    },
+    {
+      "Symbol": "SBIN",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 942.05,
+      "52_Weeks_Low": 680
+    },
+    {
+      "Symbol": "SAIL",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 143.27,
+      "52_Weeks_Low": 99.15
+    },
+    {
+      "Symbol": "JSWSTEEL",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 1213.9,
+      "52_Weeks_Low": 880
+    },
+    {
+      "Symbol": "GRASIM",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 2977.8,
+      "52_Weeks_Low": 2276.95
+    },
+    {
+      "Symbol": "TATASTEEL",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 186.94,
+      "52_Weeks_Low": 122.62
+    },
+    {
+      "Symbol": "CUMMINSIND",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 4366.2,
+      "52_Weeks_Low": 2580
+    },
+    {
+      "Symbol": "LT",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 4016.7,
+      "52_Weeks_Low": 2965.3
+    },
+    {
+      "Symbol": "BORORENEW",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 689.95,
+      "52_Weeks_Low": 408.25
+    },
+    {
+      "Symbol": "IFBAGRO",
+      "Exchange": "BSE/NSE",
+      "Series": "BE",
+      "52_Weeks_High": 1373.15,
+      "52_Weeks_Low": 440
+    },
+    {
+      "Symbol": "GMBREW",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 1295,
+      "52_Weeks_Low": 579.95
+    },
+    {
+      "Symbol": "GRAPHITE",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 638.8,
+      "52_Weeks_Low": 365.75
+    },
+    {
+      "Symbol": "SHRIRAMFIN",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 741.9,
+      "52_Weeks_Low": 493.35
+    },
+    {
+      "Symbol": "BHAGYANGR",
+      "Exchange": "BSE/NSE",
+      "Series": "BE",
+      "52_Weeks_High": 148.95,
+      "52_Weeks_Low": 65
+    },
+    {
+      "Symbol": "MAHASTEEL",
+      "Exchange": "BSE/NSE",
+      "Series": "BE",
+      "52_Weeks_High": 598,
+      "52_Weeks_Low": 179.53
+    },
+    {
+      "Symbol": "HBLENGINE",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 1018.8,
+      "52_Weeks_Low": 405
+    },
+    {
+      "Symbol": "SOMATEX",
+      "Exchange": "BSE/NSE",
+      "Series": "BE",
+      "52_Weeks_High": 126.37,
+      "52_Weeks_Low": 34.53
+    },
+    {
+      "Symbol": "HLEGLAS",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 581,
+      "52_Weeks_Low": 217.83
+    },
+    {
+      "Symbol": "JAYNECOIND",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 81.2,
+      "52_Weeks_Low": 28
+    },
+    {
+      "Symbol": "PRIVISCL",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 2954.7,
+      "52_Weeks_Low": 1368.15
+    },
+    {
+      "Symbol": "IOC",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 163.73,
+      "52_Weeks_Low": 110.72
+    },
+    {
+      "Symbol": "VSTTILLERS",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 6069,
+      "52_Weeks_Low": 3082
+    },
+    {
+      "Symbol": "SKMEGGPROD",
+      "Exchange": "BSE/NSE",
+      "Series": "BE",
+      "52_Weeks_High": 386.7,
+      "52_Weeks_Low": 154
+    },
+    {
+      "Symbol": "BANKINDIA",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 142.33,
+      "52_Weeks_Low": 90.05
+    },
+    {
+      "Symbol": "CUB",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 240.6,
+      "52_Weeks_Low": 142.91
+    },
+    {
+      "Symbol": "JINDALSTEL",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 1097.7,
+      "52_Weeks_Low": 723.35
+    },
+    {
+      "Symbol": "RAMCOSYS",
+      "Exchange": "BSE/NSE",
+      "Series": "BE",
+      "52_Weeks_High": 647.75,
+      "52_Weeks_Low": 270
+    },
+    {
+      "Symbol": "MEGASOFT",
+      "Exchange": "BSE/NSE",
+      "Series": "BE",
+      "52_Weeks_High": 204.43,
+      "52_Weeks_Low": 49.06
+    },
+    {
+      "Symbol": "BHARTIARTL",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 2110.4,
+      "52_Weeks_Low": 1511
+    },
+    {
+      "Symbol": "PNB",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 122.35,
+      "52_Weeks_Low": 85.46
+    },
+    {
+      "Symbol": "GPIL",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 290,
+      "52_Weeks_Low": 145.75
+    },
+    {
+      "Symbol": "INDIANB",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 856.9,
+      "52_Weeks_Low": 473.9
+    },
+    {
+      "Symbol": "PPAP",
+      "Exchange": "BSE/NSE",
+      "Series": "BE",
+      "52_Weeks_High": 294.79,
+      "52_Weeks_Low": 154.05
+    },
+    {
+      "Symbol": "TDPOWERSYS",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 679,
+      "52_Weeks_Low": 293
+    },
+    {
+      "Symbol": "ESSARSHPNG",
+      "Exchange": "BSE/NSE",
+      "Series": "BE",
+      "52_Weeks_High": 41.95,
+      "52_Weeks_Low": 21.5
+    },
+    {
+      "Symbol": "PROZONER",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 72.77,
+      "52_Weeks_Low": 21.6
+    },
+    {
+      "Symbol": "VINCOFE",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 169.32,
+      "52_Weeks_Low": 75
+    },
+    {
+      "Symbol": "ARFIN",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 55,
+      "52_Weeks_Low": 31.43
+    },
+    {
+      "Symbol": "PARAGMILK",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 324.45,
+      "52_Weeks_Low": 135.49
+    },
+    {
+      "Symbol": "LAURUSLABS",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 970,
+      "52_Weeks_Low": 459.55
+    },
+    {
+      "Symbol": "HINDALCO",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 859.9,
+      "52_Weeks_Low": 546.45
+    },
+    {
+      "Symbol": "FEDERALBNK",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 236.63,
+      "52_Weeks_Low": 172.66
+    },
+    {
+      "Symbol": "ASAHIINDIA",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 959.7,
+      "52_Weeks_Low": 576.8
+    },
+    {
+      "Symbol": "PRECWIRE",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 237.5,
+      "52_Weeks_Low": 118
+    },
+    {
+      "Symbol": "JKTYRE",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 440,
+      "52_Weeks_Low": 243
+    },
+    {
+      "Symbol": "CANBK",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 131.77,
+      "52_Weeks_Low": 78.6
+    },
+    {
+      "Symbol": "DCBBANK",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 164.5,
+      "52_Weeks_Low": 101.41
+    },
+    {
+      "Symbol": "MOTILALOFS",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 1097.1,
+      "52_Weeks_Low": 513
+    },
+    {
+      "Symbol": "TERASOFT",
+      "Exchange": "BSE/NSE",
+      "Series": "BE",
+      "52_Weeks_High": 533.6,
+      "52_Weeks_Low": 75.55
+    },
+    {
+      "Symbol": "VSSL",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 324,
+      "52_Weeks_Low": 178
+    },
+    {
+      "Symbol": "IDFCFIRSTB",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 80.13,
+      "52_Weeks_Low": 52.46
+    },
+    {
+      "Symbol": "ABCAPITAL",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 318.3,
+      "52_Weeks_Low": 149.01
     },
     {
       "Symbol": "KARURVYSYA",
@@ -36,13 +470,6 @@
       "Series": "EQ",
       "52_Weeks_High": 251.95,
       "52_Weeks_Low": 154.63
-    },
-    {
-      "Symbol": "NORBTEAEXP",
-      "Exchange": "BSE/NSE",
-      "Series": "BE",
-      "52_Weeks_High": 63.32,
-      "52_Weeks_Low": 13.53
     },
     {
       "Symbol": "RMDRIP",
@@ -59,18 +486,18 @@
       "52_Weeks_Low": 30.88
     },
     {
+      "Symbol": "PGINVIT",
+      "Exchange": "BSE/NSE",
+      "Series": "",
+      "52_Weeks_High": 97.5,
+      "52_Weeks_Low": 74.96
+    },
+    {
       "Symbol": "CARTRADE",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
       "52_Weeks_High": 3180,
       "52_Weeks_Low": 974.15
-    },
-    {
-      "Symbol": "AIRTELPP",
-      "Exchange": "BSE/NSE",
-      "Series": "",
-      "52_Weeks_High": 1599.8,
-      "52_Weeks_Low": 1095.85
     },
     {
       "Symbol": "PAYTM",
@@ -87,13 +514,6 @@
       "52_Weeks_Low": 313.5
     },
     {
-      "Symbol": "INOXGREEN",
-      "Exchange": "BSE/NSE",
-      "Series": "BE",
-      "52_Weeks_High": 270,
-      "52_Weeks_Low": 104
-    },
-    {
       "Symbol": "KALAMANDIR",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
@@ -106,13 +526,6 @@
       "Series": "EQ",
       "52_Weeks_High": 790,
       "52_Weeks_Low": 435.25
-    },
-    {
-      "Symbol": "CPEDU",
-      "Exchange": "BSE/NSE",
-      "Series": "",
-      "52_Weeks_High": 338,
-      "52_Weeks_Low": 217.61
     },
     {
       "Symbol": "EUROPRATIK",
@@ -136,228 +549,102 @@
       "52_Weeks_Low": 173.28
     },
     {
-      "Symbol": "SBIN",
+      "Symbol": "PSPPROJECT",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
-      "52_Weeks_High": 935.85,
-      "52_Weeks_Low": 680
+      "52_Weeks_High": 947.95,
+      "52_Weeks_Low": 592.3
     },
     {
-      "Symbol": "GRASIM",
+      "Symbol": "CREDITACC",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
-      "52_Weeks_High": 2959.6,
-      "52_Weeks_Low": 2276.95
+      "52_Weeks_High": 1490.1,
+      "52_Weeks_Low": 750.2
     },
     {
-      "Symbol": "HINDALCO",
+      "Symbol": "SBC",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
-      "52_Weeks_High": 859.9,
-      "52_Weeks_Low": 546.45
+      "52_Weeks_High": 23.77,
+      "52_Weeks_Low": 10.95
     },
     {
-      "Symbol": "FEDERALBNK",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 236.63,
-      "52_Weeks_Low": 172.66
-    },
-    {
-      "Symbol": "TATASTEEL",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 182.06,
-      "52_Weeks_Low": 122.62
-    },
-    {
-      "Symbol": "CUMMINSIND",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 4328.7,
-      "52_Weeks_Low": 2580
-    },
-    {
-      "Symbol": "IFBAGRO",
+      "Symbol": "EASTSILK",
       "Exchange": "BSE/NSE",
       "Series": "BE",
-      "52_Weeks_High": 1359,
-      "52_Weeks_Low": 440
+      "52_Weeks_High": 66.71,
+      "52_Weeks_Low": 24
     },
     {
-      "Symbol": "BHAGYANGR",
+      "Symbol": "INDIGRID",
+      "Exchange": "BSE/NSE",
+      "Series": "",
+      "52_Weeks_High": 173.87,
+      "52_Weeks_Low": 137
+    },
+    {
+      "Symbol": "INDIGRID",
+      "Exchange": "BSE/NSE",
+      "Series": "",
+      "52_Weeks_High": 173.87,
+      "52_Weeks_Low": 137
+    },
+    {
+      "Symbol": "EMBASSY",
+      "Exchange": "BSE/NSE",
+      "Series": "",
+      "52_Weeks_High": 437,
+      "52_Weeks_Low": 342.1
+    },
+    {
+      "Symbol": "GARUDA",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 230.7,
+      "52_Weeks_Low": 77.05
+    },
+    {
+      "Symbol": "SWANDEF",
       "Exchange": "BSE/NSE",
       "Series": "BE",
-      "52_Weeks_High": 136.19,
-      "52_Weeks_Low": 65
+      "52_Weeks_High": 736.45,
+      "52_Weeks_Low": 37.8
     },
     {
-      "Symbol": "ASAHIINDIA",
+      "Symbol": "JAINREC",
       "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 959.7,
-      "52_Weeks_Low": 576.8
+      "Series": "",
+      "52_Weeks_High": 413.66,
+      "52_Weeks_Low": 247.57
     },
     {
-      "Symbol": "HBLENGINE",
+      "Symbol": "ADVANCE",
       "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 1004.35,
-      "52_Weeks_Low": 405
+      "Series": "",
+      "52_Weeks_High": 154,
+      "52_Weeks_Low": 102
     },
     {
-      "Symbol": "SOMATEX",
+      "Symbol": "OMFREIGHT",
       "Exchange": "BSE/NSE",
-      "Series": "BE",
-      "52_Weeks_High": 120.36,
-      "52_Weeks_Low": 34.53
+      "Series": "",
+      "52_Weeks_High": 100,
+      "52_Weeks_Low": 81.1
     },
     {
-      "Symbol": "PRECWIRE",
+      "Symbol": "CRAMC",
       "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 237.5,
-      "52_Weeks_Low": 118
+      "Series": "",
+      "52_Weeks_High": 353.4,
+      "52_Weeks_Low": 280.25
     },
     {
-      "Symbol": "JKTYRE",
+      "Symbol": "DELPH-RE",
       "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 440,
-      "52_Weeks_Low": 243
-    },
-    {
-      "Symbol": "PRIVISCL",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 2948,
-      "52_Weeks_Low": 1368.15
-    },
-    {
-      "Symbol": "IOC",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 157.48,
-      "52_Weeks_Low": 110.72
-    },
-    {
-      "Symbol": "VSTTILLERS",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 5965,
-      "52_Weeks_Low": 3082
-    },
-    {
-      "Symbol": "BANKINDIA",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 142,
-      "52_Weeks_Low": 90.05
-    },
-    {
-      "Symbol": "CUB",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 240,
-      "52_Weeks_Low": 142.91
-    },
-    {
-      "Symbol": "RAMCOSYS",
-      "Exchange": "BSE/NSE",
-      "Series": "BE",
-      "52_Weeks_High": 642.15,
-      "52_Weeks_Low": 270
-    },
-    {
-      "Symbol": "MEGASOFT",
-      "Exchange": "BSE/NSE",
-      "Series": "BE",
-      "52_Weeks_High": 194.7,
-      "52_Weeks_Low": 49.06
-    },
-    {
-      "Symbol": "BHARTIARTL",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 2102.6,
-      "52_Weeks_Low": 1511
-    },
-    {
-      "Symbol": "PNB",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 121.43,
-      "52_Weeks_Low": 85.46
-    },
-    {
-      "Symbol": "CANBK",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 131.77,
-      "52_Weeks_Low": 78.6
-    },
-    {
-      "Symbol": "DCBBANK",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 164.5,
-      "52_Weeks_Low": 101.41
-    },
-    {
-      "Symbol": "INDIANB",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 855.4,
-      "52_Weeks_Low": 473.9
-    },
-    {
-      "Symbol": "MOTILALOFS",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 1096.75,
-      "52_Weeks_Low": 513
-    },
-    {
-      "Symbol": "TERASOFT",
-      "Exchange": "BSE/NSE",
-      "Series": "BE",
-      "52_Weeks_High": 533.6,
-      "52_Weeks_Low": 75.55
-    },
-    {
-      "Symbol": "VSSL",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 324,
-      "52_Weeks_Low": 178
-    },
-    {
-      "Symbol": "PROZONER",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 69.31,
-      "52_Weeks_Low": 21.6
-    },
-    {
-      "Symbol": "ARFIN",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 54.5,
-      "52_Weeks_Low": 31.43
-    },
-    {
-      "Symbol": "IDFCFIRSTB",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 80.13,
-      "52_Weeks_Low": 52.46
-    },
-    {
-      "Symbol": "PARAGMILK",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 324,
-      "52_Weeks_Low": 135.49
+      "Series": "",
+      "52_Weeks_High": 31.9,
+      "52_Weeks_Low": 11.07
     },
     {
       "Symbol": "TNPETRO",
@@ -381,13 +668,6 @@
       "52_Weeks_Low": 2431.8
     },
     {
-      "Symbol": "SHRIRAMFIN",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 730.3,
-      "52_Weeks_Low": 493.35
-    },
-    {
       "Symbol": "CHOLAFIN",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
@@ -402,25 +682,11 @@
       "52_Weeks_Low": 6.9
     },
     {
-      "Symbol": "MAHASTEEL",
-      "Exchange": "BSE/NSE",
-      "Series": "BE",
-      "52_Weeks_High": 595.5,
-      "52_Weeks_Low": 179.53
-    },
-    {
       "Symbol": "TVSHLTD",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
       "52_Weeks_High": 15840,
       "52_Weeks_Low": 7855.25
-    },
-    {
-      "Symbol": "JAYNECOIND",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 80.01,
-      "52_Weeks_Low": 28
     },
     {
       "Symbol": "RAMAPHO",
@@ -500,146 +766,6 @@
       "52_Weeks_Low": 56.7
     },
     {
-      "Symbol": "LAURUSLABS",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 955.95,
-      "52_Weeks_Low": 459.55
-    },
-    {
-      "Symbol": "PSPPROJECT",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 947.95,
-      "52_Weeks_Low": 592.3
-    },
-    {
-      "Symbol": "CREDITACC",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 1490.1,
-      "52_Weeks_Low": 750.2
-    },
-    {
-      "Symbol": "SBC",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 23.77,
-      "52_Weeks_Low": 10.95
-    },
-    {
-      "Symbol": "EASTSILK",
-      "Exchange": "BSE/NSE",
-      "Series": "BE",
-      "52_Weeks_High": 66.71,
-      "52_Weeks_Low": 24
-    },
-    {
-      "Symbol": "INDIGRID",
-      "Exchange": "BSE/NSE",
-      "Series": "",
-      "52_Weeks_High": 173.87,
-      "52_Weeks_Low": 137
-    },
-    {
-      "Symbol": "INDIGRID",
-      "Exchange": "BSE/NSE",
-      "Series": "",
-      "52_Weeks_High": 173.87,
-      "52_Weeks_Low": 137
-    },
-    {
-      "Symbol": "EMBASSY",
-      "Exchange": "BSE/NSE",
-      "Series": "",
-      "52_Weeks_High": 437,
-      "52_Weeks_Low": 342.1
-    },
-    {
-      "Symbol": "GARUDA",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 230.7,
-      "52_Weeks_Low": 77.05
-    },
-    {
-      "Symbol": "SWANDEF",
-      "Exchange": "BSE/NSE",
-      "Series": "BE",
-      "52_Weeks_High": 736.45,
-      "52_Weeks_Low": 37.8
-    },
-    {
-      "Symbol": "SHRINGARMS",
-      "Exchange": "BSE/NSE",
-      "Series": "",
-      "52_Weeks_High": 217.4,
-      "52_Weeks_Low": 177.51
-    },
-    {
-      "Symbol": "JAINREC",
-      "Exchange": "BSE/NSE",
-      "Series": "",
-      "52_Weeks_High": 413.66,
-      "52_Weeks_Low": 247.57
-    },
-    {
-      "Symbol": "ADVANCE",
-      "Exchange": "BSE/NSE",
-      "Series": "",
-      "52_Weeks_High": 154,
-      "52_Weeks_Low": 102
-    },
-    {
-      "Symbol": "OMFREIGHT",
-      "Exchange": "BSE/NSE",
-      "Series": "",
-      "52_Weeks_High": 100,
-      "52_Weeks_Low": 81.1
-    },
-    {
-      "Symbol": "CRAMC",
-      "Exchange": "BSE/NSE",
-      "Series": "",
-      "52_Weeks_High": 353.4,
-      "52_Weeks_Low": 280.25
-    },
-    {
-      "Symbol": "DELPH-RE",
-      "Exchange": "BSE/NSE",
-      "Series": "",
-      "52_Weeks_High": 31.9,
-      "52_Weeks_Low": 18.45
-    },
-    {
-      "Symbol": "ABDL",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 640,
-      "52_Weeks_Low": 279
-    },
-    {
-      "Symbol": "ARSSBL",
-      "Exchange": "BSE/NSE",
-      "Series": "",
-      "52_Weeks_High": 536,
-      "52_Weeks_Low": 431
-    },
-    {
-      "Symbol": "CANHLIFE",
-      "Exchange": "BSE/NSE",
-      "Series": "",
-      "52_Weeks_High": 125.99,
-      "52_Weeks_Low": 106
-    },
-    {
-      "Symbol": "MIDWESTLTD",
-      "Exchange": "BSE/NSE",
-      "Series": "",
-      "52_Weeks_High": 1190,
-      "52_Weeks_Low": 1048.5
-    },
-    {
       "Symbol": "MRF",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
@@ -696,6 +822,83 @@
       "52_Weeks_Low": 422.5
     },
     {
+      "Symbol": "ARSSBL",
+      "Exchange": "BSE/NSE",
+      "Series": "",
+      "52_Weeks_High": 536,
+      "52_Weeks_Low": 431
+    },
+    {
+      "Symbol": "CANHLIFE",
+      "Exchange": "BSE/NSE",
+      "Series": "",
+      "52_Weeks_High": 125.99,
+      "52_Weeks_Low": 106
+    },
+    {
+      "Symbol": "MIDWESTLTD",
+      "Exchange": "BSE/NSE",
+      "Series": "",
+      "52_Weeks_High": 1190,
+      "52_Weeks_Low": 1048.5
+    },
+    {
+      "Symbol": "NAM-INDIA",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 987.35,
+      "52_Weeks_Low": 498.05
+    },
+    {
+      "Symbol": "ASTERDM",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 732.2,
+      "52_Weeks_Low": 387.1
+    },
+    {
+      "Symbol": "WHEELS",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 978.5,
+      "52_Weeks_Low": 543.6
+    },
+    {
+      "Symbol": "BIRET",
+      "Exchange": "BSE/NSE",
+      "Series": "",
+      "52_Weeks_High": 355.38,
+      "52_Weeks_Low": 270.87
+    },
+    {
+      "Symbol": "KRISHIVAL",
+      "Exchange": "BSE/NSE",
+      "Series": "BE",
+      "52_Weeks_High": 508,
+      "52_Weeks_Low": 211
+    },
+    {
+      "Symbol": "HYBRIDFIN",
+      "Exchange": "BSE/NSE",
+      "Series": "BE",
+      "52_Weeks_High": 33.62,
+      "52_Weeks_Low": 10.05
+    },
+    {
+      "Symbol": "GKENERGY",
+      "Exchange": "BSE/NSE",
+      "Series": "",
+      "52_Weeks_High": 239.6,
+      "52_Weeks_Low": 155.16
+    },
+    {
+      "Symbol": "ATLANTAELE",
+      "Exchange": "BSE/NSE",
+      "Series": "",
+      "52_Weeks_High": 1068.95,
+      "52_Weeks_Low": 782.1
+    },
+    {
       "Symbol": "BAJFINANCE",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
@@ -731,13 +934,6 @@
       "52_Weeks_Low": 3344
     },
     {
-      "Symbol": "LT",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 3966.2,
-      "52_Weeks_Low": 2965.3
-    },
-    {
       "Symbol": "TATACONSUM",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
@@ -750,13 +946,6 @@
       "Series": "EQ",
       "52_Weeks_High": 4438,
       "52_Weeks_Low": 2343.05
-    },
-    {
-      "Symbol": "GMBREW",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 1289.9,
-      "52_Weeks_Low": 579.95
     },
     {
       "Symbol": "APOLLOHOSP",
@@ -836,13 +1025,6 @@
       "52_Weeks_Low": 26.28
     },
     {
-      "Symbol": "PPAP",
-      "Exchange": "BSE/NSE",
-      "Series": "BE",
-      "52_Weeks_High": 279.97,
-      "52_Weeks_Low": 154.05
-    },
-    {
       "Symbol": "BAJAJFINSV",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
@@ -850,67 +1032,18 @@
       "52_Weeks_Low": 1551.65
     },
     {
-      "Symbol": "AUBANK",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 884,
-      "52_Weeks_Low": 478.35
-    },
-    {
-      "Symbol": "NAM-INDIA",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 987.35,
-      "52_Weeks_Low": 498.05
-    },
-    {
-      "Symbol": "ASTERDM",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 732.2,
-      "52_Weeks_Low": 387.1
-    },
-    {
-      "Symbol": "WHEELS",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 978.5,
-      "52_Weeks_Low": 543.6
-    },
-    {
-      "Symbol": "BIRET",
-      "Exchange": "BSE/NSE",
-      "Series": "",
-      "52_Weeks_High": 355.38,
-      "52_Weeks_Low": 270.87
-    },
-    {
-      "Symbol": "KRISHIVAL",
+      "Symbol": "INDORAMA",
       "Exchange": "BSE/NSE",
       "Series": "BE",
-      "52_Weeks_High": 508,
-      "52_Weeks_Low": 211
+      "52_Weeks_High": 74.25,
+      "52_Weeks_Low": 32
     },
     {
-      "Symbol": "HYBRIDFIN",
+      "Symbol": "CUPID",
       "Exchange": "BSE/NSE",
-      "Series": "BE",
-      "52_Weeks_High": 33.62,
-      "52_Weeks_Low": 10.05
-    },
-    {
-      "Symbol": "GKENERGY",
-      "Exchange": "BSE/NSE",
-      "Series": "",
-      "52_Weeks_High": 239.6,
-      "52_Weeks_Low": 155.16
-    },
-    {
-      "Symbol": "ATLANTAELE",
-      "Exchange": "BSE/NSE",
-      "Series": "",
-      "52_Weeks_High": 1068.95,
-      "52_Weeks_Low": 782.1
+      "Series": "EQ",
+      "52_Weeks_High": 255.04,
+      "52_Weeks_Low": 55.75
     },
     {
       "Symbol": "ATALREAL",
@@ -925,13 +1058,6 @@
       "Series": "EQ",
       "52_Weeks_High": 1420,
       "52_Weeks_Low": 621
-    },
-    {
-      "Symbol": "RHETAN",
-      "Exchange": "BSE/NSE",
-      "Series": "",
-      "52_Weeks_High": 23,
-      "52_Weeks_Low": 20.32
     },
     {
       "Symbol": "BLACKBUCK",
@@ -953,20 +1079,6 @@
       "Series": "",
       "52_Weeks_High": 655,
       "52_Weeks_Low": 601.1
-    },
-    {
-      "Symbol": "INDORAMA",
-      "Exchange": "BSE/NSE",
-      "Series": "BE",
-      "52_Weeks_High": 74.25,
-      "52_Weeks_Low": 32
-    },
-    {
-      "Symbol": "CUPID",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 255.04,
-      "52_Weeks_Low": 55.75
     },
     {
       "Symbol": "CAPTRU-RE1",
@@ -1046,13 +1158,6 @@
       "52_Weeks_Low": 1756.05
     },
     {
-      "Symbol": "TDPOWERSYS",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 668.7,
-      "52_Weeks_Low": 293
-    },
-    {
       "Symbol": "INDOTHAI",
       "Exchange": "BSE/NSE",
       "Series": "BE",
@@ -1072,13 +1177,6 @@
       "Series": "EQ",
       "52_Weeks_High": 392.7,
       "52_Weeks_Low": 177.42
-    },
-    {
-      "Symbol": "MTARTECH",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 2318.8,
-      "52_Weeks_Low": 1155.6
     },
     {
       "Symbol": "MINDSPACE",
@@ -1109,13 +1207,6 @@
       "52_Weeks_Low": 3563.05
     },
     {
-      "Symbol": "SIRCA",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 513.45,
-      "52_Weeks_Low": 230.69
-    },
-    {
       "Symbol": "ETERNAL",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
@@ -1144,25 +1235,11 @@
       "52_Weeks_Low": 327
     },
     {
-      "Symbol": "RUBICON",
-      "Exchange": "BSE/NSE",
-      "Series": "",
-      "52_Weeks_High": 639,
-      "52_Weeks_Low": 570.75
-    },
-    {
       "Symbol": "TATACOMM",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
       "52_Weeks_High": 2004,
       "52_Weeks_Low": 1291
-    },
-    {
-      "Symbol": "BORORENEW",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 687.35,
-      "52_Weeks_Low": 408.25
     },
     {
       "Symbol": "ORCHASP",
@@ -1424,13 +1501,6 @@
       "52_Weeks_Low": 508.1
     },
     {
-      "Symbol": "JSWSTEEL",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 1178.8,
-      "52_Weeks_Low": 880
-    },
-    {
       "Symbol": "HINDCOPPER",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
@@ -1450,13 +1520,6 @@
       "Series": "EQ",
       "52_Weeks_High": 1388,
       "52_Weeks_Low": 387
-    },
-    {
-      "Symbol": "GRAPHITE",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 622,
-      "52_Weeks_Low": 365.75
     },
     {
       "Symbol": "INDRAMEDCO",
@@ -1529,13 +1592,6 @@
       "52_Weeks_Low": 66
     },
     {
-      "Symbol": "SJS",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 1577.5,
-      "52_Weeks_Low": 808.15
-    },
-    {
       "Symbol": "AVALON",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
@@ -1576,13 +1632,6 @@
       "Series": "",
       "52_Weeks_High": 93,
       "52_Weeks_Low": 70.17
-    },
-    {
-      "Symbol": "HINDPETRO",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 465.2,
-      "52_Weeks_Low": 287.55
     },
     {
       "Symbol": "CHENNPETRO",
@@ -1771,7 +1820,7 @@
       "Exchange": "BSE/NSE",
       "Series": "",
       "52_Weeks_High": 549,
-      "52_Weeks_Low": 441.1
+      "52_Weeks_Low": 439.25
     },
     {
       "Symbol": "TATAINVEST",
@@ -1802,13 +1851,6 @@
       "52_Weeks_Low": 125.12
     },
     {
-      "Symbol": "JINDALSTEL",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 1087.6,
-      "52_Weeks_Low": 723.35
-    },
-    {
       "Symbol": "KAVDEFENCE",
       "Exchange": "BSE/NSE",
       "Series": "BE",
@@ -1834,7 +1876,7 @@
       "Exchange": "BSE/NSE",
       "Series": "",
       "52_Weeks_High": 890,
-      "52_Weeks_Low": 601.1
+      "52_Weeks_Low": 595.6
     },
     {
       "Symbol": "SOLARWORLD",
@@ -2005,13 +2047,6 @@
       "52_Weeks_Low": 77.01
     },
     {
-      "Symbol": "GPIL",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 278,
-      "52_Weeks_Low": 145.75
-    },
-    {
       "Symbol": "EMKAY",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
@@ -2075,6 +2110,13 @@
       "52_Weeks_Low": 86.4
     },
     {
+      "Symbol": "ADANIPOWER",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 182.7,
+      "52_Weeks_Low": 86.4
+    },
+    {
       "Symbol": "SHREEPUSHK",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
@@ -2121,7 +2163,7 @@
       "Exchange": "BSE/NSE",
       "Series": "",
       "52_Weeks_High": 154.4,
-      "52_Weeks_Low": 119.79
+      "52_Weeks_Low": 119.5
     },
     {
       "Symbol": "SHALBY",
@@ -2383,13 +2425,6 @@
       "52_Weeks_Low": 40.48
     },
     {
-      "Symbol": "PGINVIT",
-      "Exchange": "BSE/NSE",
-      "Series": "",
-      "52_Weeks_High": 97.4,
-      "52_Weeks_Low": 74.96
-    },
-    {
       "Symbol": "GODFRYPHLP",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
@@ -2537,13 +2572,6 @@
       "52_Weeks_Low": 30.72
     },
     {
-      "Symbol": "MSUMI",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 50.54,
-      "52_Weeks_Low": 30.72
-    },
-    {
       "Symbol": "SOLARAPP1",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
@@ -2619,13 +2647,6 @@
       "Series": "EQ",
       "52_Weeks_High": 3044,
       "52_Weeks_Low": 1140.3
-    },
-    {
-      "Symbol": "HLEGLAS",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 579.5,
-      "52_Weeks_Low": 217.83
     },
     {
       "Symbol": "VIMTALABS",
@@ -2808,13 +2829,6 @@
       "Series": "EQ",
       "52_Weeks_High": 593.4,
       "52_Weeks_Low": 301.8
-    },
-    {
-      "Symbol": "SKMEGGPROD",
-      "Exchange": "BSE/NSE",
-      "Series": "BE",
-      "52_Weeks_High": 385,
-      "52_Weeks_Low": 154
     },
     {
       "Symbol": "THANGAMAYL",
@@ -3020,13 +3034,6 @@
       "52_Weeks_Low": 241.25
     },
     {
-      "Symbol": "VINCOFE",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 159.7,
-      "52_Weeks_Low": 75
-    },
-    {
       "Symbol": "MODTHREAD",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
@@ -3080,7 +3087,7 @@
       "Exchange": "BSE/NSE",
       "Series": "",
       "52_Weeks_High": 197,
-      "52_Weeks_Low": 44.95
+      "52_Weeks_Low": 46.26
     },
     {
       "Symbol": "MARICO",
@@ -4224,13 +4231,6 @@
       "52_Weeks_Low": 12.36
     },
     {
-      "Symbol": "JPPOWER",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 27.7,
-      "52_Weeks_Low": 12.36
-    },
-    {
       "Symbol": "VASWANI",
       "Exchange": "BSE/NSE",
       "Series": "BE",
@@ -4495,13 +4495,6 @@
       "Series": "EQ",
       "52_Weeks_High": 891.9,
       "52_Weeks_Low": 727.3
-    },
-    {
-      "Symbol": "SAIL",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 139.98,
-      "52_Weeks_Low": 99.15
     },
     {
       "Symbol": "SUNFLAG",
@@ -5313,7 +5306,7 @@
       "Exchange": "BSE/NSE",
       "Series": "BE",
       "52_Weeks_High": 10.93,
-      "52_Weeks_Low": 4.98
+      "52_Weeks_Low": 4.71
     },
     {
       "Symbol": "NIBL",
@@ -6167,7 +6160,7 @@
       "Exchange": "BSE/NSE",
       "Series": "EQ",
       "52_Weeks_High": 893.35,
-      "52_Weeks_Low": 583.1
+      "52_Weeks_Low": 579.55
     },
     {
       "Symbol": "POKARNA",
@@ -7021,7 +7014,7 @@
       "Exchange": "BSE/NSE",
       "Series": "EQ",
       "52_Weeks_High": 197.77,
-      "52_Weeks_Low": 23.52
+      "52_Weeks_Low": 23.45
     },
     {
       "Symbol": "TBOTEK",
@@ -7105,7 +7098,7 @@
       "Exchange": "BSE/NSE",
       "Series": "BZ",
       "52_Weeks_High": 4.29,
-      "52_Weeks_Low": 1.71
+      "52_Weeks_Low": 1.7
     },
     {
       "Symbol": "VOLTAS",
@@ -7154,7 +7147,7 @@
       "Exchange": "BSE/NSE",
       "Series": "EQ",
       "52_Weeks_High": 590,
-      "52_Weeks_Low": 241.35
+      "52_Weeks_Low": 241
     },
     {
       "Symbol": "ITDC",
@@ -7322,7 +7315,7 @@
       "Exchange": "BSE/NSE",
       "Series": "EQ",
       "52_Weeks_High": 32.91,
-      "52_Weeks_Low": 18.96
+      "52_Weeks_Low": 18.38
     },
     {
       "Symbol": "UNIMECH",
@@ -7780,13 +7773,6 @@
       "52_Weeks_Low": 224.45
     },
     {
-      "Symbol": "MANOMAY",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 248.19,
-      "52_Weeks_Low": 146
-    },
-    {
       "Symbol": "HISARMETAL",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
@@ -7876,6 +7862,13 @@
       "Series": "EQ",
       "52_Weeks_High": 3.72,
       "52_Weeks_Low": 1.59
+    },
+    {
+      "Symbol": "MANOMAY",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 248.19,
+      "52_Weeks_Low": 146
     },
     {
       "Symbol": "AGI",
@@ -8064,7 +8057,7 @@
       "Exchange": "BSE/NSE",
       "Series": "EQ",
       "52_Weeks_High": 1307,
-      "52_Weeks_Low": 747.85
+      "52_Weeks_Low": 745
     },
     {
       "Symbol": "VALIANTLAB",
@@ -8463,7 +8456,7 @@
       "Exchange": "BSE/NSE",
       "Series": "EQ",
       "52_Weeks_High": 150.9,
-      "52_Weeks_Low": 85.01
+      "52_Weeks_Low": 84.99
     },
     {
       "Symbol": "KSL",
@@ -8561,7 +8554,7 @@
       "Exchange": "BSE/NSE",
       "Series": "EQ",
       "52_Weeks_High": 363.55,
-      "52_Weeks_Low": 138.6
+      "52_Weeks_Low": 138.5
     },
     {
       "Symbol": "GIPCL",
@@ -8638,7 +8631,7 @@
       "Exchange": "BSE/NSE",
       "Series": "EQ",
       "52_Weeks_High": 569.15,
-      "52_Weeks_Low": 330
+      "52_Weeks_Low": 328
     },
     {
       "Symbol": "AMBIKCO",
@@ -9247,7 +9240,7 @@
       "Exchange": "BSE/NSE",
       "Series": "BE",
       "52_Weeks_High": 202.5,
-      "52_Weeks_Low": 107
+      "52_Weeks_Low": 106.99
     },
     {
       "Symbol": "NOIDATOLL",
@@ -9338,7 +9331,7 @@
       "Exchange": "BSE/NSE",
       "Series": "EQ",
       "52_Weeks_High": 326.11,
-      "52_Weeks_Low": 168.2
+      "52_Weeks_Low": 167.67
     },
     {
       "Symbol": "HUHTAMAKI",
@@ -10136,7 +10129,7 @@
       "Exchange": "BSE/NSE",
       "Series": "BZ",
       "52_Weeks_High": 0.79,
-      "52_Weeks_Low": 0.47
+      "52_Weeks_Low": 0.46
     },
     {
       "Symbol": "GAEL",
@@ -10256,6 +10249,13 @@
       "Series": "EQ",
       "52_Weeks_High": 246.45,
       "52_Weeks_Low": 146.65
+    },
+    {
+      "Symbol": "IRB",
+      "Exchange": "BSE/NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 61.99,
+      "52_Weeks_Low": 40.51
     },
     {
       "Symbol": "IRB",
@@ -10591,7 +10591,7 @@
       "Exchange": "BSE/NSE",
       "Series": "BE",
       "52_Weeks_High": 17.96,
-      "52_Weeks_Low": 9.7
+      "52_Weeks_Low": 9.25
     },
     {
       "Symbol": "ABAN",
@@ -10878,7 +10878,7 @@
       "Exchange": "BSE/NSE",
       "Series": "EQ",
       "52_Weeks_High": 81.63,
-      "52_Weeks_Low": 24.11
+      "52_Weeks_Low": 24
     },
     {
       "Symbol": "PRAKASHSTL",
@@ -11089,13 +11089,6 @@
       "Series": "EQ",
       "52_Weeks_High": 1.02,
       "52_Weeks_Low": 0.42
-    },
-    {
-      "Symbol": "IOB",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 59.94,
-      "52_Weeks_Low": 33.5
     },
     {
       "Symbol": "IOB",
@@ -11466,7 +11459,7 @@
       "Exchange": "BSE/NSE",
       "Series": "EQ",
       "52_Weeks_High": 233.8,
-      "52_Weeks_Low": 103.4
+      "52_Weeks_Low": 102.7
     },
     {
       "Symbol": "PIXTRANS",
@@ -11634,7 +11627,7 @@
       "Exchange": "BSE/NSE",
       "Series": "EQ",
       "52_Weeks_High": 1360,
-      "52_Weeks_Low": 847.55
+      "52_Weeks_Low": 766.8
     },
     {
       "Symbol": "EQUIPPP",
@@ -11711,7 +11704,7 @@
       "Exchange": "BSE/NSE",
       "Series": "EQ",
       "52_Weeks_High": 128.01,
-      "52_Weeks_Low": 66.15
+      "52_Weeks_Low": 62.75
     },
     {
       "Symbol": "GPTINFRA",
@@ -11873,13 +11866,6 @@
       "Series": "EQ",
       "52_Weeks_High": 140.95,
       "52_Weeks_Low": 78.06
-    },
-    {
-      "Symbol": "ESSARSHPNG",
-      "Exchange": "BSE/NSE",
-      "Series": "BE",
-      "52_Weeks_High": 41.95,
-      "52_Weeks_Low": 21.5
     },
     {
       "Symbol": "IVP",
@@ -12145,7 +12131,7 @@
       "Exchange": "BSE/NSE",
       "Series": "EQ",
       "52_Weeks_High": 1252,
-      "52_Weeks_Low": 650
+      "52_Weeks_Low": 646.1
     },
     {
       "Symbol": "RATEGAIN",
@@ -12201,7 +12187,7 @@
       "Exchange": "BSE/NSE",
       "Series": "EQ",
       "52_Weeks_High": 577,
-      "52_Weeks_Low": 273
+      "52_Weeks_Low": 262.1
     },
     {
       "Symbol": "SUNDROP",
@@ -12747,7 +12733,7 @@
       "Exchange": "BSE/NSE",
       "Series": "",
       "52_Weeks_High": 598,
-      "52_Weeks_Low": 208.5
+      "52_Weeks_Low": 206.2
     },
     {
       "Symbol": "SONACOMS",
@@ -13034,7 +13020,7 @@
       "Exchange": "BSE/NSE",
       "Series": "EQ",
       "52_Weeks_High": 121.44,
-      "52_Weeks_Low": 45.08
+      "52_Weeks_Low": 44.99
     },
     {
       "Symbol": "JUBLPHARMA",
@@ -13517,14 +13503,14 @@
       "Exchange": "BSE/NSE",
       "Series": "BE",
       "52_Weeks_High": 24,
-      "52_Weeks_Low": 12.1
+      "52_Weeks_Low": 11.53
     },
     {
       "Symbol": "SIMBHALS",
       "Exchange": "BSE/NSE",
       "Series": "BE",
       "52_Weeks_High": 24,
-      "52_Weeks_Low": 12.1
+      "52_Weeks_Low": 11.53
     },
     {
       "Symbol": "ADVENZYMES",
@@ -13678,7 +13664,7 @@
       "Exchange": "BSE/NSE",
       "Series": "EQ",
       "52_Weeks_High": 36.91,
-      "52_Weeks_Low": 13.24
+      "52_Weeks_Low": 13.03
     },
     {
       "Symbol": "HMAAGRO",
@@ -13996,6 +13982,13 @@
       "52_Weeks_Low": 396
     },
     {
+      "Symbol": "AARTISURF",
+      "Exchange": "BSE/NSE",
+      "Series": "BE",
+      "52_Weeks_High": 768.8,
+      "52_Weeks_Low": 396
+    },
+    {
       "Symbol": "DAVANGERE",
       "Exchange": "BSE/NSE",
       "Series": "EQ",
@@ -14063,7 +14056,7 @@
       "Exchange": "BSE/NSE",
       "Series": "EQ",
       "52_Weeks_High": 23.52,
-      "52_Weeks_Low": 8
+      "52_Weeks_Low": 7.91
     },
     {
       "Symbol": "UTKARSHBNK",
@@ -14539,7 +14532,7 @@
       "Exchange": "BSE/NSE",
       "Series": "EQ",
       "52_Weeks_High": 550,
-      "52_Weeks_Low": 311
+      "52_Weeks_Low": 308.1
     },
     {
       "Symbol": "AJANTPHARM",
@@ -15107,13 +15100,6 @@
       "Series": "BE",
       "52_Weeks_High": 2.85,
       "52_Weeks_Low": 0.73
-    },
-    {
-      "Symbol": "M&MFIN",
-      "Exchange": "BSE/NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 333.01,
-      "52_Weeks_Low": 231.02
     },
     {
       "Symbol": "M&MFIN",
@@ -15896,8 +15882,8 @@
       "Symbol": "SREINFRA",
       "Exchange": "BSE/NSE",
       "Series": "BE",
-      "52_Weeks_High": 1072.5,
-      "52_Weeks_Low": 812
+      "52_Weeks_High": 1355,
+      "52_Weeks_Low": 1165
     },
     {
       "Symbol": "PARENTLD",
