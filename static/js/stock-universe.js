@@ -1,4 +1,4 @@
-// --- STOCK UNIVERSE SCRIPT (V5.1 - BUG FIXES & STABILITY) --
+// --- STOCK UNIVERSE SCRIPT (V5.2 - REFRESH & TIMESTAMP ADDED) --
 document.addEventListener('DOMContentLoaded', () => {
     // --- CONSTANTS ---
     const STOCK_UNIVERSE_DATA_PATH = "/static/data/stock_universe.json";
@@ -25,6 +25,17 @@ document.addEventListener('DOMContentLoaded', () => {
     function sanitizeNumericInput(iE, options = { allowDecimal: true, allowNegative: false }) {
         if (!iE) return; let v = iE.value; let pattern = options.allowDecimal ? (options.allowNegative ? /[^0-9.-]/g : /[^0-9.]/g) : (options.allowNegative ? /[^0-9-]/g : /[^0-9]/g); let sV = v.replace(pattern, ''); if (options.allowNegative) { const minus = sV.match(/-/g) || []; if (minus.length > 1 || (minus.length === 1 && sV.indexOf('-') !== 0)) { sV = v.substring(0, v.length - 1); } } if (options.allowDecimal) { const p = sV.split('.'); if (p.length > 2) { sV = p[0] + '.' + p.slice(1).join(''); } if (sV === '.') sV = '0.'; if (sV === '-.') sV = '-0.'; } if(sV.length > 1 && sV.startsWith('0') && !sV.startsWith('0.')) { sV = sV.substring(1); } if(sV.length > 2 && sV.startsWith('-0') && !sV.startsWith('-0.')) { sV = '-' + sV.substring(2); } if (sV !== v) { iE.value = sV; }
     }
+
+    const updateLastUpdatedUI = (timestamp) => {
+        if (!suLastUpdated || !timestamp) return;
+        const date = new Date(timestamp);
+        // Format: "25 Oct, 14:30"
+        const dateStr = date.toLocaleString('en-IN', { 
+            day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hour12: false 
+        });
+        suLastUpdated.textContent = `Data: ${dateStr}`;
+        suLastUpdated.classList.remove('hidden');
+    };
     
     // --- CONFIGURATION ---
     const suColumnDefinitions = [
@@ -52,8 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- DOM ELEMENT AND STATE VARIABLES ---
     let suLoading, suError, suRowCount, suTable, suTableHeadElement, suTableBodyElement, suHeaderRow, suFilterRow, suExportSingleButton, suClearFiltersButton,
-    suInsightsToggleButton, suContainer, suTableContainer, suPanelResizer, suChartPanel, suChartStatus, suLastUpdated, suSkeletonLoader,
-    suFiltersButton, suFiltersPanel, suColumnsButton, suColumnsPanel,
+    suInsightsToggleButton, suContainer, suTableContainer, suPanelResizer, suChartPanel, suChartStatus, 
+    suLastUpdated, suRefreshButton, // Added suRefreshButton
+    suSkeletonLoader, suFiltersButton, suFiltersPanel, suColumnsButton, suColumnsPanel,
     suChartGroupBy, suChartWhRange, suChartMinStocks, suChartMinUp, suChartMinDown, suChartADClearButton,
     suChartAccordionContainer, chart52wHighContainer, chartAvgGainContainer, chartAdRatioContainer,
     chartPopup, chartPopupContainer,chartRsRankContainer;
@@ -110,9 +122,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const cachedVersion = localStorage.getItem(SU_LOCAL_STORAGE_VERSION_KEY);
             const cachedData = localStorage.getItem(SU_LOCAL_STORAGE_DATA_KEY);
             if (cachedVersion && cachedData) {
-                localDataVersion = cachedVersion;
+                localDataVersion = parseInt(cachedVersion);
                 fullStockData = JSON.parse(cachedData);
                 isStockDataLoaded = true;
+                updateLastUpdatedUI(localDataVersion); // Update UI with cached time
             } else {
                 await fetchInitialData();
             }
@@ -127,25 +140,41 @@ document.addEventListener('DOMContentLoaded', () => {
     async function fetchInitialData() {
         if(suSkeletonLoader) suSkeletonLoader.style.display = 'block';
         if(suContainer) suContainer.classList.add('hidden');
+        
+        // Add visual feedback to refresh button if it exists
+        const refreshIcon = suRefreshButton ? suRefreshButton.querySelector('i') : null;
+        if(refreshIcon) refreshIcon.classList.add('fa-spin');
+
         try {
-            const [versionRes, dataRes] = await Promise.all([ fetch(DATA_VERSION_PATH + `?t=${new Date().getTime()}`), fetch(STOCK_UNIVERSE_DATA_PATH + `?t=${new Date().getTime()}`) ]);
+            const t = new Date().getTime();
+            const [versionRes, dataRes] = await Promise.all([ 
+                fetch(DATA_VERSION_PATH + `?t=${t}`), 
+                fetch(STOCK_UNIVERSE_DATA_PATH + `?t=${t}`) 
+            ]);
             if (!versionRes.ok || !dataRes.ok) throw new Error('Failed to fetch initial data files.');
             const versionData = await versionRes.json();
             const jsonData = await dataRes.json();
+            
             localDataVersion = versionData.timestamp;
             fullStockData = jsonData?.map(r => ({ ...r, "Market Cap": parseFloat(r["Market Cap"]) || 0 })) || [];
             isStockDataLoaded = true;
+            
             localStorage.setItem(SU_LOCAL_STORAGE_VERSION_KEY, localDataVersion);
             localStorage.setItem(SU_LOCAL_STORAGE_DATA_KEY, JSON.stringify(fullStockData));
+            updateLastUpdatedUI(localDataVersion); // Update UI
+
         } catch (err) {
             if(suError) suError.textContent = `Error loading data.`;
-            isStockDataLoaded = false; // Explicitly set to false on error
+            isStockDataLoaded = false;
+        } finally {
+            if(refreshIcon) refreshIcon.classList.remove('fa-spin');
+            displayStockUniverse();
+            startPolling(); // Ensure polling restarts if this was a manual refresh
         }
     }
 
     function startPolling() {
         if (window.pollingIntervalId) clearInterval(window.pollingIntervalId);
-        setTimeout(checkForUpdates, 5000);
         window.pollingIntervalId = setInterval(checkForUpdates, POLLING_INTERVAL);
     }
 
@@ -170,7 +199,8 @@ document.addEventListener('DOMContentLoaded', () => {
             localDataVersion = newVersion;
             localStorage.setItem(SU_LOCAL_STORAGE_VERSION_KEY, newVersion);
             localStorage.setItem(SU_LOCAL_STORAGE_DATA_KEY, JSON.stringify(fullStockData));
-            applyAndRenderSU(); // FIX: Call applyAndRenderSU() directly for more efficient updates
+            updateLastUpdatedUI(localDataVersion);
+            applyAndRenderSU();
         } finally {
             if(suLoading) suLoading.classList.add('hidden');
         }
@@ -256,73 +286,66 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-        // --- TABLE INTERACTIVITY ---
-        // --- TABLE INTERACTIVITY ---
-const initializeSortable = () => {
-    if(sortableInstance) sortableInstance.destroy();
-    if(suHeaderRow) {
-        sortableInstance = Sortable.create(suHeaderRow, {
-            animation: 150,
-            ghostClass: 'sortable-ghost',
-            onEnd: () => {
-                // 1. Get the new column order from the dragged headers
-                suCurrentColumnOrder = Array.from(suHeaderRow.children).map(th => th.dataset.key);
-                saveSUColumnOrder();
-
-                // 2. Re-create BOTH the header and filter rows in the new order
-                createSUHeaderAndFilterRows();
-
-                // 3. Re-render the table BODY to match the new column order
-                renderStockUniverseTable(currentlyDisplayedSUData);
-            }
-        });
+    // --- TABLE INTERACTIVITY ---
+    const initializeSortable = () => {
+        if(sortableInstance) sortableInstance.destroy();
+        if(suHeaderRow) {
+            sortableInstance = Sortable.create(suHeaderRow, {
+                animation: 150,
+                ghostClass: 'sortable-ghost',
+                onEnd: () => {
+                    suCurrentColumnOrder = Array.from(suHeaderRow.children).map(th => th.dataset.key);
+                    saveSUColumnOrder();
+                    createSUHeaderAndFilterRows();
+                    renderStockUniverseTable(currentlyDisplayedSUData);
+                }
+            });
+        }
     }
-}
-// ... more functions
-        const initializeResizeHandles = () => { if(!suHeaderRow)return; suHeaderRow.querySelectorAll('.resize-handle').forEach(h=>h.addEventListener('mousedown',onResizeMouseDown)); }
-        function onResizeMouseDown(e){ if(e.button!==0)return; currentResizing.th=e.target.parentElement; currentResizing.startX=e.pageX; currentResizing.startWidth=currentResizing.th.offsetWidth; document.addEventListener('mousemove',onResizeMouseMove); document.addEventListener('mouseup',onResizeMouseUp); e.target.classList.add('active'); e.preventDefault(); }
-        function onResizeMouseMove(e){ if(!currentResizing.th)return; const dx=e.pageX-currentResizing.startX; let w=Math.max(50,currentResizing.startWidth+dx); currentResizing.th.style.width=`${w}px`; }
-        function onResizeMouseUp(){ if(currentResizing.th){ suColumnWidths[currentResizing.th.dataset.key]=currentResizing.th.style.width; saveSUColumnWidths(); currentResizing.th.querySelector('.resize-handle')?.classList.remove('active');} document.removeEventListener('mousemove',onResizeMouseMove); document.removeEventListener('mouseup',onResizeMouseUp); currentResizing.th=null; }
+
+    const initializeResizeHandles = () => { if(!suHeaderRow)return; suHeaderRow.querySelectorAll('.resize-handle').forEach(h=>h.addEventListener('mousedown',onResizeMouseDown)); }
+    function onResizeMouseDown(e){ if(e.button!==0)return; currentResizing.th=e.target.parentElement; currentResizing.startX=e.pageX; currentResizing.startWidth=currentResizing.th.offsetWidth; document.addEventListener('mousemove',onResizeMouseMove); document.addEventListener('mouseup',onResizeMouseUp); e.target.classList.add('active'); e.preventDefault(); }
+    function onResizeMouseMove(e){ if(!currentResizing.th)return; const dx=e.pageX-currentResizing.startX; let w=Math.max(50,currentResizing.startWidth+dx); currentResizing.th.style.width=`${w}px`; }
+    function onResizeMouseUp(){ if(currentResizing.th){ suColumnWidths[currentResizing.th.dataset.key]=currentResizing.th.style.width; saveSUColumnWidths(); currentResizing.th.querySelector('.resize-handle')?.classList.remove('active');} document.removeEventListener('mousemove',onResizeMouseMove); document.removeEventListener('mouseup',onResizeMouseUp); currentResizing.th=null; }
     
     // --- UI POPULATION & RENDERING ---
-        // --- UI POPULATION & RENDERING ---
-        const createSUHeaderAndFilterRows = () => {
-            if (!suTableHeadElement) return;
-            suTableHeadElement.innerHTML = '';
-            suHeaderRow = document.createElement('tr');
-            suFilterRow = document.createElement('tr');
-            suFilterRow.id = 'su-filter-row';
-            const colsToRender = suCurrentColumnOrder.map(k => suColumnDefinitions.find(d => d.key === k)).filter(d => d && suColumnVisibility[d.key]);
-            colsToRender.forEach(def => {
-                const th = document.createElement('th');
-                th.className = 'sortable-header resizable'; // Add resizable class
-                th.dataset.key = def.key;
-                // Add sort icon and resize handle
-                th.innerHTML = `${def.displayName} <span class="sort-icon"></span><div class="resize-handle"></div>`;
-                th.style.width = suColumnWidths[def.key] || def.defaultWidth;
-                suHeaderRow.appendChild(th);
-    
-                const filterTd = document.createElement('td');
-                if (def.isFilterable && def.filterType === 'dropdown') {
-                    const select = document.createElement('select');
-                    select.className = 'form-input';
-                    select.dataset.filterKey = def.key;
-                    select.addEventListener('change', e => {
-                        suFilters.columns[def.key] = e.target.value;
-                        if (def.key === 'Sector Name') updateDependentDropdowns();
-                        applyAndRenderSU();
-                    });
-                    filterTd.appendChild(select);
-                }
-                suFilterRow.appendChild(filterTd);
-            });
-            suTableHeadElement.append(suHeaderRow, suFilterRow);
-            populateTopLevelDropdowns();
-            updateSortIcons();
-            // Initialize interactivity
-            initializeSortable();
-            initializeResizeHandles();
-        };
+    const createSUHeaderAndFilterRows = () => {
+        if (!suTableHeadElement) return;
+        suTableHeadElement.innerHTML = '';
+        suHeaderRow = document.createElement('tr');
+        suFilterRow = document.createElement('tr');
+        suFilterRow.id = 'su-filter-row';
+        const colsToRender = suCurrentColumnOrder.map(k => suColumnDefinitions.find(d => d.key === k)).filter(d => d && suColumnVisibility[d.key]);
+        colsToRender.forEach(def => {
+            const th = document.createElement('th');
+            th.className = 'sortable-header resizable'; // Add resizable class
+            th.dataset.key = def.key;
+            // Add sort icon and resize handle
+            th.innerHTML = `${def.displayName} <span class="sort-icon"></span><div class="resize-handle"></div>`;
+            th.style.width = suColumnWidths[def.key] || def.defaultWidth;
+            suHeaderRow.appendChild(th);
+
+            const filterTd = document.createElement('td');
+            if (def.isFilterable && def.filterType === 'dropdown') {
+                const select = document.createElement('select');
+                select.className = 'form-input';
+                select.dataset.filterKey = def.key;
+                select.addEventListener('change', e => {
+                    suFilters.columns[def.key] = e.target.value;
+                    if (def.key === 'Sector Name') updateDependentDropdowns();
+                    applyAndRenderSU();
+                });
+                filterTd.appendChild(select);
+            }
+            suFilterRow.appendChild(filterTd);
+        });
+        suTableHeadElement.append(suHeaderRow, suFilterRow);
+        populateTopLevelDropdowns();
+        updateSortIcons();
+        // Initialize interactivity
+        initializeSortable();
+        initializeResizeHandles();
+    };
 
     const renderStockUniverseTable = (data) => {
         if(!suTableBodyElement) return;
@@ -358,7 +381,7 @@ const initializeSortable = () => {
         if(suRowCount) suRowCount.textContent = `Showing ${data.length} of ${fullStockData.length} stocks.`;
     };
     
-    // --- ADDED BACK: CHART POPUP FUNCTIONS ---
+    // --- CHART POPUP FUNCTIONS ---
     const createTradingViewWidget = (symbol, theme) => {
         if (!chartPopupContainer) return;
         chartPopupContainer.innerHTML = '';
@@ -423,17 +446,10 @@ const initializeSortable = () => {
             g.totalInTable = g.stocks.length; g.sumChange = 0; g.advancers = 0; g.decliners = 0; g.nearHigh = 0; g.sumRsRank = 0;
             g.stocks.forEach(s => { const change = s['change_percentage']; const down52w = s['Down from 52W High (%)']; const rsRank = s['RS_3M']; if (typeof change === 'number') { g.sumChange += change; if (change >= (minUp !== null ? minUp : 0.0001)) g.advancers++; if (change <= (minDown !== null ? minDown : -0.0001)) g.decliners++; } if (typeof down52w === 'number' && (whRange === null || down52w <= whRange)) g.nearHigh++; if (typeof rsRank === 'number') g.sumRsRank += rsRank;  });
             g.avgChange = g.totalInTable > 0 ? g.sumChange / g.totalInTable : 0; g.adRatio = g.decliners > 0 ? g.advancers / g.decliners : (g.advancers > 0 ? Infinity : 1); g.nearHighPercent = g.totalInTable > 0 ? (g.nearHigh / g.totalInTable) * 100 : 0;
-            // --- MODIFIED RS LOGIC STARTS HERE ---
-            // 1. Create a new list of stocks, excluding any where RS_3M is 100.
             const rsStocks = g.stocks.filter(s => typeof s['RS_3M'] === 'number' && s['RS_3M'] !== 100);
-            
-            // 2. Get the count and sum from this new, filtered list.
             g.rsStockCount = rsStocks.length;
             g.sumRsRank = rsStocks.reduce((sum, s) => sum + s['RS_3M'], 0);
-            
-            // 3. Calculate the average using the new count and sum.
             g.avgRsRank = g.rsStockCount > 0 ? g.sumRsRank / g.rsStockCount : 0;
-            // --- MODIFIED RS LOGIC ENDS HERE ---
         });
         const adData = [...chartGroups].sort((a, b) => b.adRatio - a.adRatio); const maxAdRatio = Math.max(1, ...adData.filter(d => isFinite(d.adRatio)).map(d => d.adRatio));
         adData.forEach(d => { d.percentageWidth = d.adRatio === Infinity ? 100 : Math.min(100, 10 + (d.adRatio / (maxAdRatio || 1)) * 90) });
@@ -492,27 +508,17 @@ const initializeSortable = () => {
             else { header.classList.remove('active'); header.setAttribute('aria-expanded', 'false'); content.style.maxHeight = null; content.classList.remove('open'); }
         });
     };
-    // const exportStockUniverseAsSingleFile = () => {
-    //     if(!currentlyDisplayedSUData||!currentlyDisplayedSUData.length){alert("No data to export.");return}
-    //     if(typeof saveAs==='undefined'){return} const inds={};
-    //     currentlyDisplayedSUData.forEach(s=>{const ind=s['Sector Name'],sym=s['Symbol'];if(!ind)return;if(!inds[ind]){inds[ind]=[];}inds[ind].push(sym);});
-    //     let fc=''; Object.keys(inds).sort().forEach(inm=>{const syms=inds[inm].join(',');fc+=`###${inm},${syms},\n`;});
-    //     const blob=new Blob([fc.trim()],{type:"text/plain;charset=utf-8"});
-    //     saveAs(blob,"Finvestik_Stocks.txt");
-    // };
-
+    
     const exportStockUniverseAsSingleFile = () => {
         if(!currentlyDisplayedSUData || !currentlyDisplayedSUData.length){
             alert("No data to export.");
             return;
         }
-        // Also check if JSZip is loaded, as it's now required
         if(typeof saveAs === 'undefined' || typeof JSZip === 'undefined'){
             alert("A required library has not loaded yet. Please wait a moment and try again.");
             return;
         }
 
-        // --- 1. Content for the FIRST file: Grouped by Sector (Existing Logic) ---
         const sectors = {};
         currentlyDisplayedSUData.forEach(s => {
             const sector = s['Sector Name'];
@@ -528,22 +534,13 @@ const initializeSortable = () => {
             sectorFileContent += `###${sectorName},${syms},\n`;
         });
 
-
-        // --- 2. Content for the NEW file: Simple Comma-Separated List ---
         const allSymbolsList = currentlyDisplayedSUData.map(stock => stock['Symbol']);
         const simpleFileContent = allSymbolsList.join(',');
 
-
-        // --- 3. Create a ZIP file and add both files to it ---
         const zip = new JSZip();
-
-        // Add the sector-grouped file
         zip.file("Stocks_By_Sector.txt", sectorFileContent.trim());
-        
-        // Add the simple list file
         zip.file("All_Stocks_List.txt", simpleFileContent);
 
-        // --- 4. Generate the ZIP and trigger the download ---
         zip.generateAsync({type:"blob"}).then(function(content) {
             saveAs(content, "Finvestik_Stock_Lists.zip");
         });
@@ -628,12 +625,13 @@ const initializeSortable = () => {
         suLoading=document.getElementById('su-loading');suError=document.getElementById('su-error');suRowCount=document.getElementById('su-row-count');suTable=document.getElementById('su-table');if(suTable){suTableHeadElement=suTable.querySelector('thead');suTableBodyElement=suTable.querySelector('tbody');}
         suClearFiltersButton=document.getElementById('su-clear-filters-button');suExportSingleButton=document.getElementById('su-export-single-button');
         suInsightsToggleButton=document.getElementById('su-insights-toggle-button');suContainer=document.getElementById('su-container');suTableContainer=document.getElementById('su-table-container');suPanelResizer=document.getElementById('su-panel-resizer');suChartPanel=document.getElementById('su-chart-panel');suChartStatus=document.getElementById('su-chart-status');
+        suLastUpdated = document.getElementById('su-last-updated'); suRefreshButton = document.getElementById('su-refresh-button'); // Init elements
         suFiltersButton=document.getElementById('su-filters-button');suFiltersPanel=document.getElementById('su-filters-panel');suColumnsButton=document.getElementById('su-columns-button');suColumnsPanel=document.getElementById('su-columns-panel');
         suChartGroupBy=document.getElementById('su-chart-group-by');suChartMinStocks=document.getElementById('su-chart-min-stocks');
         suChartWhRange=document.getElementById('su-chart-wh-range'); suChartMinUp=document.getElementById('su-chart-min-up'); suChartMinDown=document.getElementById('su-chart-min-down'); suChartADClearButton = document.getElementById('su-chart-ad-clear-button');
         suChartAccordionContainer = document.getElementById('su-chart-accordion-container'); chart52wHighContainer = document.getElementById('su-chart-52w-high'); chartAvgGainContainer = document.getElementById('su-chart-avg-gain'); chartAdRatioContainer = document.getElementById('su-chart-ad-ratio');chartRsRankContainer = document.getElementById('su-chart-rs-rank');
         chartPopup=document.getElementById('chart-popup');chartPopupContainer=document.getElementById('chart-popup-container');
-        suSkeletonLoader = document.getElementById('su-skeleton-loader'); suLastUpdated = document.getElementById('su-last-updated');
+        suSkeletonLoader = document.getElementById('su-skeleton-loader');
 
         if(suTableHeadElement)suTableHeadElement.addEventListener('click',e=>{const h=e.target.closest('.sortable-header');if(!h)return;const k=h.dataset.key;if(!k)return;if(suCurrentSort.key===k){suCurrentSort.order=suCurrentSort.order==='asc'?'desc':'asc';}else{suCurrentSort.key=k;suCurrentSort.order='desc';}updateSortIcons();applyAndRenderSU();});
         if(suClearFiltersButton) suClearFiltersButton.addEventListener('click', clearAllSUFiltersAndSort);
@@ -642,6 +640,14 @@ const initializeSortable = () => {
         if(suTableBodyElement){suTableBodyElement.addEventListener('mouseover',e=>{if(e.target.closest('.symbol-cell'))showChartPopup(e);});suTableBodyElement.addEventListener('mouseout',e=>{if(e.target.closest('.symbol-cell'))hideChartPopup(e);});}
         if(chartPopup){chartPopup.addEventListener('mouseenter',()=>clearTimeout(chartPopupTimeout));chartPopup.addEventListener('mouseleave',hideChartPopup);}
         if(suChartPanel) suChartPanel.addEventListener('click', handleChartBarClick);
+
+        if(suRefreshButton) {
+            suRefreshButton.addEventListener('click', () => {
+                localStorage.removeItem(SU_LOCAL_STORAGE_DATA_KEY);
+                localStorage.removeItem(SU_LOCAL_STORAGE_VERSION_KEY);
+                fetchInitialData();
+            });
+        }
 
         if(suColumnsButton) suColumnsButton.addEventListener('click', () => suColumnsPanel.classList.toggle('hidden'));
         if(suColumnsPanel) suColumnsPanel.addEventListener('change', e => {

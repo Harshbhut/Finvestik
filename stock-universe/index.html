@@ -97,9 +97,16 @@
                 <div class="flex-grow text-left flex items-center">
                     <div id="su-loading" class="dots-loader hidden mr-2"><div></div><div></div><div></div></div>
                     <p id="su-error" class="text-red-500 hidden"></p>
-                    <p id="su-last-updated" class="text-xs ml-2 hidden"></p>
                 </div>
                 <div class="flex flex-wrap items-center justify-end gap-2 sm:gap-4 relative">
+                    <!-- New Refresh & Time Section -->
+                    <div class="flex items-center space-x-2 mr-2 border-r border-gray-600 pr-3">
+                        <span id="su-last-updated" class="text-xs italic hidden"></span>
+                        <button id="su-refresh-button" class="p-1 rounded hover:bg-gray-700 text-blue-400 hover:text-white transition-colors" title="Force Refresh Data">
+                           <i class="fa fa-refresh"></i>
+                        </button>
+                   </div>
+                    
                     <p id="su-row-count" class="text-xs sm:text-sm"></p>
                     <div id="su-filters-button-container" class="relative">
                         <button id="su-filters-button" class="btn btn-secondary" title="Filter stocks"><i class="fa fa-filter"></i><span class="hidden sm:inline ml-2">Filters</span></button>
