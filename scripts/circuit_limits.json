@@ -1,82 +1,3538 @@
 {
-  "source_date": "2025-05-06 15:29:59",
-  "last_updated": "2025-12-02 03:37:54",
+  "source_date": "2025-06-19 15:29:59",
+  "last_updated": "2025-12-03 03:36:39",
   "data": [
     {
-      "SYMBOL": "MOHITIND",
+      "SYMBOL": "SOUTHWEST",
       "BAND": 5
     },
     {
-      "SYMBOL": "NDLVENTURE",
+      "SYMBOL": "GOLDSTAR",
       "BAND": 5
     },
     {
-      "SYMBOL": "IZMO",
+      "SYMBOL": "21STCENMGM",
+      "BAND": 2
+    },
+    {
+      "SYMBOL": "ABB",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "ADOR",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HAPPSTMNDS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ALEMBICLTD",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ROUTE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GODREJAGRO",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "APCOTEXIND",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "APOLLOTYRE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ARVIND",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ASHOKLEY",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "ADL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "NIRAJ",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "AUROPHARMA",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "BAJFINANCE",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "ANGELONE",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "BALRAMCHIN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BATAINDIA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BBTC",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SINTERCOM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BEL",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "BEPL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PULZ",
       "BAND": 5
     },
     {
-      "SYMBOL": "CBAZAAR",
+      "SYMBOL": "BPL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GRAPHITE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CARBORUNIV",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CENTENKA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CESC",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HEMIPROP",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "COROMANDEL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DABUR",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "DALMIASUG",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DCM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DCW",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DEEPAKFERT",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KHAICHEM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DPABHUSHAN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "EVERESTIND",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "FACT",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GABRIEL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GARFIBRES",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GTECJAINX",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "APOLLO",
       "BAND": 5
+    },
+    {
+      "SYMBOL": "GLAXO",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GTL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "NEWGEN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GMBREW",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "AMBER",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "FMGOETZE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KANSAINER",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PRAXIS",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "GSFC",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CASTROLIND",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "VASA",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "HCL-INSYS",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "HEROMOTOCO",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "HCC",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HINDOILEXP",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AGI",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ASTERDM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "INDIAGLYCO",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MGEL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "INGERRAND",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "FAIRCHEMOR",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "IOC",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "LINDEINDIA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HGINFRA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "IVP",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "JAYBARMARU",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "JAYSREETEA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "JINDALPOLY",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "JYOTISTRUC",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KAMATHOTEL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KARURVYSYA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KCP",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KESORAMIND",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "CUMMINSIND",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "KREBSBIO",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "KSB",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "LICHSGFIN",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "LYKALABS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HOMEFIRST",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MAHSEAMLES",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "STOVEKRAFT",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "RAJMET",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BOSCHLTD",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "MODIRUBBER",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BANDHANBNK",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "MOTOGENFIN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MRF",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HLEGLAS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SMCGLOBAL",
+      "BAND": 20
     },
     {
       "SYMBOL": "NURECA",
       "BAND": 5
     },
     {
-      "SYMBOL": "LEXUS",
+      "SYMBOL": "GIRIRAJ",
       "BAND": 5
     },
     {
-      "SYMBOL": "MIEL",
+      "SYMBOL": "NAVNETEDUL",
       "BAND": 20
     },
     {
-      "SYMBOL": "BALAJIPHOS",
+      "SYMBOL": "NOCIL",
       "BAND": 20
     },
     {
-      "SYMBOL": "C2C",
+      "SYMBOL": "ONGC",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "ONWARDTEC",
       "BAND": 20
     },
     {
-      "SYMBOL": "SILGO",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "GCHOTELS",
+      "SYMBOL": "PEARLPOLY",
       "BAND": 20
     },
     {
-      "SYMBOL": "SELMC",
+      "SYMBOL": "HERANBA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SEAMECLTD",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DRCSYSTEMS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "VERA",
       "BAND": 5
     },
     {
-      "SYMBOL": "ORCHASP",
+      "SYMBOL": "PRAKASH",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MTARTECH",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BUTTERFLY",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "RAJSREESUG",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MAHICKRA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KALYANKJIL",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "SAKHTISUG",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SURYODAY",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SANDESH",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "WONDERLA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KOHINOOR",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SAURASHCEM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SHANTIGEAR",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "INDOSTAR",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SHREYANIND",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "SIEMENS",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "SKFINDIA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "JTEKTINDIA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SRF",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "TEMBO",
       "BAND": 5
     },
     {
-      "SYMBOL": "PNC",
+      "SYMBOL": "STARPAPER",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DEEPINDS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AGARIND",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TATAELXSI",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "HONAUT",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TATACONSUM",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "THERMAX",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CLSEL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TIL",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "TIRUMALCHM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "EQUIPPP",
       "BAND": 5
+    },
+    {
+      "SYMBOL": "JUBLPHARMA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SOLARA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "VIPIND",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "VLSFINANCE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ANMOL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "WALCHANNAG",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "WSTCSTPAPR",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ARIHANTCAP",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CAPLIPOINT",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PREMIERPOL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "JAKHARIA",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "PARASPETRO",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ALPSINDUS",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "SILINV",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ZENITHEXPO",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "MOTHERSON",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "WENDT",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "STERTOOLS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SHRIRAMFIN",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "PUNJABCHEM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GULFOILLUB",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "JAGSNPHARM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DYNAMATECH",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "RAMCOIND",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KOTHARIPET",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BANKBARODA",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "BANKINDIA",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "RELINFRA",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "HINDCON",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "IPL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ICICIBANK",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "IRCON",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SHARDACROP",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GOENKA",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "SHEMAROO",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "SGIL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TATVA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GMDCLTD",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ROLEXRINGS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "REXPIPES",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "UGROCAP",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "WINDLAS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "NGIL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CARTRADE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "APTUS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DUGLOBAL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PARIN",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "YUKEN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KOTHARIPRO",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GANESHBE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BEWLTD",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "CUB",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SANSERA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "QUADPRO",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "MONTECARLO",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SOUTHBANK",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CYBERTECH",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "BHAGCHEM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DTIL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DKEGL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PVP",
+      "BAND": 2
+    },
+    {
+      "SYMBOL": "MEDICAMEQ",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "APOLSINHOT",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "LAMBODHARA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KOTYARK",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TECHNOE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SHUBHLAXMI",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "IRIS",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "NIDAN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SJS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SIGACHI",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DRSDILIP",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "JINDALSTEL",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "SBC",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "FOCUS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DMCC",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ASIANENE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HESTERBIO",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ACCELYA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SEJALLTD",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "TEGA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MICEL",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "SHRIRAMPPS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MAPMYINDIA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DATAPATTNS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MANAKALUCO",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "NRBBEARING",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "UNITEDPOLY",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "CMSINFO",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SHREERAMA",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "IMAGICAA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MONARCH",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GVPIL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MHLXMIRU",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BYKE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KTKBANK",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AWL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "RPSGVENT",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AJANTPHARM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "FIBERWEB",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SAGARDEEP",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "RICHA",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "MADHAVBAUG",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SHIGAN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "RAJRILTD",
+      "BAND": 2
+    },
+    {
+      "SYMBOL": "MITCON",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "XELPMOC",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "HITECHGEAR",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "NLCINDIA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MSUMI",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KNAGRI",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DIL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KRISHNADEF",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AVROIND",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GAEL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "UMAEXPORTS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ELDEHSG",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HARDWYN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "VCL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "UFO",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SOMATEX",
+      "BAND": 2
+    },
+    {
+      "SYMBOL": "MSTCLTD",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "QUINTEGRA",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "TRU",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "SKIPPER",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AXISCADES",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "LICI",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "SAKAR",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SPLPETRO",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KHANDSE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "RELCHEMQ",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MEDICO",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "HIKAL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TRIDENT",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PARADEEP",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "EMUDHRA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AETHER",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HAVELLS",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "WEWIN",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "GOLDTECH",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "NEOGEN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GODREJCP",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "AYMSYNTEX",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AURUM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SKP",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "RADHIKAJWE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "UNIVAFOODS",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "KSHITIJPOL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "LUPIN",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "UNITDSPR",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "SATIN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AGNI",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "KRBL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MPSLTD",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MARKSANS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TCI",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SADBHIN",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "SURANAT&P",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "INDIAMART",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "APTECHT",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "NOIDATOLL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "DREAMFOLKS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GVPTECH",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "KORE",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "AMEYA",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "GENESYS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "OMAXAUTO",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "GODREJIND",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "RADAAN",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "STCINDIA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MEGAFLEX",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "TAPIFRUIT",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "RADICO",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "INDORAMA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MARUTI",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "KSOLVES",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SECURKLOUD",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "AGRITECH",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GFSTEELS",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "CREATIVE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "COFFEEDAY",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "KANDARP",
+      "BAND": 2
+    },
+    {
+      "SYMBOL": "MAKS",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "WELSPUNLIV",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TVTODAY",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "UNIENTER",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "LUXIND",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BALAXI",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MUKANDLTD",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DHANBANK",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BIOCON",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "TIPSFILMS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KRITINUT",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CCL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "JPASSOCIAT",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "QMSMEDI",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "EXCELINDUS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SWASTIK",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AMBICAAGAR",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "NIITLTD",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ULTRACEMCO",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "WESTLIFE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GOLDENTOBC",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "SALSTEEL",
+      "BAND": 2
+    },
+    {
+      "SYMBOL": "ALKEM",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "JPPOWER",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GOKEX",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ACEINTEG",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "EVEREADY",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SAKSOFT",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HPIL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "IIFL",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "SHAHALLOYS",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "63MOONS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GRANULES",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "JSWHL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "IPSL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MSPL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "VITAL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "NECLIFE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MCLEODRUSS",
+      "BAND": 2
+    },
+    {
+      "SYMBOL": "MEDANTA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SEMAC",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "BIKAJI",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AEROENTER",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HNDFDS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "OCCL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "AAATECH",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "PRECAM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SAFARI",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AIAENG",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "QUICKHEAL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ALLETEC",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KEC",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "INDOTECH",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BLKASHYAP",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "VISASTEEL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "CENTURYPLY",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GALLANTT",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "VAKRANGEE",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "KFINTECH",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "UTTAMSUGAR",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SUPREMEINF",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "ELIN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KELLTONTEC",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BALPHARMA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "JKLAKSHMI",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AKASH",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HOMESFY",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "GMRAIRPORT",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "AVONMORE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ATLANTAA",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "HGM",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "GOLDKART",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BILVYAPAR",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "ALICON",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ANLON",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MADHUCON",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "AERONEU",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "INFOMEDIA",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "JHS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CMNL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GLOBALVECT",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MANOMAY",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "DUCOL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SUTLEJTEX",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GREENPANEL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "LTFOODS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DONEAR",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "VENUSREM",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "AARTIPHARM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KUANTUM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "JINDRILL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HIRECT",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "SANGHVIMOV",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ASMS",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "SAGCEM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SIYSIL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PITTIENG",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "UNOMINDA",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "SHERA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "IZMO",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "NSLNISP",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "NINSYS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TIMKEN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "LRRPL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "TVSSRICHAK",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PGIL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "INDIANB",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "GANESHHOU",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "IDEA",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "POCL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "RAJTV",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "SRIVASAVI",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PAGEIND",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "DIVGIITTS",
+      "BAND": 20
     },
     {
       "SYMBOL": "VERTEXPLUS",
       "BAND": 20
     },
     {
-      "SYMBOL": "ZENITHSTL",
+      "SYMBOL": "ICRA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "NDLVENTURE",
       "BAND": 5
     },
     {
-      "SYMBOL": "LASA",
+      "SYMBOL": "PHOENIXLTD",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "TGBHOTELS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "QFIL",
       "BAND": 5
     },
     {
-      "SYMBOL": "PALREDTEC",
+      "SYMBOL": "HILTON",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "KMSUGAR",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SPARC",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MEGASOFT",
       "BAND": 5
     },
     {
-      "SYMBOL": "KARMAENG",
+      "SYMBOL": "DECCANCE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "OMAXE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "USK",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ASIANTILES",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SAHYADRI",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KDDL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KPRMILL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TAKE",
       "BAND": 5
+    },
+    {
+      "SYMBOL": "PURVA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MOTILALOFS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MAANALU",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "BAJAJELEC",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "INFINIUM",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "MOS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BLAL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SVLL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "PATTECH",
+      "BAND": 2
+    },
+    {
+      "SYMBOL": "AGUL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "RHL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HITECHCORP",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MANAKSIA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "UJJIVANSFB",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CEATLTD",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "RPOWER",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "QUICKTOUCH",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HERCULES",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SEPC",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PDMJEPAPER",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MANKIND",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "RACE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TITAGARH",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "DPSCLTD",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PIGL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "BHARATWIRE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KRISHCA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "REMUS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PANACHE",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "DENTALKART",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PROV",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BAJAJ-AUTO",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "GOKUL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "UBL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KDL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "ARCHIDPLY",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DPWIRES",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ARTEMISMED",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ZFCVINDIA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ASHOKAMET",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CELLPOINT",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "VILINBIO",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "MAWANASUG",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "URAVIDEF",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "ESFL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "CROMPTON",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "SUMICHEM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PARAGMILK",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PENTAGON",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "IDEAFORGE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GLOBALPET",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CYIENTDLM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ASPINWALL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "UTKARSHBNK",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "EXCEL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "PREMEXPLN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SERVICE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GLOBUSSPR",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MAHASTEEL",
+      "BAND": 2
+    },
+    {
+      "SYMBOL": "MGL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ASALCBR",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MOLDTECH",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "YCCL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ZYDUSWELL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "UNIVPHOTO",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SHRITECH",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "VIJIFIN",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "DEN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BAFNAPH",
+      "BAND": 2
+    },
+    {
+      "SYMBOL": "NIITMTS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SARDAEN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "REFEX",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GROBTEA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "REDTAPE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "JSWENERGY",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "ABBOTINDIA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BEARDSELL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "NESTLEIND",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "UNITEDTEA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MBLINFRA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ADVENZYMES",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "YUDIZ",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "MINDTECK",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "VASCONEQ",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TEXMOPIPES",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KECL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PYRAMID",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AEROFLEX",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PERSISTENT",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "CPS",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "RBLBANK",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "RISHABH",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "RATNAVEER",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BIGBLOC",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SABEVENTS",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "SAROJA",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "JIWANRAM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GNA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "UNIHEALTH",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "EMSLIMITED",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ZAGGLE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SAMHI",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CHAVDA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MARATHON",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KEL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "NUVAMA",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "MADHUSUDAN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MASKINVEST",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "KODYTECH",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "YATRA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ALCODIS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DRL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "MARCO",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HIGREEN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CELLECOR",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "VBL",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "SUNDARAM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KINGFA",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "RAJRATAN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KAPSTON",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "UNIVASTU",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SILLYMONKS",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "ROLLT",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "MAL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "HEADSUP",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HISARMETAL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CANARYS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SPCENET",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "OLIL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ROSSARI",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SCML",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "UGARSUGAR",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ARVINDPORT",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "BSE",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "BLUEJET",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "SHANTHALA",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "PARAGON",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "WELINV",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TRANSTEEL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HONASA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SARTELE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "LGHL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "RADIOCITY",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MICROPRO",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ORISSAMINE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "WAAREEINDO",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "INTENTECH",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "TASTYBITE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "RAMKY",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ASKAUTOLTD",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "BEDMUTHA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "JWL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "OBEROIRLTY",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "ROCKINGDCE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "NRAIL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CBAZAAR",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "MARINETRAN",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "IOLCP",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "APCL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ACCENTMIC",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PRUDMOULI",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "BAJEL",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "SHREEOSFM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "RPPINFRA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "JAMNAAUTO",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SURAJEST",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HUDCO",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "RBZJEWEL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GANGOTRI",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "EFORCE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AZAD",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "JALAN",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "KIRLOSENG",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "INDIFRA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "STARCEMENT",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KICL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ERIS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KCEIL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "CDSL",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "DIGIDRIVE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TRANSWIND",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "JYOTICNC",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "IBLFL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "SALASAR",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "STEL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SIS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "COCHINSHIP",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HINDMOTORS",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "MAXPOSURE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DCAL",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "CHOLAHLDNG",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CAPACITE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DAVANGERE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "WORTHPERI",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MCL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "LAWSIKHO",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KONSTELEC",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "DHTL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "MEGATHERM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BLSE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ITALIANE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SIGNPOST",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ALPEXSOLAR",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "POLYSIL",
+      "BAND": 2
+    },
+    {
+      "SYMBOL": "WTICAB",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "INM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DEEM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SADHAV",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MVKAGRO",
+      "BAND": 2
+    },
+    {
+      "SYMBOL": "VR",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GOPAL",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "SHREEKARNI",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PRATHAM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SCILAL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KRYSTAL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TRUST",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "ALUWIND",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BHARTIHEXA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "UEL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "TARACHAND",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AIIL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "JNKINDIA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SLONE",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "REFRACTORY",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "EMMIL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PRLIND",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "VERITAAS",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "ABSMARINE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "IEML",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HOACFOODS",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "AWFIS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GSMFOILS",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "VILAS",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "AIMTRON",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "IXIGO",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SYMPHONY",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "VADILALIND",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "RELAXO",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "STANLEY",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "OMINFRAL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SYLVANPLY",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "VISAMAN",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "VSTTILLERS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DTL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "NEPHROCARE",
+      "BAND": 2
+    },
+    {
+      "SYMBOL": "DHANUKA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AMBEY",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AGIIL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SATIPOLY",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "APRAMEYA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "RAJINDLTD",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ASHALOG",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "RPEL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "UNIECOM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AESTHETIK",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "SUYOG",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SSDL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BRACEPORT",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "INTERARCH",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ELGIRUBCO",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "IDEALTECHO",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "SURAJLTD",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "IBULLSLTD",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "AERON",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TREEHOUSE",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "STYLEBAAZA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BOSS",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "GALAPREC",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "VIESL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "SHUBHSHREE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AUSL",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "KROSS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "INNOMET",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "EXCELLENT",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PGEL",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "ARKADE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "WCIL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PELATRO",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DECCANTRAN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "NORTHARC",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PAISALO",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TIJARIA",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "SHAKTIPUMP",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TRITURBINE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MANBA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "RAPPID",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "UYFINCORP",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "DIVYADHAN",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "DSSL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PARAMOUNT",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "POLYMED",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KANANIIND",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PRANIK",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AFFORDABLE",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "FRESHARA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MORARJEE",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "ANKITMETAL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "DBEIL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "OCCLLTD",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "OBSCP",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "DANISH",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "USHAFIN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HEXATRADEX",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "ABINFRA",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "ACMESOLAR",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "KMEW",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SWANCORP",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "NIVABUPA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SPECIALITY",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "RACLGEAR",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "RAJPUTANA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "APEXECO",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "RTNINDIA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SAMPANN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SURAKSHA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ETML",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SAILIFE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "VMM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "IGIL",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "DAMCAPITAL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MAMATA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TRANSRAILL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CEWATER",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "NMSTEEL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SANATHAN",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "KITEX",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MAYURUNIQ",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DUCON",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "UNIMECH",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "ZUARI",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "QUADFUTURE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "INDUSTOWER",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "BARFLEX",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "STALLION",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "ITCHOTELS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DENTA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "VMART",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MCLOUD",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ORCHASP",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "AJAXENGG",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "VIVIDHA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ABFRL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CURAA",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "BHARATSE",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "ISHANCH",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "RAPIDFLEET",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MTEDUCARE",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "NBCC",
+      "BAND": 0
+    },
+    {
+      "SYMBOL": "SREEL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CIFL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TINNARUBR",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KTL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "TANKUP",
+      "BAND": 2
+    },
+    {
+      "SYMBOL": "ABLBL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ENRIN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ARUNAYA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PRIMO",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MONOLITH",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "RAJOOENG",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "VGINFOTECH",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BELRISE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "DCCL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "NRVANDANA",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "SAHAJ",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "BLUSPRING",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TRAVELFOOD",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "INFLUX",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "SMARTEN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ATHERENERG",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "WHITEFORCE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "BRIGHOTEL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ANTHEM",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "EUROBOND",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SELLOWRAP",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PERFECT",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "CUDML",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "RNPL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "NIKITA",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "FLYSBS",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "AARADHYA",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "PARTH",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "JYOTIGLOBL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MEDISTEP",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AMCL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "SAWALIYA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ALLTIME",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SHKSIL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ARCIIL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "REGAAL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MRIL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ARFIN",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "SGFIN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "LAXMIINDIA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "KAYTEX",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "OPTIVALUE",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CPEDU",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SNEHAA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "STLNETWORK",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GCSL",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "SUPREMEENG",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "ATLANTAELE",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "GANESHCP",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GKENERGY",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "DEVX",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GML",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "SHRINGARMS",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "HILINFRA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TECHD",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "JAYESH",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MWL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "AGSTRA",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "GURUNANAK",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "RUBICON",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SYSTMTXC",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SOLEX",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "OMFREIGHT",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GREENLEAF",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "GEMAROMA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "MIDWESTLTD",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "PIRAMALFIN",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ORKLAINDIA",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "PWL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SHIVAUM",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "FINBUD",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TMCV",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "EUROPRATIK",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SHETHJI",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "CAPILLARY",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "TENNIND",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "SOLARWORLD",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "ARSSBL",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "EXCELSOFT",
+      "BAND": 10
+    },
+    {
+      "SYMBOL": "GLOTTIS",
+      "BAND": 20
     },
     {
       "SYMBOL": "STYRENIX",
@@ -517,6 +3973,10 @@
     {
       "SYMBOL": "MIDHANI",
       "BAND": 20
+    },
+    {
+      "SYMBOL": "SILGO",
+      "BAND": 5
     },
     {
       "SYMBOL": "ORIENTHOT",
@@ -1309,6 +4769,10 @@
     {
       "SYMBOL": "KRITIKA",
       "BAND": 20
+    },
+    {
+      "SYMBOL": "PNC",
+      "BAND": 5
     },
     {
       "SYMBOL": "IOB",
@@ -2215,6 +5679,10 @@
       "BAND": 20
     },
     {
+      "SYMBOL": "SADHNANIQ",
+      "BAND": 5
+    },
+    {
       "SYMBOL": "GSS",
       "BAND": 20
     },
@@ -2229,6 +5697,10 @@
     {
       "SYMBOL": "NESCO",
       "BAND": 20
+    },
+    {
+      "SYMBOL": "ACL",
+      "BAND": 5
     },
     {
       "SYMBOL": "DENEERS",
@@ -2317,6 +5789,10 @@
     {
       "SYMBOL": "HMAAGRO",
       "BAND": 10
+    },
+    {
+      "SYMBOL": "PALREDTEC",
+      "BAND": 5
     },
     {
       "SYMBOL": "MAGSON",
@@ -3123,6 +6599,10 @@
       "BAND": 20
     },
     {
+      "SYMBOL": "MIEL",
+      "BAND": 20
+    },
+    {
       "SYMBOL": "TROM",
       "BAND": 20
     },
@@ -3323,6 +6803,10 @@
       "BAND": 20
     },
     {
+      "SYMBOL": "C2C",
+      "BAND": 20
+    },
+    {
       "SYMBOL": "ABHAPOWER",
       "BAND": 20
     },
@@ -3403,6 +6887,10 @@
       "BAND": 20
     },
     {
+      "SYMBOL": "MOHITIND",
+      "BAND": 5
+    },
+    {
       "SYMBOL": "AGARWALEYE",
       "BAND": 20
     },
@@ -3439,6 +6927,10 @@
       "BAND": 20
     },
     {
+      "SYMBOL": "BALAJIPHOS",
+      "BAND": 20
+    },
+    {
       "SYMBOL": "ORIENTCEM",
       "BAND": 20
     },
@@ -3453,6 +6945,10 @@
     {
       "SYMBOL": "DIVINEHIRA",
       "BAND": 5
+    },
+    {
+      "SYMBOL": "GCHOTELS",
+      "BAND": 20
     },
     {
       "SYMBOL": "ESSENTIA",
@@ -4603,6 +8099,10 @@
       "BAND": 20
     },
     {
+      "SYMBOL": "TRIGYN",
+      "BAND": 5
+    },
+    {
       "SYMBOL": "ABMINTLLTD",
       "BAND": 5
     },
@@ -4684,6 +8184,10 @@
     },
     {
       "SYMBOL": "RAJVIR",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "SELMC",
       "BAND": 5
     },
     {
@@ -4821,6 +8325,10 @@
     {
       "SYMBOL": "WOCKPHARMA",
       "BAND": 20
+    },
+    {
+      "SYMBOL": "TREJHARA",
+      "BAND": 5
     },
     {
       "SYMBOL": "LCCINFOTEC",
@@ -4999,10 +8507,6 @@
       "BAND": 0
     },
     {
-      "SYMBOL": "SOUTHWEST",
-      "BAND": 20
-    },
-    {
       "SYMBOL": "EASTSILK",
       "BAND": 5
     },
@@ -5049,6 +8553,10 @@
     {
       "SYMBOL": "RAMASTEEL",
       "BAND": 20
+    },
+    {
+      "SYMBOL": "PKTEA",
+      "BAND": 5
     },
     {
       "SYMBOL": "DGCONTENT",
@@ -5551,6 +9059,10 @@
       "BAND": 10
     },
     {
+      "SYMBOL": "MANUGRAPH",
+      "BAND": 5
+    },
+    {
       "SYMBOL": "ACE",
       "BAND": 20
     },
@@ -5723,6 +9235,10 @@
       "BAND": 20
     },
     {
+      "SYMBOL": "LEXUS",
+      "BAND": 5
+    },
+    {
       "SYMBOL": "GOKULAGRO",
       "BAND": 20
     },
@@ -5737,6 +9253,10 @@
     {
       "SYMBOL": "DISHTV",
       "BAND": 20
+    },
+    {
+      "SYMBOL": "ZENITHSTL",
+      "BAND": 5
     },
     {
       "SYMBOL": "SRHHYPOLTD",
@@ -6543,6 +10063,10 @@
       "BAND": 20
     },
     {
+      "SYMBOL": "LASA",
+      "BAND": 5
+    },
+    {
       "SYMBOL": "MPTODAY",
       "BAND": 5
     },
@@ -6645,6 +10169,10 @@
     {
       "SYMBOL": "BLUEPEBBLE",
       "BAND": 10
+    },
+    {
+      "SYMBOL": "TAC",
+      "BAND": 20
     },
     {
       "SYMBOL": "RADIOWALLA",
@@ -6755,6 +10283,10 @@
       "BAND": 5
     },
     {
+      "SYMBOL": "KARMAENG",
+      "BAND": 5
+    },
+    {
       "SYMBOL": "DELPHIFX",
       "BAND": 10
     },
@@ -6825,6 +10357,10 @@
     {
       "SYMBOL": "CEIGALL",
       "BAND": 10
+    },
+    {
+      "SYMBOL": "OLAELEC",
+      "BAND": 5
     },
     {
       "SYMBOL": "PPSL",
@@ -7139,6 +10675,14 @@
       "BAND": 5
     },
     {
+      "SYMBOL": "NATCAPSUQ",
+      "BAND": 5
+    },
+    {
+      "SYMBOL": "JUBLCPL",
+      "BAND": 5
+    },
+    {
       "SYMBOL": "REPCOHOME",
       "BAND": 20
     },
@@ -7160,6 +10704,10 @@
     },
     {
       "SYMBOL": "QPOWER",
+      "BAND": 20
+    },
+    {
+      "SYMBOL": "TEJASCARGO",
       "BAND": 20
     },
     {
@@ -7455,3478 +11003,6 @@
       "BAND": 10
     },
     {
-      "SYMBOL": "GOLDSTAR",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "21STCENMGM",
-      "BAND": 2
-    },
-    {
-      "SYMBOL": "ABB",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "ADOR",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HAPPSTMNDS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ALEMBICLTD",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ROUTE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GODREJAGRO",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "APCOTEXIND",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "APOLLOTYRE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ARVIND",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ASHOKLEY",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "ADL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "NIRAJ",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "AUROPHARMA",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "BAJFINANCE",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "ANGELONE",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "BALRAMCHIN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BATAINDIA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BBTC",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SINTERCOM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BEL",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "BEPL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PULZ",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "BPL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GRAPHITE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "CARBORUNIV",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "CENTENKA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "CESC",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HEMIPROP",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "COROMANDEL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DABUR",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "DALMIASUG",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DCM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DCW",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DEEPAKFERT",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KHAICHEM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DPABHUSHAN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "EVERESTIND",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "FACT",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GABRIEL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GARFIBRES",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GTECJAINX",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "APOLLO",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "GLAXO",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GTL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "NEWGEN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GMBREW",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "AMBER",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "FMGOETZE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KANSAINER",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GSFC",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "CASTROLIND",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "VASA",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "HCL-INSYS",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "HEROMOTOCO",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "HCC",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HINDOILEXP",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AGI",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ASTERDM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "INDIAGLYCO",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MGEL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "INGERRAND",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "FAIRCHEMOR",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "IOC",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "LINDEINDIA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HGINFRA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "IVP",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "JAYBARMARU",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "JAYSREETEA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "JINDALPOLY",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "JYOTISTRUC",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KAMATHOTEL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KARURVYSYA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KCP",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KESORAMIND",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "CUMMINSIND",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "KREBSBIO",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "KSB",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "LICHSGFIN",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "LYKALABS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HOMEFIRST",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MAHSEAMLES",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "STOVEKRAFT",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "RAJMET",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BOSCHLTD",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "MODIRUBBER",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BANDHANBNK",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "MOTOGENFIN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MRF",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HLEGLAS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SMCGLOBAL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GIRIRAJ",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "NAVNETEDUL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "NOCIL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ONGC",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "ONWARDTEC",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PEARLPOLY",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HERANBA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SEAMECLTD",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DRCSYSTEMS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "VERA",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "PRAKASH",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MTARTECH",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BUTTERFLY",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "RAJSREESUG",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MAHICKRA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KALYANKJIL",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "SAKHTISUG",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SURYODAY",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SANDESH",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "WONDERLA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KOHINOOR",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SAURASHCEM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SHANTIGEAR",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "INDOSTAR",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SHREYANIND",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "SIEMENS",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "SKFINDIA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "JTEKTINDIA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SRF",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "TEMBO",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "STARPAPER",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DEEPINDS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AGARIND",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TATAELXSI",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "HONAUT",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TATACONSUM",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "THERMAX",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "CLSEL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TIL",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "TIRUMALCHM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "EQUIPPP",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "JUBLPHARMA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SOLARA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "VIPIND",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "VLSFINANCE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ANMOL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "WALCHANNAG",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "WSTCSTPAPR",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ARIHANTCAP",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "CAPLIPOINT",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PREMIERPOL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "JAKHARIA",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "PARASPETRO",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ALPSINDUS",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "SILINV",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ZENITHEXPO",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "MOTHERSON",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "WENDT",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "STERTOOLS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SHRIRAMFIN",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "PUNJABCHEM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GULFOILLUB",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "JAGSNPHARM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DYNAMATECH",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "RAMCOIND",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KOTHARIPET",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BANKBARODA",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "BANKINDIA",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "RELINFRA",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "HINDCON",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "IPL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ICICIBANK",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "IRCON",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SHARDACROP",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GOENKA",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "SHEMAROO",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "SGIL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TATVA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GMDCLTD",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ROLEXRINGS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "REXPIPES",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "UGROCAP",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "WINDLAS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "NGIL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "CARTRADE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "APTUS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DUGLOBAL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PARIN",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "YUKEN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KOTHARIPRO",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GANESHBE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BEWLTD",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "CUB",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SANSERA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "QUADPRO",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "MONTECARLO",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SOUTHBANK",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "CYBERTECH",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "BHAGCHEM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DTIL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DKEGL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PVP",
-      "BAND": 2
-    },
-    {
-      "SYMBOL": "MEDICAMEQ",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "APOLSINHOT",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "LAMBODHARA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KOTYARK",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TECHNOE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SHUBHLAXMI",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "IRIS",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "NIDAN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SJS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SIGACHI",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DRSDILIP",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "JINDALSTEL",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "SBC",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "FOCUS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DMCC",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ASIANENE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HESTERBIO",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ACCELYA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SEJALLTD",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "TEGA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MICEL",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "SHRIRAMPPS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MAPMYINDIA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DATAPATTNS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MANAKALUCO",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "NRBBEARING",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "UNITEDPOLY",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "CMSINFO",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SHREERAMA",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "IMAGICAA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MONARCH",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GVPIL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MHLXMIRU",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BYKE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KTKBANK",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AWL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "RPSGVENT",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AJANTPHARM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "FIBERWEB",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SAGARDEEP",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "RICHA",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "MADHAVBAUG",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SHIGAN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "RAJRILTD",
-      "BAND": 2
-    },
-    {
-      "SYMBOL": "MITCON",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "XELPMOC",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "HITECHGEAR",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "NLCINDIA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MSUMI",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KNAGRI",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DIL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KRISHNADEF",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AVROIND",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GAEL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "UMAEXPORTS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ELDEHSG",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HARDWYN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "VCL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "UFO",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SOMATEX",
-      "BAND": 2
-    },
-    {
-      "SYMBOL": "MSTCLTD",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "QUINTEGRA",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "TRU",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "SKIPPER",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AXISCADES",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "LICI",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "SAKAR",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SPLPETRO",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KHANDSE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "RELCHEMQ",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HIKAL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TRIDENT",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PARADEEP",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "EMUDHRA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AETHER",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HAVELLS",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "WEWIN",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "GOLDTECH",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "NEOGEN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GODREJCP",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "AYMSYNTEX",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AURUM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SKP",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "RADHIKAJWE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "UNIVAFOODS",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "KSHITIJPOL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "LUPIN",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "UNITDSPR",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "SATIN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AGNI",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "KRBL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MPSLTD",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MARKSANS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TCI",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SADBHIN",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "SURANAT&P",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "INDIAMART",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "APTECHT",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "NOIDATOLL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "DREAMFOLKS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GVPTECH",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "KORE",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "AMEYA",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "GENESYS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "OMAXAUTO",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "GODREJIND",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "RADAAN",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "STCINDIA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MEGAFLEX",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "RADICO",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "INDORAMA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MARUTI",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "KSOLVES",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SECURKLOUD",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "AGRITECH",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GFSTEELS",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "CREATIVE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "COFFEEDAY",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "KANDARP",
-      "BAND": 2
-    },
-    {
-      "SYMBOL": "MAKS",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "WELSPUNLIV",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TVTODAY",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "UNIENTER",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "LUXIND",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BALAXI",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MUKANDLTD",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DHANBANK",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BIOCON",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "TIPSFILMS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KRITINUT",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "CCL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "JPASSOCIAT",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "QMSMEDI",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "EXCELINDUS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SWASTIK",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AMBICAAGAR",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "NIITLTD",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ULTRACEMCO",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "WESTLIFE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GOLDENTOBC",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "SALSTEEL",
-      "BAND": 2
-    },
-    {
-      "SYMBOL": "ALKEM",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "JPPOWER",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GOKEX",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ACEINTEG",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "EVEREADY",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SAKSOFT",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HPIL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "IIFL",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "SHAHALLOYS",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "63MOONS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GRANULES",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "JSWHL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "IPSL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MSPL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "VITAL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "NECLIFE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MCLEODRUSS",
-      "BAND": 2
-    },
-    {
-      "SYMBOL": "MEDANTA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SEMAC",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "BIKAJI",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AEROENTER",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HNDFDS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "OCCL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "AAATECH",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "PRECAM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SAFARI",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AIAENG",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "QUICKHEAL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ALLETEC",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KEC",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "INDOTECH",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BLKASHYAP",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "VISASTEEL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "CENTURYPLY",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GALLANTT",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "VAKRANGEE",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "KFINTECH",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "UTTAMSUGAR",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SUPREMEINF",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "ELIN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KELLTONTEC",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BALPHARMA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "JKLAKSHMI",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AKASH",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HOMESFY",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "GMRAIRPORT",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "AVONMORE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ATLANTAA",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "HGM",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "BILVYAPAR",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "ALICON",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ANLON",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MADHUCON",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "AERONEU",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "INFOMEDIA",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "JHS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "CMNL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GLOBALVECT",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DUCOL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SUTLEJTEX",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GREENPANEL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "LTFOODS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DONEAR",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "VENUSREM",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "AARTIPHARM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KUANTUM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "JINDRILL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HIRECT",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "SANGHVIMOV",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ASMS",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "SAGCEM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SIYSIL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PITTIENG",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "UNOMINDA",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "SHERA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "NSLNISP",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "NINSYS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TIMKEN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "LRRPL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "TVSSRICHAK",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PGIL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "INDIANB",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "GANESHHOU",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "IDEA",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "POCL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "RAJTV",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "SRIVASAVI",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PAGEIND",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "DIVGIITTS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ICRA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PHOENIXLTD",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "TGBHOTELS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "QFIL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "HILTON",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "KMSUGAR",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SPARC",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MEGASOFT",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "DECCANCE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "OMAXE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "USK",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ASIANTILES",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SAHYADRI",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KDDL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KPRMILL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TAKE",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "PURVA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MOTILALOFS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MAANALU",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "BAJAJELEC",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "INFINIUM",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "MOS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BLAL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SVLL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "PATTECH",
-      "BAND": 2
-    },
-    {
-      "SYMBOL": "AGUL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "RHL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HITECHCORP",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MANAKSIA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "UJJIVANSFB",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "CEATLTD",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "RPOWER",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "QUICKTOUCH",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HERCULES",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SEPC",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PDMJEPAPER",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MANKIND",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "RACE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TITAGARH",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "DPSCLTD",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PIGL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "BHARATWIRE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KRISHCA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "REMUS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PANACHE",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "DENTALKART",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PROV",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BAJAJ-AUTO",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "GOKUL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "UBL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KDL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "ARCHIDPLY",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DPWIRES",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ARTEMISMED",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ZFCVINDIA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ASHOKAMET",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "CELLPOINT",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "VILINBIO",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "MAWANASUG",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "URAVIDEF",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "ESFL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "CROMPTON",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "SUMICHEM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PARAGMILK",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PENTAGON",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "IDEAFORGE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GLOBALPET",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "CYIENTDLM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ASPINWALL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "UTKARSHBNK",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "EXCEL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "PREMEXPLN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SERVICE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GLOBUSSPR",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MAHASTEEL",
-      "BAND": 2
-    },
-    {
-      "SYMBOL": "MGL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ASALCBR",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MOLDTECH",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "YCCL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ZYDUSWELL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "UNIVPHOTO",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SHRITECH",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "VIJIFIN",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "DEN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BAFNAPH",
-      "BAND": 2
-    },
-    {
-      "SYMBOL": "NIITMTS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SARDAEN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "REFEX",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GROBTEA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "REDTAPE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "JSWENERGY",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "ABBOTINDIA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BEARDSELL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "NESTLEIND",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "UNITEDTEA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MBLINFRA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ADVENZYMES",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "YUDIZ",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "MINDTECK",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "VASCONEQ",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TEXMOPIPES",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KECL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PYRAMID",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AEROFLEX",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PERSISTENT",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "CPS",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "RBLBANK",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "RATNAVEER",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BIGBLOC",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SABEVENTS",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "SAROJA",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "JIWANRAM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GNA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "UNIHEALTH",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "EMSLIMITED",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ZAGGLE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SAMHI",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "CHAVDA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MARATHON",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KEL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "NUVAMA",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "MADHUSUDAN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MASKINVEST",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "KODYTECH",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "YATRA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ALCODIS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DRL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "MARCO",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HIGREEN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "CELLECOR",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "VBL",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "SUNDARAM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "RAJRATAN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KAPSTON",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "UNIVASTU",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SILLYMONKS",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "ROLLT",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "MAL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "HEADSUP",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HISARMETAL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "CANARYS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SPCENET",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "OLIL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ROSSARI",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SCML",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "UGARSUGAR",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ARVINDPORT",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "BSE",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "BLUEJET",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "SHANTHALA",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "PARAGON",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "WELINV",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TRANSTEEL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HONASA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SARTELE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "LGHL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "RADIOCITY",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MICROPRO",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ORISSAMINE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "WAAREEINDO",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "INTENTECH",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "TASTYBITE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "RAMKY",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ASKAUTOLTD",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "BEDMUTHA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "JWL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "OBEROIRLTY",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "ROCKINGDCE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "NRAIL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MARINETRAN",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "IOLCP",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "APCL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ACCENTMIC",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PRUDMOULI",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "BAJEL",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "SHREEOSFM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "RPPINFRA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "JAMNAAUTO",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SURAJEST",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HUDCO",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "RBZJEWEL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GANGOTRI",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "EFORCE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AZAD",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "JALAN",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "KIRLOSENG",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "STARCEMENT",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KICL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ERIS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KCEIL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "CDSL",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "DIGIDRIVE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TRANSWIND",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "JYOTICNC",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "IBLFL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "SALASAR",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "STEL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SIS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "COCHINSHIP",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HINDMOTORS",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "MAXPOSURE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DCAL",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "CHOLAHLDNG",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "CAPACITE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DAVANGERE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "WORTHPERI",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "LAWSIKHO",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KONSTELEC",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "DHTL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "MEGATHERM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BLSE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ITALIANE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SIGNPOST",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ALPEXSOLAR",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "POLYSIL",
-      "BAND": 2
-    },
-    {
-      "SYMBOL": "WTICAB",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "INM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DEEM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SADHAV",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MVKAGRO",
-      "BAND": 2
-    },
-    {
-      "SYMBOL": "VR",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GOPAL",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "SHREEKARNI",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PRATHAM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SCILAL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KRYSTAL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TRUST",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "ALUWIND",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BHARTIHEXA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "UEL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "TARACHAND",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AIIL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "JNKINDIA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SLONE",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "REFRACTORY",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "EMMIL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PRLIND",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "VERITAAS",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "ABSMARINE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "IEML",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HOACFOODS",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "AWFIS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GSMFOILS",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "VILAS",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "BEACON",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AIMTRON",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "IXIGO",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SYMPHONY",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "VADILALIND",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "RELAXO",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "STANLEY",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "OMINFRAL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SYLVANPLY",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "VISAMAN",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "VSTTILLERS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DTL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "NEPHROCARE",
-      "BAND": 2
-    },
-    {
-      "SYMBOL": "DHANUKA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AMBEY",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AGIIL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SATIPOLY",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "APRAMEYA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "RAJINDLTD",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ASHALOG",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "RPEL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "UNIECOM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AESTHETIK",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "SUYOG",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SSDL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BRACEPORT",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "INTERARCH",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ELGIRUBCO",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "IDEALTECHO",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "SURAJLTD",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "IBULLSLTD",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "AERON",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TREEHOUSE",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "STYLEBAAZA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BOSS",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "GALAPREC",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "VIESL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "SHUBHSHREE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AUSL",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "KROSS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "INNOMET",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "EXCELLENT",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PGEL",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "ARKADE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "WCIL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PELATRO",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DECCANTRAN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "NORTHARC",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PAISALO",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TIJARIA",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "SHAKTIPUMP",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TRITURBINE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MANBA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "RAPPID",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "UYFINCORP",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "DIVYADHAN",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "DSSL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PARAMOUNT",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "POLYMED",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KANANIIND",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PRANIK",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AFFORDABLE",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "FRESHARA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MORARJEE",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "ANKITMETAL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "DBEIL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "OCCLLTD",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "OBSCP",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "DANISH",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "USHAFIN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HEXATRADEX",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "ABINFRA",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "ACMESOLAR",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "KMEW",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SWANCORP",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "NIVABUPA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SPECIALITY",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "RACLGEAR",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "RAJPUTANA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "APEXECO",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "RTNINDIA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SAMPANN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SURAKSHA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ETML",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SAILIFE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "VMM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "IGIL",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "DAMCAPITAL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MAMATA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TRANSRAILL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "CEWATER",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "NMSTEEL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SANATHAN",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "KITEX",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MAYURUNIQ",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DUCON",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "UNIMECH",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "ZUARI",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "QUADFUTURE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "INDUSTOWER",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "BARFLEX",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "STALLION",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "ITCHOTELS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DENTA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "VMART",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MCLOUD",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AJAXENGG",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "VIVIDHA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ABFRL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "CURAA",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "BHARATSE",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "ISHANCH",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "RAPIDFLEET",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MTEDUCARE",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "NBCC",
-      "BAND": 0
-    },
-    {
-      "SYMBOL": "SREEL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "CIFL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TINNARUBR",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KTL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "TANKUP",
-      "BAND": 2
-    },
-    {
-      "SYMBOL": "ABLBL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ENRIN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ARUNAYA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PRIMO",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MONOLITH",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "RAJOOENG",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "VGINFOTECH",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BELRISE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "DCCL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "NRVANDANA",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "SAHAJ",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "BLUSPRING",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TRAVELFOOD",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "INFLUX",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "SMARTEN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ATHERENERG",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "WHITEFORCE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "BRIGHOTEL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ANTHEM",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "EUROBOND",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SELLOWRAP",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PERFECT",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "CUDML",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "RNPL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "NIKITA",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "FLYSBS",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "AARADHYA",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "PARTH",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "JYOTIGLOBL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MEDISTEP",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AMCL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "SAWALIYA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ALLTIME",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SHKSIL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ARCIIL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "REGAAL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MRIL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ARFIN",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "SGFIN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "LAXMIINDIA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "KAYTEX",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "OPTIVALUE",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "CPEDU",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SNEHAA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "STLNETWORK",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GCSL",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "SUPREMEENG",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "ATLANTAELE",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "GANESHCP",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GKENERGY",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "DEVX",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GML",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "SHRINGARMS",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "HILINFRA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TECHD",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "JAYESH",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MWL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "AGSTRA",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "GURUNANAK",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "RUBICON",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SYSTMTXC",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SOLEX",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "OMFREIGHT",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GREENLEAF",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "GEMAROMA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "MIDWESTLTD",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "PIRAMALFIN",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ORKLAINDIA",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "PWL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SHIVAUM",
-      "BAND": 5
-    },
-    {
-      "SYMBOL": "FINBUD",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "TMCV",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "EUROPRATIK",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SHETHJI",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "CAPILLARY",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "TENNIND",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "SOLARWORLD",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "ARSSBL",
-      "BAND": 20
-    },
-    {
-      "SYMBOL": "EXCELSOFT",
-      "BAND": 10
-    },
-    {
-      "SYMBOL": "GLOTTIS",
-      "BAND": 20
-    },
-    {
       "SYMBOL": "CNX500",
       "BAND": null
     },
@@ -10964,6 +11040,58 @@
     },
     {
       "SYMBOL": "NIFINDIAMANU",
+      "BAND": null
+    },
+    {
+      "SYMBOL": "NIFTY",
+      "BAND": null
+    },
+    {
+      "SYMBOL": "BANKNIFTY",
+      "BAND": null
+    },
+    {
+      "SYMBOL": "CNXMIDCAP",
+      "BAND": null
+    },
+    {
+      "SYMBOL": "MIDCAP50",
+      "BAND": null
+    },
+    {
+      "SYMBOL": "CNXREALTY",
+      "BAND": null
+    },
+    {
+      "SYMBOL": "CNXINFRA",
+      "BAND": null
+    },
+    {
+      "SYMBOL": "CNXENERGY",
+      "BAND": null
+    },
+    {
+      "SYMBOL": "CNXFMCG",
+      "BAND": null
+    },
+    {
+      "SYMBOL": "CNXPSUBANK",
+      "BAND": null
+    },
+    {
+      "SYMBOL": "CNXMETAL",
+      "BAND": null
+    },
+    {
+      "SYMBOL": "CNXCOMMO",
+      "BAND": null
+    },
+    {
+      "SYMBOL": "FINNIFTY",
+      "BAND": null
+    },
+    {
+      "SYMBOL": "NIFSC250",
       "BAND": null
     },
     {
@@ -11028,58 +11156,6 @@
     },
     {
       "SYMBOL": "NIFMICCAP250",
-      "BAND": null
-    },
-    {
-      "SYMBOL": "NIFTY",
-      "BAND": null
-    },
-    {
-      "SYMBOL": "BANKNIFTY",
-      "BAND": null
-    },
-    {
-      "SYMBOL": "CNXMIDCAP",
-      "BAND": null
-    },
-    {
-      "SYMBOL": "MIDCAP50",
-      "BAND": null
-    },
-    {
-      "SYMBOL": "CNXREALTY",
-      "BAND": null
-    },
-    {
-      "SYMBOL": "CNXINFRA",
-      "BAND": null
-    },
-    {
-      "SYMBOL": "CNXENERGY",
-      "BAND": null
-    },
-    {
-      "SYMBOL": "CNXFMCG",
-      "BAND": null
-    },
-    {
-      "SYMBOL": "CNXPSUBANK",
-      "BAND": null
-    },
-    {
-      "SYMBOL": "CNXMETAL",
-      "BAND": null
-    },
-    {
-      "SYMBOL": "CNXCOMMO",
-      "BAND": null
-    },
-    {
-      "SYMBOL": "FINNIFTY",
-      "BAND": null
-    },
-    {
-      "SYMBOL": "NIFSC250",
       "BAND": null
     }
   ]
