@@ -18,7 +18,8 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DATA_DIR = os.path.join(SCRIPT_DIR, "..", "static", "data")
 
 CONFIG = {
-    "strike_api_url_template": "https://api-v2a.strike.money/v2/api/equity/priceticks?securities=EQ%3A*&onlyFaoStocks=false&candleInterval=1d&dateTimes={date}",
+    "strike_api_url_template": "https://api-v2a.strike.money/v2/api/equity/last-traded-state?securities=EQ%3A*&onlyFaoStocks=false&lastTradedTime={date}",
+    #"strike_api_url_template": "https://api-v2a.strike.money/v2/api/equity/priceticks?securities=EQ%3A*&onlyFaoStocks=false&candleInterval=1d&dateTimes={date}",
     "output_file": os.path.join(STATIC_DATA_DIR, "stock_universe.json"),
     "output_version_file": os.path.join(STATIC_DATA_DIR, "data_version.json"),
     "sector_file": os.path.join(SCRIPT_DIR, "Sector_Industry.json"),
