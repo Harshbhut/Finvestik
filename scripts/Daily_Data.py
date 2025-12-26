@@ -7,7 +7,6 @@ import logging
 import pandas as pd
 from datetime import datetime, timedelta
 import pytz
-# The corrected import line is here:
 from typing import List, Dict, Any, Optional
 
 # -------------------------------
@@ -18,8 +17,12 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_DATA_DIR = os.path.join(SCRIPT_DIR, "..", "static", "data")
 
 CONFIG = {
-    "strike_api_url_template": "https://api-v2a.strike.money/v2/api/equity/last-traded-state?securities=EQ%3A*&onlyFaoStocks=false&lastTradedTime={date}",
-    #"strike_api_url_template": "https://api-v2a.strike.money/v2/api/equity/priceticks?securities=EQ%3A*&onlyFaoStocks=false&candleInterval=1d&dateTimes={date}",
+    # 1. NEW URL (For Today's Data - Live/Closing State)
+    "strike_api_url_today": "https://api-v2a.strike.money/v2/api/equity/last-traded-state?securities=EQ%3A*&onlyFaoStocks=false&lastTradedTime={date}",
+    
+    # 2. OLD URL (For Previous Day Data - Historical % Change Calculation)
+    "strike_api_url_history": "https://api-v2a.strike.money/v2/api/equity/priceticks?securities=EQ%3A*&onlyFaoStocks=false&candleInterval=1d&dateTimes={date}",
+    
     "output_file": os.path.join(STATIC_DATA_DIR, "stock_universe.json"),
     "output_version_file": os.path.join(STATIC_DATA_DIR, "data_version.json"),
     "sector_file": os.path.join(SCRIPT_DIR, "Sector_Industry.json"),
@@ -53,8 +56,9 @@ def save_json_file(data: Any, path: str):
 def find_valid_trading_day_data(start_date: datetime.date, url_template: str, max_lookback_days: int = 30) -> (Optional[datetime.date], Optional[Dict[str, Any]]):
     """
     Looks back day-by-day from a start date to find the first day with valid API data.
+    Handles BOTH JSON structures (Old 'ticks' and New 'current.ticks').
     """
-    logging.info(f"Searching for valid trading data, starting from {start_date.strftime('%Y-%m-%d')}...")
+    logging.info(f"Searching for data using template: {url_template[:60]}...")
     current_date = start_date
     for _ in range(max_lookback_days):
         date_str = current_date.strftime("%Y-%m-%d")
@@ -63,13 +67,19 @@ def find_valid_trading_day_data(start_date: datetime.date, url_template: str, ma
             response = requests.get(api_url, timeout=30)
             response.raise_for_status()
             data = response.json()
-            if data.get("data", {}).get("ticks"):
+            
+            # CHECK 1: New API Structure (data -> current -> ticks)
+            ticks_new = data.get("data", {}).get("current", {}).get("ticks")
+            # CHECK 2: Old API Structure (data -> ticks)
+            ticks_old = data.get("data", {}).get("ticks")
+
+            if ticks_new or ticks_old:
                 logging.info(f"  SUCCESS: Found valid trading data for date: {date_str}")
                 return current_date, data
             else:
-                logging.info(f"  No trades found for {date_str}, looking back one more day...")
+                logging.info(f"  No trades found for {date_str}, looking back...")
         except requests.exceptions.RequestException as e:
-            logging.warning(f"  Could not fetch data for {date_str} ({e}), looking back one more day...")
+            logging.warning(f"  Could not fetch data for {date_str} ({e}), looking back...")
         
         current_date -= timedelta(days=1)
 
@@ -77,48 +87,76 @@ def find_valid_trading_day_data(start_date: datetime.date, url_template: str, ma
     return None, None
 
 def process_strike_response(today_data: Dict[str, Any], previous_day_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-    """Processes the raw JSON response from Strike API into a clean list of stocks."""
-    logging.info("Step 2: Processing today's and previous day's data...")
+    """
+    Processes the raw JSON response from Strike API.
+    - Uses NEW JSON structure for 'today_data' (Live/State)
+    - Uses OLD JSON structure for 'previous_day_data' (Price Ticks)
+    """
+    logging.info("Step 2: Processing today's (New API) and previous day's (Old API) data...")
     
+    # --- 1. Process Previous Day (USING OLD API STRUCTURE) ---
     previous_day_closes = {}
+    
+    # Old API Structure: data -> ticks -> SYMBOL -> [[date, open, high, low, close...]]
+    # Index 4 is 'close'
     prev_api_data = previous_day_data.get("data", {})
     prev_ticks = prev_api_data.get("ticks", {})
+    
     for symbol, tick_data in prev_ticks.items():
-        if tick_data and isinstance(tick_data, list) and len(tick_data[0]) > 4:
+        if tick_data and isinstance(tick_data, list) and isinstance(tick_data[0], list) and len(tick_data[0]) > 4:
+            # Old API always has Close at index 4
             previous_day_closes[symbol] = tick_data[0][4] 
+            
     logging.info(f"  Created a lookup map with {len(previous_day_closes)} previous day closing prices.")
 
+    # --- 2. Process Today's Data (USING NEW API STRUCTURE) ---
     stocks = []
     today_api_data = today_data.get("data", {})
-    fields = today_api_data.get("fields", [])
-    today_ticks = today_api_data.get("ticks", {})
+    
+    # New API Structure: data -> current -> ticks -> SYMBOL
+    if "current" in today_api_data:
+        today_inner = today_api_data["current"]
+        fields = today_inner.get("fields", [])
+        today_ticks = today_inner.get("ticks", {})
+    else:
+        # Fallback (unlikely given instructions, but safe)
+        fields = today_api_data.get("fields", [])
+        today_ticks = today_api_data.get("ticks", {})
 
     if not all([fields, today_ticks]):
         logging.error("  Could not find 'fields' or 'ticks' in today's API response. Aborting.")
         return []
 
     fallback_count = 0
+    
     for symbol, tick_data in today_ticks.items():
         if not tick_data or not isinstance(tick_data, list) or not isinstance(tick_data[0], list):
             continue
 
         values = tick_data[0]
-        stock_info = dict(zip(fields, values))
+        # Create a temporary dict with API field names
+        raw_stock_info = dict(zip(fields, values))
         
+        # MAPPING: Map New API specific keys to our Internal Keys
+        # We explicitly look for 'dayClose', 'dayVolume' etc.
         stock = {
             "symbol": symbol,
-            "close": stock_info.get("dayClose"), "high": stock_info.get("dayHigh"),
-            "low": stock_info.get("dayLow"), "volume": stock_info.get("dayVolume"),
-            "open": stock_info.get("dayOpen")
+            "close": raw_stock_info.get("dayClose", raw_stock_info.get("close")),
+            "high": raw_stock_info.get("dayHigh", raw_stock_info.get("high")),
+            "low": raw_stock_info.get("dayLow", raw_stock_info.get("low")),
+            "volume": raw_stock_info.get("dayVolume", raw_stock_info.get("volume")),
+            "open": raw_stock_info.get("dayOpen", raw_stock_info.get("open"))
         }
 
-        today_close = stock.get("dayClose")
+        today_close = stock.get("close")
         previous_close = previous_day_closes.get(symbol)
 
+        # CALCULATION: Compare Today's (New API) Close vs Previous (Old API) Close
         if previous_close is not None and isinstance(today_close, (int, float)) and previous_close != 0:
             stock['%change'] = ((today_close - previous_close) / previous_close) * 100
         else:
-            today_open = stock.get("dayOpen")
+            # Fallback if historical data is missing
+            today_open = stock.get("open")
             if isinstance(today_open, (int, float)) and isinstance(today_close, (int, float)) and today_open != 0:
                 stock['%change'] = ((today_close - today_open) / today_open) * 100
                 fallback_count += 1
@@ -127,13 +165,14 @@ def process_strike_response(today_data: Dict[str, Any], previous_day_data: Dict[
 
         stocks.append(stock)
     
-    logging.info(f"  Processed {len(stocks)} stocks from today's data.")
+    logging.info(f"  Processed {len(stocks)} stocks using mixed API logic.")
     if fallback_count > 0:
-        logging.info(f"  Used fallback %change calculation for {fallback_count} stocks.")
+        logging.info(f"  Used fallback %change calculation (Open vs Close) for {fallback_count} stocks (missing history).")
     return stocks
 
 
 # --- 3. DATA MAPPING AND CALCULATION FUNCTIONS ---
+
 def map_sector_data(stocks: List[Dict], sector_data: List[Dict]):
     logging.info("Step 3: Mapping sector/industry data...")
     sector_map = {item["Symbol"]: item for item in sector_data if "Symbol" in item}
@@ -150,19 +189,15 @@ def map_sector_data(stocks: List[Dict], sector_data: List[Dict]):
 def filter_invalid_inecode(stocks: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     logging.info("Step 3.5: Filtering stocks with invalid INECODE...")
     initial_count = len(stocks)
-    
     filtered_stocks = [
         stock for stock in stocks
         if stock.get("INECODE") and stock.get("INECODE") != "XXXXXXXXXXXX"
     ]
     removed_count = initial_count - len(filtered_stocks)
-
     if removed_count > 0:
         logging.info(f"  Removed {removed_count} stocks where INECODE is missing or 'XXXXXXXXXXXX'.")
     else:
         logging.info("  No stocks found with invalid INECODE to remove.")
-    
-    logging.info(f"  Continuing with {len(filtered_stocks)} stocks.")
     return filtered_stocks
 
 def map_circuit_limits(stocks: List[Dict], circuit_data: List[Dict]):
@@ -307,17 +342,21 @@ def calculate_rs_rating(stocks: List[Dict], historical_data: List[Dict], trade_d
     logging.info(f"  Calculated RS Rating for {total_3m} (3M) and {total_6m} (6M) of {len(stocks)} stocks.")
 
 def prepare_and_save_data(stocks: List[Dict]):
-    """Prepares and saves the final enriched data, formatting it for final output."""
+    """Prepares and saves the final enriched data."""
     logging.info("Step 9: Preparing and saving final JSON file...")
     for stock in stocks:
         stock.pop("_RS_3M_value", None); stock.pop("_RS_6M_value", None)
+        # We KEEP 'open', 'high', etc internally, but we clean up before save
         stock.pop("open", None)
     df = pd.DataFrame(stocks)
     if '%change' in df.columns:
         df['%change'] = df['%change'].round(2)
     df.drop(columns=['SecurityID', 'ListingID', 'SME Stock?', 'Industry ID'], inplace=True, errors='ignore')
+    
+    # RENAME to match Frontend Expectations
     df.rename(columns={'close': 'current_price', 'high': 'day_high', 'low': 'day_low',
                        'volume': 'day_volume', '%change': 'change_percentage', 'symbol': 'Symbol'}, inplace=True)
+    
     records = df.where(pd.notnull(df), None).to_dict(orient="records")
     for rec in records:
         v = rec.get("change_percentage")
@@ -330,29 +369,32 @@ def prepare_and_save_data(stocks: List[Dict]):
 
 # --- 4. MAIN EXECUTION ---
 def main():
-    """Main function to orchestrate the data fetching and processing workflow."""
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
     
     ist = pytz.timezone('Asia/Kolkata')
     start_date = datetime.now(ist).date()
     logging.info(f"🚀 Starting data pipeline. Current IST date: {start_date.strftime('%Y-%m-%d')}")
 
-    url_template = CONFIG["strike_api_url_template"]
-    latest_trade_date, raw_today_data = find_valid_trading_day_data(start_date, url_template)
+    # 1. Fetch TODAY'S Data using NEW URL
+    url_template_today = CONFIG["strike_api_url_today"]
+    latest_trade_date, raw_today_data = find_valid_trading_day_data(start_date, url_template_today)
 
     if not raw_today_data:
-        logging.error("Pipeline stopped: Could not determine the latest trading day.")
+        logging.error("Pipeline stopped: Could not determine the latest trading day (New API).")
         return
 
+    # 2. Fetch PREVIOUS DAY'S Data using OLD URL
+    # Look back starting from yesterday relative to the found trade date
+    url_template_history = CONFIG["strike_api_url_history"]
     previous_day_start_search = latest_trade_date - timedelta(days=1)
-    previous_trade_date, raw_previous_day_data = find_valid_trading_day_data(previous_day_start_search, url_template)
+    previous_trade_date, raw_previous_day_data = find_valid_trading_day_data(previous_day_start_search, url_template_history)
 
     if not raw_previous_day_data:
-        logging.error("Pipeline stopped: Could not determine the previous trading day.")
+        logging.error("Pipeline stopped: Could not determine the previous trading day (Old API).")
         return
 
     trade_date = latest_trade_date.strftime("%Y-%m-%d")
-    logging.info(f"Finalized data dates. Latest: {trade_date}, Previous: {previous_trade_date.strftime('%Y-%m-%d')}")
+    logging.info(f"Finalized data dates. Latest (New API): {trade_date}, Previous (Old API): {previous_trade_date.strftime('%Y-%m-%d')}")
         
     stocks = process_strike_response(raw_today_data, raw_previous_day_data)
     if not stocks: 
