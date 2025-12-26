@@ -106,18 +106,18 @@ def process_strike_response(today_data: Dict[str, Any], previous_day_data: Dict[
         
         stock = {
             "symbol": symbol,
-            "close": stock_info.get("close"), "high": stock_info.get("high"),
-            "low": stock_info.get("low"), "volume": stock_info.get("volume"),
-            "open": stock_info.get("open")
+            "close": stock_info.get("dayClose"), "high": stock_info.get("dayHigh"),
+            "low": stock_info.get("dayLow"), "volume": stock_info.get("dayVolume"),
+            "open": stock_info.get("dayOpen")
         }
 
-        today_close = stock.get("close")
+        today_close = stock.get("dayClose")
         previous_close = previous_day_closes.get(symbol)
 
         if previous_close is not None and isinstance(today_close, (int, float)) and previous_close != 0:
             stock['%change'] = ((today_close - previous_close) / previous_close) * 100
         else:
-            today_open = stock.get("open")
+            today_open = stock.get("dayOpen")
             if isinstance(today_open, (int, float)) and isinstance(today_close, (int, float)) and today_open != 0:
                 stock['%change'] = ((today_close - today_open) / today_open) * 100
                 fallback_count += 1
