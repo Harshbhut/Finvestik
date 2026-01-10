@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Finvestik - RRG Analysis</title>
+
+    <meta name="description" content="Find Sector wise Strong Swing & Momentum Setups along with RRG (Relative Rotation Graph)." />
+    <meta name="keywords" content="RRG, Relative Rotation Graph, Stock Market,Stock Universe, Stock Scanner,Sector Rotation,Postion Sizing Calculator, Custom Index, Risk Management,Trading" />
+    <meta name="author" content="Finvestik" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:title" content="Finvestik - RRG" />
+    <meta property="og:description" content="Find Sector wise Strong Swing & Momentum Setups along with RRG." />
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.finvestik.com/stock-universe/rrg.html" />
+    <meta property="og:image" content="/static/images/Financial Growth Vector Logo.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@harshbhut5">
+    <meta name="twitter:title" content="Finvestik - Stock RRG" />
+    <meta name="twitter:description" content="Find Sector wise Strong Swing & Momentum Setups along with RRG." />
+    <meta name="twitter:image" content="https://www.finvestik.com/static/images/Financial%20Growth%20Vector%20Logo.png" />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/Financial Growth Vector Logo.png">
+    <link rel="apple-touch-icon" href="/static/images/Financial Growth Vector Logo.png">
+    
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <!-- Chart.js Ecosystem -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2.1.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q06244YWW6"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Q06244YWW6');
+    </script>
+
+    <style>
+        /* Chart Area */
+        #rrg-wrapper {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            cursor: crosshair;
+            border-radius: 0.75rem;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .control-label {
+            color: var(--text-secondary);
+            font-size: 0.70rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Bottom Tab Buttons */
+        .quad-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            font-weight: 700;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            min-width: 120px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .quad-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Active States with Colors */
+        .quad-btn.leading { color: #10b981; border-bottom: 3px solid transparent; }
+        .quad-btn.leading:hover, .quad-btn.leading.active { background-color: #10b981; color: white; border-color: #10b981; }
+
+        .quad-btn.weakening { color: #f59e0b; border-bottom: 3px solid transparent; }
+        .quad-btn.weakening:hover, .quad-btn.weakening.active { background-color: #f59e0b; color: white; border-color: #f59e0b; }
+
+        .quad-btn.lagging { color: #ef4444; border-bottom: 3px solid transparent; }
+        .quad-btn.lagging:hover, .quad-btn.lagging.active { background-color: #ef4444; color: white; border-color: #ef4444; }
+
+        .quad-btn.improving { color: #3b82f6; border-bottom: 3px solid transparent; }
+        .quad-btn.improving:hover, .quad-btn.improving.active { background-color: #3b82f6; color: white; border-color: #3b82f6; }
+
+    </style>
+</head>
+<body class="h-screen flex flex-col antialiased overflow-hidden">
+    
+    <!-- 1. HEADER -->
+    <header id="app-header" class="sticky top-0 z-50 w-full shadow-md flex-shrink-0" role="banner">
+        <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16 sm:h-20">
+            <div class="flex-shrink-0 flex items-center gap-3">
+                 <a href="/"><img src="/static/images/Financial Growth Vector Logo.png" alt="Finvestik Logo" id="finvestik-logo" class="h-[40px] w-[40px] sm:h-12 sm:w-12 rounded-md object-contain cursor-pointer"/></a>
+            </div>
+            
+            <nav class="hidden sm:flex flex-grow justify-center px-2 space-x-2" aria-label="Main navigation">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/education" class="nav-link">Education</a>
+                <a href="/stock-universe" class="nav-link active">Stock Universe</a>
+                <a href="/position-calculator" class="nav-link">Position Calculator</a>
+                <a href="/custom-index" class="nav-link">Custom Index</a>
+            </nav>
+
+            <div class="flex items-center">
+                <!-- NEW: Back to Universe Button -->
+                <a href="/stock-universe" class="btn btn-secondary text-xs h-9 px-3 mr-3 flex items-center justify-center transition-colors" title="Back to Stock Universe">
+                    <i class="fa fa-arrow-left sm:mr-2"></i>
+                    <span class="hidden sm:inline">Stock Universe</span>
+                </a>
+
+                <div id="theme-toggle-container" class="flex-shrink-0 sm:order-last">
+                    <button id="theme-toggle" title="Toggle theme" class="w-10 h-10 rounded-full flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 text-lg">
+                        <i class="fa fa-moon-o"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. MAIN CONTENT -->
+    <div id="main-content-area" class="w-full max-w-7xl mx-auto flex flex-col flex-grow p-4 min-h-0">
+        
+        <!-- TOP CONTROLS -->
+        <div class="content-card p-3 mb-3 shadow-lg flex-shrink-0">
+            <div class="grid grid-cols-2 md:grid-cols-6 gap-3 items-end">
+                <!-- Group By -->
+                <div>
+                    <label class="control-label">Group By</label>
+                    <select id="rrg-group-by" class="form-input text-xs h-8 py-1 font-inter">
+                        <option value="Sector Name">Sector</option>
+                        <option value="Industry Name">Industry</option>
+                    </select>
+                </div>
+                <!-- Filters -->
+                <div>
+                    <label class="control-label">Min Stocks</label>
+                    <input type="number" id="filter-min-count" class="form-input text-xs h-8 py-1 font-inter" value="5" min="1">
+                </div>
+                <div>
+                    <label class="control-label">Min M.Cap</label>
+                    <input type="number" id="filter-min-mcap" class="form-input text-xs h-8 py-1 font-inter" value="500" step="100">
+                </div>
+                <div>
+                    <label class="control-label">Min Volume</label>
+                    <input type="number" id="filter-min-vol" class="form-input text-xs h-8 py-1 font-inter" value="10000" step="1000">
+                </div>
+                
+                <!-- Reset (Icon Only) -->
+                <div class="flex flex-col justify-end h-full">
+                    <button id="btn-reset-zoom" class="btn btn-secondary h-8 w-8 p-0 flex items-center justify-center rounded-md" title="Reset View">
+                        <i class="fa fa-refresh text-sm"></i>
+                    </button>
+                </div>
+
+                <!-- Chart Level Back & Status -->
+                <div class="flex flex-col justify-end">
+                    <button id="btn-back-level" class="btn btn-primary hidden h-8 w-full text-xs justify-center mb-1 font-inter">
+                        <i class="fa fa-arrow-left mr-2"></i> Back
+                    </button>
+                    <div id="chart-status" class="text-[10px] text-right w-full hidden font-mono opacity-70 truncate" style="color: var(--text-secondary);"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN CHART AREA -->
+        <div class="flex-grow h-full min-w-0 mb-3">
+            <div id="rrg-wrapper">
+                <canvas id="rrgChart"></canvas>
+                <div class="absolute bottom-2 left-3 text-[10px] opacity-60 pointer-events-none select-none flex items-center gap-2 font-inter" style="color: var(--text-secondary);">
+                    <span><i class="fa fa-mouse-pointer"></i> Scroll Zoom</span>
+                    <span>•</span>
+                    <span><i class="fa fa-hand-paper-o"></i> Drag Pan</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOTTOM CONTROLS -->
+        <div class="flex-shrink-0 flex justify-center items-center gap-4 select-none">
+            <div class="quad-btn improving" onclick="manualZoomTo('improving', this)">
+                IMPROVING
+            </div>
+            <div class="quad-btn leading" onclick="manualZoomTo('leading', this)">
+                LEADING
+            </div>
+            <div class="quad-btn weakening" onclick="manualZoomTo('weakening', this)">
+                WEAKENING
+            </div>
+            <div class="quad-btn lagging" onclick="manualZoomTo('lagging', this)">
+                LAGGING
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 4. JAVASCRIPT LOGIC -->
+    <script>
+        // --- CHART JS GLOBAL FONT SETUP ---
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        
+        // --- CONFIGURATION ---
+        const DATA_PATH = "/static/data/stock_universe.json";
+        
+        const STATE = {
+            data: [], view: 'GROUPS', activeGroup: null, chart: null,
+            zoomedQuadrant: null, 
+            center: { x: 50, y: 50 }, span: 10,
+            filters: { groupBy: 'Sector Name', minCount: 5, minMCap: 500, minVol: 10000 }
+        };
+
+        const COLORS = { leading: '#10b981', weakening: '#f59e0b', lagging: '#ef4444', improving: '#3b82f6' };
+
+        // --- THEME HELPER ---
+        function getCssVar(name) {
+            return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+        }
+
+        function getThemeColors() {
+            return {
+                grid: getCssVar('--border-color'),
+                text: getCssVar('--text-secondary'),
+                bg: getCssVar('--card-bg')
+            };
+        }
+
+        // --- THEME TOGGLE ---
+        const themeBtn = document.getElementById('theme-toggle');
+        const root = document.documentElement;
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        
+        if (savedTheme === 'light') { root.classList.add('light'); themeBtn.innerHTML = '<i class="fa fa-sun-o"></i>'; } 
+        else { root.classList.remove('light'); themeBtn.innerHTML = '<i class="fa fa-moon-o"></i>'; }
+
+        themeBtn.addEventListener('click', () => {
+            root.classList.toggle('light');
+            const isLight = root.classList.contains('light');
+            themeBtn.innerHTML = isLight ? '<i class="fa fa-sun-o"></i>' : '<i class="fa fa-moon-o"></i>';
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            
+            if(STATE.chart) {
+                STATE.chart.options.scales.x.grid.color = getCssVar('--border-color');
+                STATE.chart.options.scales.y.grid.color = getCssVar('--border-color');
+                STATE.chart.options.scales.x.ticks.color = getCssVar('--text-secondary');
+                STATE.chart.options.scales.y.ticks.color = getCssVar('--text-secondary');
+                STATE.chart.options.scales.x.title.color = getCssVar('--text-secondary');
+                STATE.chart.options.scales.y.title.color = getCssVar('--text-secondary');
+                STATE.chart.options.scales.x.ticks.font = { family: "'Inter', sans-serif" };
+                STATE.chart.update('none'); 
+            }
+        });
+
+        // --- DATA LOADING ---
+        async function initData() {
+            try {
+                const res = await fetch(DATA_PATH + `?t=${Date.now()}`);
+                const json = await res.json();
+                STATE.data = json.map(d => ({
+                    symbol: d['Symbol'], name: d['Stock Name'], sector: d['Sector Name'], industry: d['Industry Name'],
+                    rs3: parseFloat(d['RS_3M']) || 0, rs6: parseFloat(d['RS_6M']) || 0, mcap: parseFloat(d['Market Cap']) || 0, vol: parseFloat(d['day_volume']) || 0
+                })).filter(d => d.rs3 !== 0 && d.rs6 !== 0);
+                updateChartData();
+            } catch (e) { console.error(e); alert("Failed to load data"); }
+        }
+
+        // --- CALCULATION ENGINE ---
+        function updateChartData() {
+            const { groupBy, minCount, minMCap, minVol } = STATE.filters;
+            const validStocks = STATE.data.filter(s => s.mcap >= minMCap && s.vol >= minVol);
+            
+            let points = [], avgX = 50, avgY = 50;
+
+            if (STATE.view === 'GROUPS') {
+                const groups = {};
+                validStocks.forEach(s => {
+                    const gName = groupBy === 'Sector Name' ? s.sector : s.industry;
+                    if (!gName) return;
+                    if (!groups[gName]) groups[gName] = { name: gName, sum3: 0, sum6: 0, count: 0 };
+                    groups[gName].sum3 += s.rs3; groups[gName].sum6 += s.rs6; groups[gName].count++;
+                });
+
+                const rawPoints = Object.values(groups).filter(g => g.count >= minCount).map(g => ({
+                    x: g.sum6 / g.count, y: g.sum3 / g.count, label: g.name, count: g.count, isGroup: true
+                }));
+
+                const validForCenter = rawPoints.filter(p => p.x < 99 && p.y < 99);
+                if(validForCenter.length > 0) {
+                    avgX = validForCenter.reduce((sum, p) => sum + p.x, 0) / validForCenter.length;
+                    avgY = validForCenter.reduce((sum, p) => sum + p.y, 0) / validForCenter.length;
+                }
+                points = rawPoints;
+                document.getElementById('chart-status').textContent = `${points.length} Groups (Center: ${avgX.toFixed(0)}, ${avgY.toFixed(0)})`;
+                document.getElementById('btn-back-level').classList.add('hidden');
+                document.getElementById('filter-min-count').parentElement.classList.remove('opacity-50');
+
+            } else {
+                const groupName = STATE.activeGroup;
+                const groupingKey = groupBy === 'Sector Name' ? 'sector' : 'industry';
+                const groupStocks = validStocks.filter(s => s[groupingKey] === groupName);
+
+                const validForCenter = groupStocks.filter(s => s.rs3 < 99.9 && s.rs6 < 99.9);
+                if(validForCenter.length > 0) {
+                    avgX = validForCenter.reduce((sum, s) => sum + s.rs6, 0) / validForCenter.length;
+                    avgY = validForCenter.reduce((sum, s) => sum + s.rs3, 0) / validForCenter.length;
+                }
+                points = groupStocks.map(s => ({
+                    x: s.rs6, y: s.rs3, label: s.symbol, name: s.name, isGroup: false
+                }));
+                document.getElementById('chart-status').textContent = `${groupName} (Avg: ${avgX.toFixed(0)}, ${avgY.toFixed(0)})`;
+                document.getElementById('btn-back-level').classList.remove('hidden');
+                document.getElementById('filter-min-count').parentElement.classList.add('opacity-50');
+            }
+
+            let maxDev = 0;
+            points.forEach(p => maxDev = Math.max(maxDev, Math.abs(p.x - avgX), Math.abs(p.y - avgY)));
+            if(maxDev === 0) maxDev = 10;
+            
+            STATE.center = { x: avgX, y: avgY };
+            STATE.span = maxDev * 1.15;
+
+            points = points.map(p => {
+                const quad = getQuadrantName(p.x, p.y, avgX, avgY);
+                return { ...p, quadrant: quad, backgroundColor: COLORS[quad] };
+            });
+
+            renderChart(points);
+        }
+
+        function getQuadrantName(x, y, cx, cy) {
+            if (x >= cx && y >= cy) return 'leading';
+            if (x >= cx && y < cy) return 'weakening';
+            if (x < cx && y >= cy) return 'improving';
+            return 'lagging';
+        }
+
+        // --- INTERACTION LOGIC ---
+
+        window.manualZoomTo = (q, btnElement) => {
+            document.querySelectorAll('.quad-btn').forEach(b => b.classList.remove('active'));
+            
+            if(STATE.zoomedQuadrant === q) {
+                resetZoom();
+            } else {
+                STATE.zoomedQuadrant = q;
+                btnElement.classList.add('active');
+                renderChart(STATE.chart.data.datasets[0].data); 
+            }
+        };
+
+        function resetZoom() {
+            STATE.zoomedQuadrant = null;
+            document.querySelectorAll('.quad-btn').forEach(b => b.classList.remove('active'));
+            if(STATE.chart) STATE.chart.resetZoom();
+            if(STATE.chart) renderChart(STATE.chart.data.datasets[0].data);
+        }
+
+        function renderChart(points) {
+            const ctx = document.getElementById('rrgChart').getContext('2d');
+            const cx = STATE.center.x;
+            const cy = STATE.center.y;
+            const span = STATE.span;
+
+            let minX, maxX, minY, maxY;
+
+            if (STATE.view === 'STOCKS') {
+                minX = 0; maxX = 110;
+                minY = 0; maxY = 110;
+            } else {
+                minX = cx - span; maxX = cx + span;
+                minY = cy - span; maxY = cy + span;
+            }
+
+            if (STATE.zoomedQuadrant) {
+                const q = STATE.zoomedQuadrant;
+                if(STATE.view === 'STOCKS') {
+                    if(q === 'leading')   { minX = cx; maxX = 110; minY = cy; maxY = 110; }
+                    if(q === 'improving') { minX = 0; maxX = cx; minY = cy; maxY = 110; }
+                    if(q === 'lagging')   { minX = 0; maxX = cx; minY = 0; maxY = cy; }
+                    if(q === 'weakening') { minX = cx; maxX = 110; minY = 0; maxY = cy; }
+                } else {
+                    if(q === 'leading')   { minX = cx; maxX = cx + span; minY = cy; maxY = cy + span; }
+                    if(q === 'improving') { minX = cx - span; maxX = cx; minY = cy; maxY = cy + span; }
+                    if(q === 'lagging')   { minX = cx - span; maxX = cx; minY = cy - span; maxY = cy; }
+                    if(q === 'weakening') { minX = cx; maxX = cx + span; minY = cy - span; maxY = cy; }
+                }
+            }
+
+            if (STATE.chart) STATE.chart.destroy();
+
+            STATE.chart = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        data: points,
+                        pointBackgroundColor: points.map(p => p.backgroundColor),
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 1,
+                        pointRadius: STATE.view === 'GROUPS' ? 10 : 6,
+                        pointHoverRadius: 14
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: { duration: 600 },
+                    layout: { padding: 10 },
+                    plugins: {
+                        legend: { display: false },
+                        zoom: {
+                            zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'xy' },
+                            pan: { enabled: true, mode: 'xy', threshold: 10 }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(17, 24, 39, 0.95)',
+                            callbacks: {
+                                label: (c) => c.raw.isGroup ? `${c.raw.label} (${c.raw.count})` : c.raw.label,
+                                afterLabel: (c) => `Trend: ${c.raw.x.toFixed(1)} | Mom: ${c.raw.y.toFixed(1)}`
+                            }
+                        },
+                        datalabels: {
+                            display: STATE.view === 'GROUPS',
+                            align: 'top', offset: 6,
+                            color: getCssVar('--text-secondary'),
+                            font: { size: 10, weight: 'bold' },
+                            formatter: (v) => v.label
+                        },
+                        annotation: {
+                            annotations: {
+                                vLine: { type: 'line', xMin: cx, xMax: cx, borderColor: getCssVar('--border-color'), borderWidth: 2, borderDash: [5,5] },
+                                hLine: { type: 'line', yMin: cy, yMax: cy, borderColor: getCssVar('--border-color'), borderWidth: 2, borderDash: [5,5] },
+                                q1: { type: 'label', xValue: maxX, yValue: maxY, content: 'LEADING', color: 'rgba(16, 185, 129, 0.1)', font: {size:40, weight:900}, position: 'end', xAdjust: -40, yAdjust: 40 },
+                                q2: { type: 'label', xValue: maxX, yValue: minY, content: 'WEAKENING', color: 'rgba(245, 158, 11, 0.1)', font: {size:40, weight:900}, position: 'end', xAdjust: -40, yAdjust: -40 },
+                                q3: { type: 'label', xValue: minX, yValue: minY, content: 'LAGGING', color: 'rgba(239, 68, 68, 0.1)', font: {size:40, weight:900}, position: 'start', xAdjust: 40, yAdjust: -40 },
+                                q4: { type: 'label', xValue: minX, yValue: maxY, content: 'IMPROVING', color: 'rgba(59, 130, 246, 0.1)', font: {size:40, weight:900}, position: 'start', xAdjust: 40, yAdjust: 40 },
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            min: minX, max: maxX,
+                            grid: { color: getCssVar('--border-color') },
+                            ticks: { color: getCssVar('--text-secondary'), stepSize: 10, font: { family: "'Inter', sans-serif" } },
+                            title: { display: true, text: 'Trend -->', color: getCssVar('--text-secondary'), font: { family: "'Inter', sans-serif" } }
+                        },
+                        y: {
+                            min: minY, max: maxY,
+                            grid: { color: getCssVar('--border-color') },
+                            ticks: { color: getCssVar('--text-secondary'), stepSize: 10, font: { family: "'Inter', sans-serif" } },
+                            title: { display: true, text: 'Momentum -->', color: getCssVar('--text-secondary'), font: { family: "'Inter', sans-serif" } }
+                        }
+                    },
+                    onClick: (evt, activeElements) => {
+                        if (activeElements.length > 0 && STATE.view === 'GROUPS') {
+                            const idx = activeElements[0].index;
+                            STATE.activeGroup = points[idx].label;
+                            STATE.view = 'STOCKS';
+                            updateChartData();
+                        }
+                    },
+                    onHover: (e, els) => {
+                        e.native.target.style.cursor = els.length ? 'pointer' : 'default';
+                    }
+                },
+                plugins: [ChartDataLabels]
+            });
+        }
+
+        // --- LISTENERS ---
+        document.getElementById('rrg-group-by').addEventListener('change', (e) => {
+            STATE.filters.groupBy = e.target.value;
+            if(STATE.view === 'STOCKS') { STATE.view = 'GROUPS'; STATE.activeGroup = null; }
+            resetZoom(); updateChartData();
+        });
+
+        document.getElementById('btn-reset-zoom').addEventListener('click', resetZoom);
+        
+        document.getElementById('btn-back-level').addEventListener('click', () => {
+            STATE.view = 'GROUPS'; STATE.activeGroup = null; updateChartData();
+        });
+
+        function debounce(func, timeout = 300){ let timer; return (...args) => { clearTimeout(timer); timer = setTimeout(() => { func.apply(this, args); }, timeout); }; }
+        const handleInput = debounce(() => {
+            STATE.filters.minCount = parseInt(document.getElementById('filter-min-count').value) || 1;
+            STATE.filters.minMCap = parseFloat(document.getElementById('filter-min-mcap').value) || 0;
+            STATE.filters.minVol = parseFloat(document.getElementById('filter-min-vol').value) || 0;
+            updateChartData();
+        });
+        ['filter-min-count', 'filter-min-mcap', 'filter-min-vol'].forEach(id => document.getElementById(id).addEventListener('input', handleInput));
+
+        window.addEventListener('DOMContentLoaded', initData);
+
+    </script>
+</body>
+</html>
