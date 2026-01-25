@@ -43,6 +43,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install requests pandas bs4
+          pip install pytz
       - name: Run Daily_Data.py
         run: |
           python scripts/Daily_Data.py
