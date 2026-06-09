@@ -1,7 +1,21 @@
 {
-  "source_date": "2026-06-05",
-  "last_updated": "2026-06-08 12:41:02",
+  "source_date": "2026-06-08",
+  "last_updated": "2026-06-09 11:59:55",
   "data": [
+    {
+      "Symbol": "BMW",
+      "Exchange": "BSE",
+      "Series": "",
+      "52_Weeks_High": 65.19,
+      "52_Weeks_Low": 26.06
+    },
+    {
+      "Symbol": "UFBL",
+      "Exchange": "BSE, NSE",
+      "Series": "",
+      "52_Weeks_High": 556.15,
+      "52_Weeks_Low": 170.7
+    },
     {
       "Symbol": "SEKURITIND",
       "Exchange": "BSE",
@@ -15,13 +29,6 @@
       "Series": "",
       "52_Weeks_High": 1536.75,
       "52_Weeks_Low": 649.3
-    },
-    {
-      "Symbol": "BMW",
-      "Exchange": "BSE",
-      "Series": "",
-      "52_Weeks_High": 64.6,
-      "52_Weeks_Low": 26.06
     },
     {
       "Symbol": "CEMPRO",
@@ -45,6 +52,13 @@
       "52_Weeks_Low": 3.2
     },
     {
+      "Symbol": "GVPIL",
+      "Exchange": "BSE, NSE",
+      "Series": "",
+      "52_Weeks_High": 929.95,
+      "52_Weeks_Low": 270.75
+    },
+    {
       "Symbol": "SIGMAADV",
       "Exchange": "BSE, NSE",
       "Series": "",
@@ -57,13 +71,6 @@
       "Series": "",
       "52_Weeks_High": 818.7,
       "52_Weeks_Low": 470.1
-    },
-    {
-      "Symbol": "GVPIL",
-      "Exchange": "BSE, NSE",
-      "Series": "",
-      "52_Weeks_High": 912.05,
-      "52_Weeks_Low": 270.3
     },
     {
       "Symbol": "IBULLSLTD",
@@ -99,13 +106,6 @@
       "Series": "",
       "52_Weeks_High": 0.36,
       "52_Weeks_Low": 0.28
-    },
-    {
-      "Symbol": "UFBL",
-      "Exchange": "BSE, NSE",
-      "Series": "",
-      "52_Weeks_High": 514,
-      "52_Weeks_Low": 170.7
     },
     {
       "Symbol": "VIYASH",
@@ -1100,13 +1100,6 @@
       "Series": "",
       "52_Weeks_High": 35.6,
       "52_Weeks_Low": 25.2
-    },
-    {
-      "Symbol": "ADANIENT",
-      "Exchange": "BSE, NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 2803.1,
-      "52_Weeks_Low": 1753
     },
     {
       "Symbol": "ADANIENT",
@@ -3027,13 +3020,6 @@
       "52_Weeks_Low": 744.9
     },
     {
-      "Symbol": "ADANIENSOL",
-      "Exchange": "BSE, NSE",
-      "Series": "EQ",
-      "52_Weeks_High": 1463.65,
-      "52_Weeks_Low": 744.9
-    },
-    {
       "Symbol": "ADVAIT",
       "Exchange": "BSE, NSE",
       "Series": "",
@@ -3725,13 +3711,6 @@
       "Series": "EQ",
       "52_Weeks_High": 447.8,
       "52_Weeks_Low": 207.7
-    },
-    {
-      "Symbol": "LENSKART",
-      "Exchange": "BSE, NSE",
-      "Series": "",
-      "52_Weeks_High": 557.65,
-      "52_Weeks_Low": 356.1
     },
     {
       "Symbol": "LENSKART",
@@ -5554,6 +5533,13 @@
       "52_Weeks_Low": 462
     },
     {
+      "Symbol": "MSCIADD",
+      "Exchange": "BSE",
+      "Series": "",
+      "52_Weeks_High": 33.2,
+      "52_Weeks_Low": 26.79
+    },
+    {
       "Symbol": "TEXINFRA",
       "Exchange": "BSE, NSE",
       "Series": "EQ",
@@ -5967,6 +5953,13 @@
       "52_Weeks_Low": 143.34
     },
     {
+      "Symbol": "INDOKEM",
+      "Exchange": "BSE",
+      "Series": "",
+      "52_Weeks_High": 930,
+      "52_Weeks_Low": 186
+    },
+    {
       "Symbol": "PGIL",
       "Exchange": "BSE, NSE",
       "Series": "EQ",
@@ -6098,6 +6091,13 @@
       "Series": "EQ",
       "52_Weeks_High": 279.9,
       "52_Weeks_Low": 129.1
+    },
+    {
+      "Symbol": "COLAB",
+      "Exchange": "BSE",
+      "Series": "",
+      "52_Weeks_High": 204.6,
+      "52_Weeks_Low": 24.4
     },
     {
       "Symbol": "PGINVIT",
@@ -6574,6 +6574,13 @@
       "Series": "EQ",
       "52_Weeks_High": 580,
       "52_Weeks_Low": 412
+    },
+    {
+      "Symbol": "MOTILALOFS",
+      "Exchange": "BSE, NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 1097.1,
+      "52_Weeks_Low": 614.9
     },
     {
       "Symbol": "MOTILALOFS",
@@ -16843,6 +16850,13 @@
       "Series": "BE",
       "52_Weeks_High": 2.44,
       "52_Weeks_Low": 0.68
+    },
+    {
+      "Symbol": "DIL",
+      "Exchange": "NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 2.67,
+      "52_Weeks_Low": 0.96
     },
     {
       "Symbol": "DIL",
