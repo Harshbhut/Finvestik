@@ -1,13 +1,34 @@
 {
-  "source_date": "2026-06-10",
-  "last_updated": "2026-06-11 12:41:57",
+  "source_date": "2026-06-12",
+  "last_updated": "2026-06-12 12:28:43",
   "data": [
+    {
+      "Symbol": "TRUEGREEN",
+      "Exchange": "BSE, NSE",
+      "Series": "",
+      "52_Weeks_High": 185.65,
+      "52_Weeks_Low": 52.75
+    },
+    {
+      "Symbol": "SIGMAADV",
+      "Exchange": "BSE, NSE",
+      "Series": "",
+      "52_Weeks_High": 504.2,
+      "52_Weeks_Low": 82
+    },
     {
       "Symbol": "CEMPRO",
       "Exchange": "BSE, NSE",
       "Series": "",
       "52_Weeks_High": 1257,
       "52_Weeks_Low": 481.4
+    },
+    {
+      "Symbol": "GVPIL",
+      "Exchange": "BSE, NSE",
+      "Series": "",
+      "52_Weeks_High": 935.15,
+      "52_Weeks_Low": 270.75
     },
     {
       "Symbol": "IBULLSLTD",
@@ -18,17 +39,10 @@
     },
     {
       "Symbol": "CMRGREEN",
-      "Exchange": "NSE",
+      "Exchange": "BSE, NSE",
       "Series": "",
       "52_Weeks_High": 247.9,
       "52_Weeks_Low": 241
-    },
-    {
-      "Symbol": "UFBL",
-      "Exchange": "BSE, NSE",
-      "Series": "",
-      "52_Weeks_High": 576.45,
-      "52_Weeks_Low": 170.7
     },
     {
       "Symbol": "ACGL",
@@ -38,18 +52,18 @@
       "52_Weeks_Low": 1410.5
     },
     {
-      "Symbol": "TRUEGREEN",
-      "Exchange": "BSE, NSE",
-      "Series": "",
-      "52_Weeks_High": 181,
-      "52_Weeks_Low": 52.75
-    },
-    {
       "Symbol": "MOBAVENUE",
       "Exchange": "BSE",
       "Series": "",
       "52_Weeks_High": 1578,
-      "52_Weeks_Low": 649.3
+      "52_Weeks_Low": 655
+    },
+    {
+      "Symbol": "UFBL",
+      "Exchange": "BSE, NSE",
+      "Series": "",
+      "52_Weeks_High": 576.45,
+      "52_Weeks_Low": 170.7
     },
     {
       "Symbol": "SEKURITIND",
@@ -85,20 +99,6 @@
       "Series": "",
       "52_Weeks_High": 12,
       "52_Weeks_Low": 8.1
-    },
-    {
-      "Symbol": "GVPIL",
-      "Exchange": "BSE, NSE",
-      "Series": "",
-      "52_Weeks_High": 929.95,
-      "52_Weeks_Low": 270.75
-    },
-    {
-      "Symbol": "SIGMAADV",
-      "Exchange": "BSE, NSE",
-      "Series": "",
-      "52_Weeks_High": 470,
-      "52_Weeks_Low": 82
     },
     {
       "Symbol": "MIIL",
@@ -2551,6 +2551,13 @@
       "52_Weeks_Low": 239
     },
     {
+      "Symbol": "EBGNG",
+      "Exchange": "BSE, NSE",
+      "Series": "EQ",
+      "52_Weeks_High": 484.8,
+      "52_Weeks_Low": 239
+    },
+    {
       "Symbol": "CPPLUS",
       "Exchange": "BSE, NSE",
       "Series": "EQ",
@@ -3732,6 +3739,13 @@
       "Series": "EQ",
       "52_Weeks_High": 447.8,
       "52_Weeks_Low": 207.7
+    },
+    {
+      "Symbol": "LENSKART",
+      "Exchange": "BSE, NSE",
+      "Series": "",
+      "52_Weeks_High": 557.65,
+      "52_Weeks_Low": 356.1
     },
     {
       "Symbol": "LENSKART",
@@ -5554,13 +5568,6 @@
       "52_Weeks_Low": 462
     },
     {
-      "Symbol": "MSCIADD",
-      "Exchange": "BSE",
-      "Series": "",
-      "52_Weeks_High": 33.2,
-      "52_Weeks_Low": 26.79
-    },
-    {
       "Symbol": "TEXINFRA",
       "Exchange": "BSE, NSE",
       "Series": "EQ",
@@ -5978,7 +5985,7 @@
       "Exchange": "BSE",
       "Series": "",
       "52_Weeks_High": 930,
-      "52_Weeks_Low": 210.9
+      "52_Weeks_Low": 222
     },
     {
       "Symbol": "PGIL",
@@ -6510,7 +6517,7 @@
       "Exchange": "BSE",
       "Series": "",
       "52_Weeks_High": 470,
-      "52_Weeks_Low": 39.35
+      "52_Weeks_Low": 38.79
     },
     {
       "Symbol": "WIPL",
@@ -7605,6 +7612,13 @@
       "52_Weeks_Low": 576.1
     },
     {
+      "Symbol": "TMPV",
+      "Exchange": "BSE, NSE",
+      "Series": "",
+      "52_Weeks_High": 457.04,
+      "52_Weeks_Low": 294.15
+    },
+    {
       "Symbol": "TATAINVEST",
       "Exchange": "BSE, NSE",
       "Series": "EQ",
@@ -7630,14 +7644,14 @@
       "Exchange": "BSE, NSE",
       "Series": "",
       "52_Weeks_High": 1.75,
-      "52_Weeks_Low": 0.68
+      "52_Weeks_Low": 0.69
     },
     {
       "Symbol": "11QPR",
       "Exchange": "BSE",
       "Series": "",
       "52_Weeks_High": 84.99,
-      "52_Weeks_Low": 0.55
+      "52_Weeks_Low": 0.6
     },
     {
       "Symbol": "SIGMA",
@@ -9309,8 +9323,8 @@
       "Symbol": "BPAGRI",
       "Exchange": "BSE",
       "Series": "",
-      "52_Weeks_High": 11.38,
-      "52_Weeks_Low": 11.86
+      "52_Weeks_High": 114.61,
+      "52_Weeks_Low": 11.37
     },
     {
       "Symbol": "AKSHARCHEM",
@@ -9884,7 +9898,7 @@
       "Exchange": "BSE",
       "Series": "",
       "52_Weeks_High": 99.2,
-      "52_Weeks_Low": 1.49
+      "52_Weeks_Low": 1.79
     },
     {
       "Symbol": "NSDL",
@@ -14388,6 +14402,13 @@
       "52_Weeks_Low": 79.01
     },
     {
+      "Symbol": "ROJL",
+      "Exchange": "BSE",
+      "Series": "",
+      "52_Weeks_High": 2.68,
+      "52_Weeks_Low": 1.1
+    },
+    {
       "Symbol": "11QPD",
       "Exchange": "BSE",
       "Series": "",
@@ -14491,6 +14512,13 @@
       "Series": "EQ",
       "52_Weeks_High": 107.76,
       "52_Weeks_Low": 35.21
+    },
+    {
+      "Symbol": "PATSPINLTD",
+      "Exchange": "BSE, NSE",
+      "Series": "",
+      "52_Weeks_High": 12.38,
+      "52_Weeks_Low": 5.87
     },
     {
       "Symbol": "REGENCERAM",
@@ -14815,13 +14843,6 @@
       "52_Weeks_Low": 120
     },
     {
-      "Symbol": "TMPV",
-      "Exchange": "BSE, NSE",
-      "Series": "",
-      "52_Weeks_High": 459.67,
-      "52_Weeks_Low": 294.15
-    },
-    {
       "Symbol": "NOCIL",
       "Exchange": "BSE, NSE",
       "Series": "EQ",
@@ -14869,13 +14890,6 @@
       "Series": "BE",
       "52_Weeks_High": 16.2,
       "52_Weeks_Low": 6.42
-    },
-    {
-      "Symbol": "PATSPINLTD",
-      "Exchange": "BSE, NSE",
-      "Series": "",
-      "52_Weeks_High": 12.65,
-      "52_Weeks_Low": 5.87
     },
     {
       "Symbol": "MURUDCERA",
@@ -15751,13 +15765,6 @@
       "Series": "EQ",
       "52_Weeks_High": 89.99,
       "52_Weeks_Low": 25.01
-    },
-    {
-      "Symbol": "ROJL",
-      "Exchange": "BSE",
-      "Series": "",
-      "52_Weeks_High": 2.75,
-      "52_Weeks_Low": 1.1
     },
     {
       "Symbol": "LIKHITHA",
