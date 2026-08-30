@@ -252,7 +252,7 @@ def calculate_tomcap(stocks: List[Dict]):
         if isinstance(sma20, (int, float)) and isinstance(mcap, (int, float)) and mcap > 0:
             stock["Tomcap"] = math.floor((sma20 * 100 / mcap) * 100) / 100
             count += 1
-        else: stock["Tomcap"] = None
+        else: stock["Tomcap"] = 0.0
     logging.info(f"  Calculated Tomcap for {count} of {len(stocks)} stocks.")
 
 def calculate_rs_rating(stocks: List[Dict], historical_data: List[Dict], trade_date: str):
