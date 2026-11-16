@@ -10,7 +10,7 @@
 /* --- LEFT COLUMN: PROFILE --- */
 .profile-column {
     flex: 1;
-    min-width: 300px;
+    min-width: 0;
 }
 .profile-content {
     padding: 1rem;
@@ -93,7 +93,7 @@
 }
 .cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
     gap: 1.5rem;
 }
 
@@ -171,7 +171,7 @@
         font-size: 0.95rem;
     }
     .cards-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 1rem;
     }
     .card {
@@ -190,4 +190,13 @@
     .card-link {
         font-size: 0.8rem;
     }
+}
+/* Let content wrap at narrow widths and with enlarged system fonts. */
+.cards-column, .cta-content { min-width: 0; }
+.cta-card { gap: 1rem; }
+.cta-arrow { flex-shrink: 0; }
+.card-text, .card-link, .cta-content { overflow-wrap: anywhere; }
+@media (max-width: 379px) {
+    .cards-grid { grid-template-columns: minmax(0, 1fr); }
+    .profile-content { padding-inline: 0; }
 }

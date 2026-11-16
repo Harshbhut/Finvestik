@@ -4,6 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Finvestik - Stock Universe</title>
     
@@ -52,7 +53,7 @@
     <header id="app-header" class="sticky top-0 z-50 w-full shadow-md" role="banner">
         <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16 sm:h-20">
             <div class="flex-shrink-0">
-                 <a href="/"><img src="/static/images/Financial Growth Vector Logo.png" alt="Finvestik Logo" id="finvestik-logo" class="h-[40px] w-[40px] sm:h-12 sm:w-12 md:h-16 md:w-16 rounded-md object-contain cursor-pointer"/></a>
+                 <a href="/"><img decoding="async" src="/static/images/Financial Growth Vector Logo.png" alt="Finvestik Logo" id="finvestik-logo" class="h-[40px] w-[40px] sm:h-12 sm:w-12 md:h-16 md:w-16 rounded-md object-contain cursor-pointer"/></a>
             </div>
             
             <nav class="hidden sm:flex flex-grow justify-center px-2 space-x-2" aria-label="Main navigation">
@@ -146,7 +147,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="animate-pulse"><script>for(let i=0;i<15;i++){document.write(`<tr><td><div class="h-4 bg-slate-700 rounded w-3/4"></div></td><td><div class="h-4 bg-slate-700 rounded w-full"></div></td><td><div class="h-4 bg-slate-700 rounded w-1/2 ml-auto"></div></td><td><div class="h-4 bg-slate-700 rounded w-2/3 ml-auto"></div></td><td><div class="h-4 bg-slate-700 rounded w-3/4 ml-auto"></div></td><td><div class="h-4 bg-slate-700 rounded w-5/6 ml-auto"></div></td><td><div class="h-4 bg-slate-700 rounded w-1/2 ml-auto"></div></td><td><div class="h-4 bg-slate-700 rounded w-full"></div></td><td><div class="h-4 bg-slate-700 rounded w-full"></div></td></tr>`)}</script></tr>
+                            <tr class="animate-pulse"><td colspan="9" class="p-4 text-center" role="status">Loading stock data…</td></tr>
                         </tbody>
                     </table>
                 </div>

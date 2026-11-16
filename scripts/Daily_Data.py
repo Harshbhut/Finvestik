@@ -4,9 +4,10 @@ import math
 import time
 import requests
 import logging
-import pandas as pd
 from datetime import datetime, timedelta
-import pytz
+from zoneinfo import ZoneInfo
+from bisect import bisect_left
+from data_utils import atomic_write_json
 from typing import List, Dict, Any, Optional
 
 # -------------------------------
@@ -19,10 +20,10 @@ STATIC_DATA_DIR = os.path.join(SCRIPT_DIR, "..", "static", "data")
 CONFIG = {
     # 1. NEW URL (For Today's Data - Live/Closing State)
     "strike_api_url_today": "https://api-v2.strike.money/v3/market/api/equity/last-traded-state?securities=EQ%3A*&onlyFaoStocks=false&lastTradedTime={date}",
-    
+
     # 2. OLD URL (For Previous Day Data - Historical % Change Calculation)
     "strike_api_url_history": "https://api-v2.strike.money/v3/market/api/equity/priceticks?securities=EQ%3A*&onlyFaoStocks=false&candleInterval=1d&dateTimes={date}",
-    
+
     "output_file": os.path.join(STATIC_DATA_DIR, "stock_universe.json"),
     "output_version_file": os.path.join(STATIC_DATA_DIR, "data_version.json"),
     "sector_file": os.path.join(SCRIPT_DIR, "Sector_Industry.json"),
@@ -45,13 +46,8 @@ def load_json_file(file_path: str) -> Optional[Dict[str, Any]]:
     return None
 
 def save_json_file(data: Any, path: str):
-    """A generic function to save data to a JSON file."""
-    try:
-        os.makedirs(os.path.dirname(path), exist_ok=True)
-        with open(path, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=2)
-    except Exception as e:
-        logging.error(f"Failed to save JSON file to {path}: {e}")
+    """Persist a complete snapshot or fail without replacing the previous one."""
+    atomic_write_json(data, path)
 
 def find_valid_trading_day_data(start_date: datetime.date, url_template: str, max_lookback_days: int = 30) -> (Optional[datetime.date], Optional[Dict[str, Any]]):
     """
@@ -66,7 +62,7 @@ def find_valid_trading_day_data(start_date: datetime.date, url_template: str, ma
             response = requests.get(api_url, timeout=30)
             response.raise_for_status()
             data = response.json()
-            
+
             ticks_new = data.get("data", {}).get("current", {}).get("ticks")
             ticks_old = data.get("data", {}).get("ticks")
 
@@ -77,7 +73,7 @@ def find_valid_trading_day_data(start_date: datetime.date, url_template: str, ma
                 logging.info(f"  No trades found for {date_str}, looking back...")
         except requests.exceptions.RequestException as e:
             logging.warning(f"  Could not fetch data for {date_str} ({e}), looking back...")
-        
+
         current_date -= timedelta(days=1)
 
     logging.error(f"FATAL: Could not find any trading data after looking back {max_lookback_days} days.")
@@ -88,20 +84,20 @@ def process_strike_response(today_data: Dict[str, Any], previous_day_data: Dict[
     Processes the raw JSON response from Strike API using mixed API logic.
     """
     logging.info("Step 2: Processing today's (New API) and previous day's (Old API) data...")
-    
+
     previous_day_closes = {}
     prev_api_data = previous_day_data.get("data", {})
     prev_ticks = prev_api_data.get("ticks", {})
-    
+
     for symbol, tick_data in prev_ticks.items():
         if tick_data and isinstance(tick_data, list) and isinstance(tick_data[0], list) and len(tick_data[0]) > 4:
-            previous_day_closes[symbol] = tick_data[0][4] 
-            
+            previous_day_closes[symbol] = tick_data[0][4]
+
     logging.info(f"  Created a lookup map with {len(previous_day_closes)} previous day closing prices.")
 
     stocks = []
     today_api_data = today_data.get("data", {})
-    
+
     if "current" in today_api_data:
         today_inner = today_api_data["current"]
         fields = today_inner.get("fields", [])
@@ -121,7 +117,7 @@ def process_strike_response(today_data: Dict[str, Any], previous_day_data: Dict[
 
         values = tick_data[0]
         raw_stock_info = dict(zip(fields, values))
-        
+
         stock = {
             "symbol": symbol,
             "close": raw_stock_info.get("dayClose", raw_stock_info.get("close")),
@@ -145,7 +141,7 @@ def process_strike_response(today_data: Dict[str, Any], previous_day_data: Dict[
                 stock['%change'] = 0.0
 
         stocks.append(stock)
-    
+
     logging.info(f"  Processed {len(stocks)} stocks using mixed API logic.")
     if fallback_count > 0:
         logging.info(f"  Used fallback %change calculation (Open vs Close) for {fallback_count} stocks (missing history).")
@@ -159,8 +155,7 @@ def map_sector_data(stocks: List[Dict], sector_data: List[Dict]):
         symbol = stock.get("symbol")
         sector_info = sector_map.get(symbol)
         if sector_info:
-            sector_info.pop("Symbol", None)
-            stock.update(sector_info)
+            stock.update({key: value for key, value in sector_info.items() if key != "Symbol"})
             count += 1
     logging.info(f"  Mapped sector data for {count} of {len(stocks)} stocks.")
 
@@ -203,11 +198,14 @@ def map_52_week_high_low(stocks: List[Dict], high_low_data) -> List[Dict]:
 
         day_high, day_low, close_price = stock.get("high"), stock.get("low"), stock.get("close")
         stored = hl_map.get(sym, {})
-        high_candidates = [v for v in (stored.get("52_Weeks_High"), day_high) if isinstance(v, (int, float))]
-        low_candidates = [v for v in (stored.get("52_Weeks_Low"), day_low) if isinstance(v, (int, float))]
+        def valid_price(value):
+            return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value) and value > 0
 
-        fifty_two_week_high = max(high_candidates) if high_candidates else None
-        fifty_two_week_low = min(low_candidates) if low_candidates else None
+        stored_high, stored_low = stored.get("52_Weeks_High"), stored.get("52_Weeks_Low")
+        # A single day's range cannot establish the 52-week range. Expand only
+        # known historical extrema; missing source values remain unavailable.
+        fifty_two_week_high = (max(stored_high, day_high) if valid_price(day_high) else stored_high) if valid_price(stored_high) else None
+        fifty_two_week_low = (min(stored_low, day_low) if valid_price(day_low) else stored_low) if valid_price(stored_low) else None
 
         stock["fifty_two_week_high"] = fifty_two_week_high
         stock["fifty_two_week_low"] = fifty_two_week_low
@@ -266,7 +264,7 @@ def calculate_rs_rating(stocks: List[Dict], historical_data: List[Dict], trade_d
         if not all([today_close, candles]): continue
         first_hist_date = str(candles[0][0])[:10]
         historical_slice = candles[1:] if first_hist_date == trade_date else candles
-        closes = [today_close] + [c[4] for c in historical_slice if len(c) >= 5 and isinstance(c[4], (int, float))]
+        closes = [today_close] + [c[4] for c in historical_slice if len(c) >= 5 and isinstance(c[4], (int, float)) and math.isfinite(c[4]) and c[4] > 0]
         days_1m, days_2m, days_3m, days_6m = 21, 42, 65, 120
 
         if len(closes) > days_3m:
@@ -285,34 +283,49 @@ def calculate_rs_rating(stocks: List[Dict], historical_data: List[Dict], trade_d
     t3, t6 = len(rs_values_3m), len(rs_values_6m)
     for stock in stocks:
         if "_RS_3M_value" in stock and t3 > 1:
-            stock["RS_3M"] = round(rs_values_3m.index(stock["_RS_3M_value"])/(t3-1)*99)
+            stock["RS_3M"] = round(bisect_left(rs_values_3m, stock["_RS_3M_value"])/(t3-1)*99)
         if "_RS_6M_value" in stock and t6 > 1:
-            stock["RS_6M"] = round(rs_values_6m.index(stock["_RS_6M_value"])/(t6-1)*99)
+            stock["RS_6M"] = round(bisect_left(rs_values_6m, stock["_RS_6M_value"])/(t6-1)*99)
     logging.info(f"  Calculated RS Rating for {t3} (3M) and {t6} (6M) of {len(stocks)} stocks.")
 
 def prepare_and_save_data(stocks: List[Dict]):
     logging.info("Step 9: Preparing and saving final JSON file...")
     for stock in stocks:
         stock.pop("_RS_3M_value", None); stock.pop("_RS_6M_value", None); stock.pop("open", None)
-    df = pd.DataFrame(stocks)
-    if '%change' in df.columns: df['%change'] = df['%change'].round(2)
-    df.drop(columns=['SecurityID', 'ListingID', 'SME Stock?', 'Industry ID'], inplace=True, errors='ignore')
-    df.rename(columns={'close': 'current_price', 'high': 'day_high', 'low': 'day_low',
-                       'volume': 'day_volume', '%change': 'change_percentage', 'symbol': 'Symbol'}, inplace=True)
-    records = df.where(pd.notnull(df), None).to_dict(orient="records")
+    if not stocks:
+        raise ValueError("Refusing to publish an empty stock universe")
+    renamed = {'close': 'current_price', 'high': 'day_high', 'low': 'day_low',
+               'volume': 'day_volume', '%change': 'change_percentage', 'symbol': 'Symbol'}
+    excluded = {'SecurityID', 'ListingID', 'SME Stock?', 'Industry ID'}
+    records = []
+    for stock in stocks:
+        record = {}
+        for key, value in stock.items():
+            if key in excluded:
+                continue
+            if isinstance(value, float) and not math.isfinite(value):
+                value = None
+            if key == '%change' and isinstance(value, (int, float)):
+                value = round(value, 2)
+            record[renamed.get(key, key)] = value
+        records.append(record)
+    # Match the old tabular output contract: every row has the union of columns.
+    columns = dict.fromkeys(key for record in records for key in record)
+    records = [{key: record.get(key) for key in columns} for record in records]
     save_json_file(records, CONFIG["output_file"])
     logging.info(f"  Successfully saved {len(records)} stocks.")
 
 # --- 4. MAIN EXECUTION ---
 def main():
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    ist = pytz.timezone('Asia/Kolkata')
+    ist = ZoneInfo('Asia/Kolkata')
     start_date = datetime.now(ist).date()
     logging.info(f"🚀 Starting data pipeline. Current IST date: {start_date.strftime('%Y-%m-%d')}")
 
     # 1. Fetch Today's Data (New API)
     latest_q_date, raw_today_data = find_valid_trading_day_data(start_date, CONFIG["strike_api_url_today"])
-    if not raw_today_data: return
+    if not raw_today_data:
+        raise RuntimeError("No valid current market data; retaining published snapshot")
 
     # FIX: Get the actual session date from the API response
     actual_trade_date_str = None
@@ -321,7 +334,7 @@ def main():
         first_symbol = next(iter(today_ticks))
         actual_trade_date_str = str(today_ticks[first_symbol][0][0])[:10]
         actual_trade_date = datetime.strptime(actual_trade_date_str, "%Y-%m-%d").date()
-    except:
+    except (KeyError, IndexError, StopIteration, TypeError, ValueError):
         actual_trade_date = latest_q_date
         actual_trade_date_str = actual_trade_date.strftime("%Y-%m-%d")
 
@@ -329,17 +342,23 @@ def main():
     # Search starts strictly from one day BEFORE the actual found session date
     previous_day_start = actual_trade_date - timedelta(days=1)
     prev_trade_date, raw_previous_day_data = find_valid_trading_day_data(previous_day_start, CONFIG["strike_api_url_history"])
-    if not raw_previous_day_data: return
+    if not raw_previous_day_data:
+        raise RuntimeError("No valid previous market data; retaining published snapshot")
 
     stocks = process_strike_response(raw_today_data, raw_previous_day_data)
-    if not stocks: return
+    if not stocks:
+        raise RuntimeError("Current market response contains no usable stocks")
 
     sector_data = load_json_file(CONFIG["sector_file"])
     high_low_data = load_json_file(CONFIG["high_low_file"])
     circuit_data = load_json_file(CONFIG["circuit_limit_file"])
     historical_data = load_json_file(CONFIG["historical_file"])
 
-    if sector_data: 
+    if not isinstance(sector_data, list) or not sector_data:
+        raise RuntimeError("Sector metadata is required; retaining published snapshot")
+    if not isinstance(historical_data, list) or not historical_data:
+        raise RuntimeError("Historical metadata is required; retaining published snapshot")
+    if sector_data:
         map_sector_data(stocks, sector_data)
         stocks = filter_invalid_inecode(stocks)
     if circuit_data: map_circuit_limits(stocks, circuit_data.get("data", []))
@@ -348,7 +367,7 @@ def main():
         calculate_turnover_sma20(stocks, historical_data, actual_trade_date_str)
         calculate_tomcap(stocks)
         calculate_rs_rating(stocks, historical_data, actual_trade_date_str)
-    
+
     prepare_and_save_data(stocks)
     save_json_file({"timestamp": int(time.time() * 1000)}, CONFIG["output_version_file"])
     logging.info(f"✅ Version file created at {CONFIG['output_version_file']}")

@@ -34,10 +34,10 @@
     --text-secondary: #6b7281; /* slate-500 */
     --accent-primary: #4f46e5; /* indigo-600 */
     --accent-primary-hover: #4338ca; /* indigo-700 */
-    --accent-secondary: #0ea5e9; /* sky-500 */
-    --text-positive: #10b981; /* emerald-500 */
-    --text-negative: #ef4444; /* red-500 */
-    --text-warning: #f59e0b; /* amber-500 */
+    --accent-secondary: #0369a1; /* sky-700 */
+    --text-positive: #047857; /* emerald-700: readable on white */
+    --text-negative: #b91c1c; /* red-700 */
+    --text-warning: #92400e; /* amber-800 */
     --text-on-accent: #ffffff;
     --focus-ring-color: #a5b4fc; /* indigo-300 */
     --social-x-hover-color: #000000;
@@ -483,19 +483,13 @@
   
   .hidden { display: none; } 
   
-  @media (max-width: 639px) { 
-      #su-insights-toggle-button { display: none !important; }
-  }
+
   
   .result-value.green { color: var(--text-positive); }
   .result-value.red { color: var(--text-negative); }
   .result-value.neutral { color: var(--text-secondary); }
   
-  @media (max-width: 639px) { 
-    #su-chart-panel, #su-panel-resizer {
-      display: none !important;
-    }
-  }
+
 
 /* --- LIVE UPDATE ANIMATIONS --- */
 @keyframes flash-positive { 0% { background-color: rgba(52, 211, 153, 0.4); } 100% { background-color: transparent; } }
@@ -509,3 +503,86 @@
 .flash-neutral  { animation: flash-neutral 1s ease-out; }
 .row-fade-in    { animation: row-fade-in 0.5s ease-out; }
 .row-fade-out   { animation: row-fade-out 0.5s ease-out forwards; }
+
+/* Responsive and accessible defaults shared by every page. */
+*, *::before, *::after { box-sizing: border-box; }
+html { color-scheme: dark; scroll-padding-top: 6rem; }
+html.light { color-scheme: light; }
+img, video { max-width: 100%; height: auto; }
+main, .content-card { min-width: 0; }
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: 3px solid var(--focus-ring-color);
+    outline-offset: 3px;
+}
+.btn, .nav-link, .mobile-nav-link, #theme-toggle,
+#hamburger-menu-button, #su-refresh-button, .social-icon {
+    min-height: 44px;
+    min-width: 44px;
+}
+.social-icon { display: inline-flex; align-items: center; justify-content: center; }
+.table-container { max-width: 100%; overscroll-behavior-inline: contain; }
+#su-filters-panel { max-height: min(70vh, 600px); overflow-y: auto; }
+
+/* Five navigation links need more room than Tailwind's sm breakpoint allows. */
+@media (min-width: 640px) and (max-width: 1023px) {
+    #app-header nav { display: none !important; }
+    #hamburger-menu-button-container { display: block !important; }
+    #mobile-menu:not(.hidden) { display: block !important; }
+}
+
+@media (max-width: 1023px) {
+    #su-container { flex-direction: column; }
+    #su-panel-resizer { display: none; }
+    #su-chart-panel:not(.is-closed) {
+        width: 100% !important;
+        min-width: 0;
+        max-width: none;
+        max-height: 65vh;
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+    }
+    #su-chart-panel.is-closed { display: none; }
+}
+
+@media (max-width: 639px) {
+    /* 16px controls prevent automatic zoom when focusing inputs on iOS. */
+    .form-input, .chart-panel-input, #su-filter-row input, #su-filter-row select {
+        font-size: 1rem;
+        min-height: 44px;
+    }
+    .copy-qty-button, .local-clear-button { width: 44px; height: 44px; }
+    #su-controls > div { width: 100%; min-width: 0; }
+    #su-controls > div:last-child { justify-content: flex-start; gap: 0.5rem; }
+    #su-filters-panel, #su-columns-panel {
+        position: fixed;
+        top: 5rem;
+        left: 1rem;
+        right: 1rem;
+        width: auto;
+        max-width: none;
+        max-height: calc(100dvh - 6rem);
+    }
+    .su-filters-grid { grid-template-columns: minmax(0, 1fr); }
+    .su-filters-footer { flex-wrap: wrap; }
+    .table-container { max-height: 65vh; }
+    footer { padding-inline: 1rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    .row-fade-out { opacity: 0; }
+}
+
+/* RRG needs usable chart space and wrapping quadrant controls on phones. */
+@media (max-width: 639px) {
+    body:has(#rrg-wrapper) { height: auto; min-height: 100dvh; overflow: auto; }
+    body:has(#rrg-wrapper) > div { flex-shrink: 0; }
+    #rrg-wrapper { min-height: 320px; }
+    div:has(> .quad-btn) { flex-wrap: wrap; gap: 0.5rem; }
+    body .quad-btn { min-width: 0; min-height: 44px; flex: 1 1 40%; padding-inline: 0.5rem; }
+}

@@ -2,6 +2,7 @@
 <html lang="en" class="dark">
 <head>
     <meta charset="UTF-8" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Finvestik - RRG Analysis</title>
 
@@ -33,7 +34,7 @@
     <link rel="stylesheet" href="/static/css/style.css">
 
     <!-- Chart.js Ecosystem -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2.1.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
@@ -117,7 +118,7 @@
     <header id="app-header" class="sticky top-0 z-50 w-full shadow-md flex-shrink-0" role="banner">
         <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16 sm:h-20">
             <div class="flex-shrink-0 flex items-center gap-3">
-                 <a href="/"><img src="/static/images/Financial Growth Vector Logo.png" alt="Finvestik Logo" id="finvestik-logo" class="h-[40px] w-[40px] sm:h-12 sm:w-12 rounded-md object-contain cursor-pointer"/></a>
+                 <a href="/"><img decoding="async" src="/static/images/Financial Growth Vector Logo.png" alt="Finvestik Logo" id="finvestik-logo" class="h-[40px] w-[40px] sm:h-12 sm:w-12 rounded-md object-contain cursor-pointer"/></a>
             </div>
             
             <nav class="hidden sm:flex flex-grow justify-center px-2 space-x-2" aria-label="Main navigation">
@@ -252,7 +253,8 @@
         // --- THEME TOGGLE ---
         const themeBtn = document.getElementById('theme-toggle');
         const root = document.documentElement;
-        const savedTheme = localStorage.getItem('theme') || 'dark';
+        let savedTheme = 'dark';
+        try { savedTheme = localStorage.getItem('finvestikTheme') || localStorage.getItem('theme') || 'dark'; } catch (_) {}
         
         if (savedTheme === 'light') { root.classList.add('light'); themeBtn.innerHTML = '<i class="fa fa-sun-o"></i>'; } 
         else { root.classList.remove('light'); themeBtn.innerHTML = '<i class="fa fa-moon-o"></i>'; }
@@ -261,7 +263,7 @@
             root.classList.toggle('light');
             const isLight = root.classList.contains('light');
             themeBtn.innerHTML = isLight ? '<i class="fa fa-sun-o"></i>' : '<i class="fa fa-moon-o"></i>';
-            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            try { localStorage.setItem('finvestikTheme', isLight ? 'light' : 'dark'); } catch (_) {}
             
             if(STATE.chart) {
                 STATE.chart.options.scales.x.grid.color = getCssVar('--border-color');
@@ -278,8 +280,10 @@
         // --- DATA LOADING ---
         async function initData() {
             try {
-                const res = await fetch(DATA_PATH + `?t=${Date.now()}`);
+                const res = await fetch(DATA_PATH, { cache: 'no-cache', signal: AbortSignal.timeout(30000) });
+                if (!res.ok) throw new Error(`Data request failed: ${res.status}`);
                 const json = await res.json();
+                if (!Array.isArray(json)) throw new Error('Invalid stock dataset.');
                 STATE.data = json.map(d => ({
                     symbol: d['Symbol'], name: d['Stock Name'], sector: d['Sector Name'], industry: d['Industry Name'],
                     rs3: parseFloat(d['RS_3M']) || 0, rs6: parseFloat(d['RS_6M']) || 0, mcap: parseFloat(d['Market Cap']) || 0, vol: parseFloat(d['day_volume']) || 0
@@ -296,7 +300,7 @@
             let points = [], avgX = 50, avgY = 50;
 
             if (STATE.view === 'GROUPS') {
-                const groups = {};
+                const groups = Object.create(null);
                 validStocks.forEach(s => {
                     const gName = groupBy === 'Sector Name' ? s.sector : s.industry;
                     if (!gName) return;

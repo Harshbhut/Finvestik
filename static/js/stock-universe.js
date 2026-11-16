@@ -16,6 +16,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const SU_CHART_PANEL_SETTINGS = 'finvestikSUChartPanel';
     const PROFESSIONAL_CHART_COLORS = ['#3b82f6', '#10b981', '#f97316', '#8b5cf6', '#ef4444', '#14b8a6', '#6366f1', '#f59e0b', '#d946ef', '#0ea5e9', '#22c55e', '#ec4899'];
 
+    // Persistence is optional: blocked storage and quota errors must not break live data.
+    const storage = {
+        getItem(key) { try { return localStorage.getItem(key); } catch (_) { return null; } },
+        setItem(key, value) { try { localStorage.setItem(key, value); } catch (_) {} },
+        removeItem(key) { try { localStorage.removeItem(key); } catch (_) {} }
+    };
+    const parseObject = (value) => {
+        try { const parsed = JSON.parse(value); return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {}; }
+        catch (_) { return {}; }
+    };
+    const normalizeStockData = (data) => {
+        if (!Array.isArray(data) || !data.length || data.some(row => !row || typeof row !== 'object' || Array.isArray(row) || typeof row.Symbol !== 'string')) {
+            throw new Error('Invalid stock data.');
+        }
+        return data.map(row => ({ ...row, 'Market Cap': parseFloat(row['Market Cap']) || 0 }));
+    };
+    const cacheStockData = () => {
+        // Invalidate the old pair first so a failed write cannot associate old data with a new version.
+        storage.removeItem(SU_LOCAL_STORAGE_VERSION_KEY);
+        storage.removeItem(SU_LOCAL_STORAGE_DATA_KEY);
+        try {
+            localStorage.setItem(SU_LOCAL_STORAGE_DATA_KEY, JSON.stringify(fullStockData));
+            localStorage.setItem(SU_LOCAL_STORAGE_VERSION_KEY, String(localDataVersion));
+        } catch (_) {
+            storage.removeItem(SU_LOCAL_STORAGE_VERSION_KEY);
+            storage.removeItem(SU_LOCAL_STORAGE_DATA_KEY);
+        }
+    };
+    const setSelectOptions = (select, values) => {
+        const options = document.createDocumentFragment();
+        ['ALL', ...values].forEach(value => options.appendChild(new Option(String(value), String(value))));
+        select.replaceChildren(options);
+    };
+
     // --- HELPER FUNCTIONS ---
     const formatValue = (value, fallback = 'N/A') => (value !== null && value !== undefined) ? String(value) : fallback;
     const formatPrice = (value) => (typeof value === 'number') ? value.toFixed(2) : formatValue(value);
@@ -74,22 +108,23 @@ document.addEventListener('DOMContentLoaded', () => {
     let suCurrentSort = { key: 'Market Cap', order: 'desc' };
     let suFilters = {}; let chartPopupTimeout, sortableInstance, pollingIntervalId; 
     let localDataVersion = null;
+    let updateInProgress = false;
     let currentResizing = { th: null, startX: 0, startWidth: 0 }, panelResizing = { active: false, startX: 0, startWidth: 0 }; 
 
     // --- STATE MANAGEMENT ---
     const loadSUColumnSettings = () => {
         const allKeys = new Set(suColumnDefinitions.map(d => d.key));
-        const savedJSON = localStorage.getItem(SU_COLUMN_ORDER_KEY);
+        const savedJSON = storage.getItem(SU_COLUMN_ORDER_KEY);
         let savedOrder = [];
-        if(savedJSON) { try { savedOrder = JSON.parse(savedJSON).filter(k=>allKeys.has(k)); } catch(e){} }
+        if(savedJSON) { try { savedOrder = [...new Set(JSON.parse(savedJSON).filter(k=>allKeys.has(k)))]; } catch(e){} }
         const savedKeySet = new Set(savedOrder);
         const missingKeys = suColumnDefinitions.map(d => d.key).filter(k => !savedKeySet.has(k));
         suCurrentColumnOrder = [...savedOrder, ...missingKeys];
         
-        const widthsJSON = localStorage.getItem(SU_COLUMN_WIDTHS_KEY);
-        try { suColumnWidths = widthsJSON ? JSON.parse(widthsJSON) : {}; } catch(e) { suColumnWidths = {}; }
+        const widthsJSON = storage.getItem(SU_COLUMN_WIDTHS_KEY);
+        suColumnWidths = parseObject(widthsJSON);
 
-        const visibilityJSON = localStorage.getItem(SU_COLUMN_VISIBILITY_KEY);
+        const visibilityJSON = storage.getItem(SU_COLUMN_VISIBILITY_KEY);
         try { 
             const savedVisibility = visibilityJSON ? JSON.parse(visibilityJSON) : {};
             suColumnDefinitions.forEach(def => {
@@ -99,17 +134,23 @@ document.addEventListener('DOMContentLoaded', () => {
             suColumnDefinitions.forEach(def => { suColumnVisibility[def.key] = def.isVisible; });
         }
     };
-    const saveSUColumnVisibility = () => localStorage.setItem(SU_COLUMN_VISIBILITY_KEY, JSON.stringify(suColumnVisibility));
+    const saveSUColumnVisibility = () => storage.setItem(SU_COLUMN_VISIBILITY_KEY, JSON.stringify(suColumnVisibility));
     const loadSUFilters = () => {
-        suFilters = JSON.parse(localStorage.getItem(SU_FILTERS_KEY) || '{}');
-        if (!suFilters.columns) suFilters.columns = {};
-        if (!suFilters.textFilters) suFilters.textFilters = {};
-        if (!suFilters.chart) suFilters.chart = { groupBy: 'Sector Name', whRange: 25, minStocks: null, minUp: null, minDown: null };
+        const saved = parseObject(storage.getItem(SU_FILTERS_KEY));
+        suFilters = {
+            columns: parseObject(JSON.stringify(saved.columns)),
+            textFilters: parseObject(JSON.stringify(saved.textFilters)),
+            chart: { groupBy: 'Sector Name', whRange: 25, minStocks: null, minUp: null, minDown: null, ...parseObject(JSON.stringify(saved.chart)) }
+        };
+        if (!['Sector Name', 'Industry Name'].includes(suFilters.chart.groupBy)) suFilters.chart.groupBy = 'Sector Name';
+        ['whRange', 'minStocks', 'minUp', 'minDown'].forEach(key => {
+            if (suFilters.chart[key] !== null && !Number.isFinite(suFilters.chart[key])) suFilters.chart[key] = null;
+        });
     };
-    const saveSUFilters = () => localStorage.setItem(SU_FILTERS_KEY, JSON.stringify(suFilters));
+    const saveSUFilters = () => storage.setItem(SU_FILTERS_KEY, JSON.stringify(suFilters));
 
-    const saveSUColumnOrder = () => localStorage.setItem(SU_COLUMN_ORDER_KEY, JSON.stringify(suCurrentColumnOrder));
-    const saveSUColumnWidths = () => localStorage.setItem(SU_COLUMN_WIDTHS_KEY, JSON.stringify(suColumnWidths));
+    const saveSUColumnOrder = () => storage.setItem(SU_COLUMN_ORDER_KEY, JSON.stringify(suCurrentColumnOrder));
+    const saveSUColumnWidths = () => storage.setItem(SU_COLUMN_WIDTHS_KEY, JSON.stringify(suColumnWidths));
 
     // --- DATA FETCHING & POLLING ---
     async function initDataLoad() {
@@ -119,11 +160,12 @@ document.addEventListener('DOMContentLoaded', () => {
         populateFiltersPanel();
 
         try {
-            const cachedVersion = localStorage.getItem(SU_LOCAL_STORAGE_VERSION_KEY);
-            const cachedData = localStorage.getItem(SU_LOCAL_STORAGE_DATA_KEY);
+            const cachedVersion = storage.getItem(SU_LOCAL_STORAGE_VERSION_KEY);
+            const cachedData = storage.getItem(SU_LOCAL_STORAGE_DATA_KEY);
             if (cachedVersion && cachedData) {
-                localDataVersion = parseInt(cachedVersion);
-                fullStockData = JSON.parse(cachedData);
+                localDataVersion = Number(cachedVersion);
+                if (!Number.isFinite(localDataVersion) || localDataVersion <= 0) throw new Error('Invalid cached version.');
+                fullStockData = normalizeStockData(JSON.parse(cachedData));
                 isStockDataLoaded = true;
                 updateLastUpdatedUI(localDataVersion); // Update UI with cached time
             } else {
@@ -132,12 +174,16 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (e) {
             await fetchInitialData();
         } finally {
-            displayStockUniverse();
+            // A network load already rendered the table; cached data still needs its first render.
+            if (!suHeaderRow) displayStockUniverse();
             startPolling();
+            if (isStockDataLoaded) await checkForUpdates();
         }
     }
 
     async function fetchInitialData() {
+        if (updateInProgress) return;
+        updateInProgress = true;
         if(suSkeletonLoader) suSkeletonLoader.style.display = 'block';
         if(suContainer) suContainer.classList.add('hidden');
         
@@ -146,27 +192,29 @@ document.addEventListener('DOMContentLoaded', () => {
         if(refreshIcon) refreshIcon.classList.add('fa-spin');
 
         try {
-            const t = new Date().getTime();
             const [versionRes, dataRes] = await Promise.all([ 
-                fetch(DATA_VERSION_PATH + `?t=${t}`), 
-                fetch(STOCK_UNIVERSE_DATA_PATH + `?t=${t}`) 
+                fetch(DATA_VERSION_PATH, { cache: 'no-cache', signal: AbortSignal.timeout(30000) }),
+                fetch(STOCK_UNIVERSE_DATA_PATH, { cache: 'no-cache', signal: AbortSignal.timeout(30000) })
             ]);
             if (!versionRes.ok || !dataRes.ok) throw new Error('Failed to fetch initial data files.');
             const versionData = await versionRes.json();
             const jsonData = await dataRes.json();
             
+            if (!Number.isFinite(versionData.timestamp) || versionData.timestamp <= 0) throw new Error('Invalid data version.');
+            const nextData = normalizeStockData(jsonData);
             localDataVersion = versionData.timestamp;
-            fullStockData = jsonData?.map(r => ({ ...r, "Market Cap": parseFloat(r["Market Cap"]) || 0 })) || [];
+            fullStockData = nextData;
             isStockDataLoaded = true;
             
-            localStorage.setItem(SU_LOCAL_STORAGE_VERSION_KEY, localDataVersion);
-            localStorage.setItem(SU_LOCAL_STORAGE_DATA_KEY, JSON.stringify(fullStockData));
+            cacheStockData();
             updateLastUpdatedUI(localDataVersion); // Update UI
+            populateTopLevelDropdowns();
 
         } catch (err) {
             if(suError) suError.textContent = `Error loading data.`;
-            isStockDataLoaded = false;
+            // Keep the last valid snapshot available when a refresh fails.
         } finally {
+            updateInProgress = false;
             if(refreshIcon) refreshIcon.classList.remove('fa-spin');
             displayStockUniverse();
             startPolling(); // Ensure polling restarts if this was a manual refresh
@@ -174,32 +222,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function startPolling() {
-        if (window.pollingIntervalId) clearInterval(window.pollingIntervalId);
-        window.pollingIntervalId = setInterval(checkForUpdates, POLLING_INTERVAL);
+        clearInterval(pollingIntervalId);
+        pollingIntervalId = setInterval(checkForUpdates, POLLING_INTERVAL);
     }
 
     async function checkForUpdates() {
+        if (document.hidden || updateInProgress) return;
+        if (!isStockDataLoaded) { await fetchInitialData(); return; }
+        updateInProgress = true;
         try {
-            const res = await fetch(DATA_VERSION_PATH + `?t=${new Date().getTime()}`);
+            const res = await fetch(DATA_VERSION_PATH, { cache: 'no-cache', signal: AbortSignal.timeout(30000) });
             if (!res.ok) return;
             const versionData = await res.json();
-            if (versionData.timestamp && localDataVersion && versionData.timestamp > localDataVersion) {
+            if (Number.isFinite(versionData.timestamp) && versionData.timestamp > localDataVersion) {
                 if(suLoading) suLoading.classList.remove('hidden');
                 await fetchAndApplyUpdates(versionData.timestamp);
             }
         } catch (error) { console.error("Error checking for updates:", error); }
+        finally { updateInProgress = false; }
     }
 
     async function fetchAndApplyUpdates(newVersion) {
         try {
-            const res = await fetch(STOCK_UNIVERSE_DATA_PATH + `?t=${new Date().getTime()}`);
+            const res = await fetch(STOCK_UNIVERSE_DATA_PATH, { cache: 'no-cache', signal: AbortSignal.timeout(30000) });
             if (!res.ok) return;
             const jsonData = await res.json();
-            fullStockData = jsonData?.map(r => ({ ...r, "Market Cap": parseFloat(r["Market Cap"]) || 0 })) || [];
+            fullStockData = normalizeStockData(jsonData);
             localDataVersion = newVersion;
-            localStorage.setItem(SU_LOCAL_STORAGE_VERSION_KEY, newVersion);
-            localStorage.setItem(SU_LOCAL_STORAGE_DATA_KEY, JSON.stringify(fullStockData));
+            cacheStockData();
             updateLastUpdatedUI(localDataVersion);
+            populateTopLevelDropdowns();
             applyAndRenderSU();
         } finally {
             if(suLoading) suLoading.classList.add('hidden');
@@ -289,7 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- TABLE INTERACTIVITY ---
     const initializeSortable = () => {
         if(sortableInstance) sortableInstance.destroy();
-        if(suHeaderRow) {
+        if(suHeaderRow && typeof Sortable !== 'undefined') {
             sortableInstance = Sortable.create(suHeaderRow, {
                 animation: 150,
                 ghostClass: 'sortable-ghost',
@@ -439,7 +491,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const groupName = stock[key]; if (!groupName) return acc;
             if (!acc[groupName]) acc[groupName] = { name: groupName, stocks: [] };
             acc[groupName].stocks.push(stock); return acc;
-        }, {});
+        }, Object.create(null));
         const tableGroups = groupData(tableData, groupBy);
         let chartGroups = Object.values(tableGroups).filter(g => g.stocks.length >= (minStocks || 0));
         chartGroups.forEach(g => {
@@ -478,8 +530,26 @@ document.addEventListener('DOMContentLoaded', () => {
             if (suFilters.columns[suFilters.chart.groupBy] === item.name) barItem.classList.add('active');
             barItem.dataset.groupKey = item.name;
             if(titleFormatter) barItem.title = titleFormatter(item);
-            let subLabel = subLabelFormatter ? `<span class="chart-bar-sublabel">${subLabelFormatter(item)}</span>` : '';
-            barItem.innerHTML = `<div class="chart-bar-value">${valueFormatter(item)}</div><div class="chart-bar-container"><div class="chart-bar-fill" style="width: ${item.percentageWidth}%; background-color: ${barColor};"></div><div class="chart-bar-label">${item.name} ${subLabel}</div></div>`;
+            const value = document.createElement('div');
+            value.className = 'chart-bar-value';
+            value.textContent = valueFormatter(item);
+            const track = document.createElement('div');
+            track.className = 'chart-bar-container';
+            const fill = document.createElement('div');
+            fill.className = 'chart-bar-fill';
+            fill.style.width = `${Math.max(0, Math.min(100, Number(item.percentageWidth) || 0))}%`;
+            fill.style.backgroundColor = barColor;
+            const label = document.createElement('div');
+            label.className = 'chart-bar-label';
+            label.textContent = String(item.name);
+            if (subLabelFormatter) {
+                const subLabel = document.createElement('span');
+                subLabel.className = 'chart-bar-sublabel';
+                subLabel.textContent = subLabelFormatter(item);
+                label.append(' ', subLabel);
+            }
+            track.append(fill, label);
+            barItem.append(value, track);
             frag.appendChild(barItem);
         });
         container.appendChild(frag);
@@ -492,11 +562,11 @@ document.addEventListener('DOMContentLoaded', () => {
         suInsightsToggleButton.classList.toggle('active');
         const isNowVisible = !suChartPanel.classList.contains('is-closed');
         if (isNowVisible && currentlyDisplayedSUData) { renderAllInsightCharts(currentlyDisplayedSUData); }
-        try { const settings = JSON.parse(localStorage.getItem(SU_CHART_PANEL_SETTINGS) || '{}'); settings.isOpen = isNowVisible; localStorage.setItem(SU_CHART_PANEL_SETTINGS, JSON.stringify(settings)); } catch (e) {}
+        try { const settings = JSON.parse(storage.getItem(SU_CHART_PANEL_SETTINGS) || '{}'); settings.isOpen = isNowVisible; storage.setItem(SU_CHART_PANEL_SETTINGS, JSON.stringify(settings)); } catch (e) {}
     };
     const initializePanelResizer = () => { if(!suPanelResizer)return;suPanelResizer.addEventListener('mousedown',e=>{if(e.button!==0)return;panelResizing.active=true;panelResizing.startX=e.pageX;panelResizing.startWidth=suChartPanel.offsetWidth;suPanelResizer.classList.add('active');document.body.style.cursor='col-resize';document.body.style.userSelect='none';document.addEventListener('mousemove',onPanelResizeMouseMove);document.addEventListener('mouseup',onPanelResizeMouseUp,{once:true});e.preventDefault();}); };
     function onPanelResizeMouseMove(e) { if(!panelResizing.active || !suChartPanel)return; const dx = e.pageX - panelResizing.startX; let newWidth = panelResizing.startWidth - dx; if (suTableContainer) { const mainContainerWidth = suTableContainer.parentElement.clientWidth; newWidth = Math.max(0, Math.min(newWidth, mainContainerWidth - 58));} suChartPanel.style.width = `${newWidth}px`; }
-    function onPanelResizeMouseUp() { panelResizing.active=false;suPanelResizer.classList.remove('active');document.body.style.cursor='';document.body.style.userSelect='';document.removeEventListener('mousemove',onPanelResizeMouseMove);try{const s=JSON.parse(localStorage.getItem(SU_CHART_PANEL_SETTINGS)||'{}');s.width=suChartPanel.style.width;localStorage.setItem(SU_CHART_PANEL_SETTINGS,JSON.stringify(s));}catch(e){}}
+    function onPanelResizeMouseUp() { panelResizing.active=false;suPanelResizer.classList.remove('active');document.body.style.cursor='';document.body.style.userSelect='';document.removeEventListener('mousemove',onPanelResizeMouseMove);try{const s=JSON.parse(storage.getItem(SU_CHART_PANEL_SETTINGS)||'{}');s.width=suChartPanel.style.width;storage.setItem(SU_CHART_PANEL_SETTINGS,JSON.stringify(s));}catch(e){}}
     const initializeAccordion = () => {
         if(!suChartAccordionContainer) return;
         suChartAccordionContainer.addEventListener('click', (e) => {
@@ -519,7 +589,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const sectors = {};
+        const sectors = Object.create(null);
         currentlyDisplayedSUData.forEach(s => {
             const sector = s['Sector Name'];
             const sym = s['Symbol'];
@@ -592,7 +662,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const s = suFilterRow.querySelector(`select[data-filter-key="${def.key}"]`);
             if(s){
                 const vals = [...new Set(fullStockData.map(i => i[def.key]).filter(Boolean))].sort();
-                s.innerHTML=`<option value="ALL">ALL</option>`+vals.map(v=>`<option value="${v}">${v}</option>`).join('');
+                setSelectOptions(s, vals);
                 s.value = suFilters.columns[def.key] || 'ALL';
             }
         });
@@ -605,7 +675,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(!indDrop) return;
         let relInd=[...new Set(fullStockData.filter(r=>selSec === 'ALL' || r['Sector Name'] === selSec).map(i=>i['Industry Name']).filter(Boolean))].sort();
         const curInd = suFilters.columns['Industry Name'] || 'ALL';
-        indDrop.innerHTML = `<option value="ALL">ALL</option>`+relInd.map(v=>`<option value="${v}">${v}</option>`).join('');
+        setSelectOptions(indDrop, relInd);
         indDrop.value = relInd.includes(curInd) ? curInd : 'ALL';
         if(!relInd.includes(curInd)) suFilters.columns['Industry Name'] = 'ALL';
     };
@@ -619,6 +689,8 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDependentDropdowns();
         applyAndRenderSU();
     };
+
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) void checkForUpdates(); });
 
     // --- INITIALIZATION ---
     (function initializePage(){
@@ -643,8 +715,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if(suRefreshButton) {
             suRefreshButton.addEventListener('click', () => {
-                localStorage.removeItem(SU_LOCAL_STORAGE_DATA_KEY);
-                localStorage.removeItem(SU_LOCAL_STORAGE_VERSION_KEY);
+                storage.removeItem(SU_LOCAL_STORAGE_DATA_KEY);
+                storage.removeItem(SU_LOCAL_STORAGE_VERSION_KEY);
                 fetchInitialData();
             });
         }
@@ -695,7 +767,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         initDataLoad().finally(()=>{
             try {
-                const settings=JSON.parse(localStorage.getItem(SU_CHART_PANEL_SETTINGS)||'{}');
+                const settings=JSON.parse(storage.getItem(SU_CHART_PANEL_SETTINGS)||'{}');
                 if (settings.isOpen) {
                     if(suContainer) suContainer.classList.remove('panel-is-closed');
                     if(suChartPanel) suChartPanel.classList.remove('is-closed');

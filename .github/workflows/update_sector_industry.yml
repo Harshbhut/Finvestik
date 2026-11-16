@@ -1,54 +1,48 @@
-name: Update Weekly Sector & Industry Data
-
-permissions:
-  contents: write # ✅ allows git push via GitHub Actions
+name: "Update Weekly Sector & Industry Data"
 
 on:
-  # Scheduled run: 5:00 AM IST, Monday to Saturday (i.e., 23:30 UTC, Sunday-Thursday)
   schedule:
-    - cron: '30 23 * * 0-4'
+    - cron: "30 23 * * 0-4"
   workflow_dispatch:
     inputs:
       run_mode:
-        description: "Select mode: 'mcap' or 'full'"
-        required: true
+        description: Refresh all metadata or market caps only
+        type: choice
+        options: [full, mcap]
         default: full
 
+# Only this collector job can write generated snapshots.
+permissions:
+  contents: read
+concurrency:
+  group: data-${{ github.workflow }}
+  cancel-in-progress: false
+
 jobs:
-  update-sector-industry:
+  collect:
+    if: ${{ github.event_name != 'workflow_dispatch' || github.ref_name == github.event.repository.default_branch }}
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: scripts # Assumes script + JSON are inside scripts/
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    env:
+      DATA_BRANCH: ${{ github.event.repository.default_branch }}
+      RUN_MODE: ${{ inputs.run_mode || 'full' }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
-      - name: Set up Python
-        uses: actions/setup-python@v6
+      - name: Checkout default branch
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
-          python-version: '3.14'
-      - name: Install dependencies
-        run: |
-          pip install requests
-
-      # Always run in 'full' mode for scheduled triggers, allow custom mode for manual runs
-      - name: Set mode for update
-        id: set_mode
-        run: |
-          if [ "${{ github.event_name }}" = "schedule" ]; then
-            echo "mode=full" >> $GITHUB_OUTPUT
-          else
-            echo "mode=${{ github.event.inputs.run_mode }}" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Run Sector_Industry.py with correct mode
-        run: |
-          python Sector_Industry.py ${{ steps.set_mode.outputs.mode }}
-
-      - name: Commit & Push updated Sector_Industry.json
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add Sector_Industry.json
-          git diff --staged --quiet || git commit -m "📈 Auto-update Sector_Industry.json (mode=${{ steps.set_mode.outputs.mode }}) at $(TZ='Asia/Kolkata' date '+%Y-%m-%d %H:%M:%S IST')"
-          git push
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 1
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+      - name: Install collector dependencies
+        run: python -m pip install -r scripts/requirements.txt
+      - name: Collect and validate data
+        run: python scripts/Sector_Industry.py "$RUN_MODE"
+      - name: Commit generated snapshots
+        run: bash scripts/commit_data.sh scripts/Sector_Industry.json

@@ -2,49 +2,40 @@ name: "Circuit Limit Script"
 
 on:
   schedule:
-    - cron: '30 2 * * 1-6' #8:00 AM IST (2:30 AM UTC)
+    - cron: "30 2 * * 1-6"
   workflow_dispatch:
 
+# Only this collector job can write generated snapshots.
 permissions:
-  contents: write
+  contents: read
+concurrency:
+  group: data-${{ github.workflow }}
+  cancel-in-progress: false
 
 jobs:
-  run-script:
+  collect:
+    if: ${{ github.event_name != 'workflow_dispatch' || github.ref_name == github.event.repository.default_branch }}
     runs-on: ubuntu-latest
-    
-    # ✅ SET THE DEFAULT DIRECTORY FOR ALL 'run' STEPS
-    defaults:
-      run:
-        working-directory: scripts  # ❗️ Assumes your .py file is in a 'scripts' folder
-
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    env:
+      DATA_BRANCH: ${{ github.event.repository.default_branch }}
     steps:
-      - name: "⬇️ Checkout code"
-        uses: actions/checkout@v5
-
-      - name: "🐍 Set up Python"
-        uses: actions/setup-python@v6
+      - name: Checkout default branch
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
-          python-version: '3.14'
-
-      - name: "📦 Install dependencies"
-        # This command runs from inside the 'scripts' folder
-        run: |
-          python -m pip install --upgrade pip
-          # pip install -r requirements.txt # If you have one
-          pip install requests pandas
-
-      - name: "🚀 Run circuitlimit.py"
-        run: python circuitlimit.py
-
-      - name: "💾 Commit & Push data"
-        # This command also runs from inside the 'scripts' folder
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          
-          # We must use ../ to go up one level to the root for git operations
-          git add .
-
-          git diff --staged --quiet || git commit -m "📊 Auto-update circuit limit data at $(TZ='Asia/Kolkata' date '+%Y-%m-%d %H:%M:%S IST')"
-          
-          git push
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 1
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+      - name: Install collector dependencies
+        run: python -m pip install -r scripts/requirements.txt
+      - name: Collect and validate data
+        run: python scripts/circuitlimit.py
+      - name: Commit generated snapshots
+        run: bash scripts/commit_data.sh scripts/circuit_limits.json

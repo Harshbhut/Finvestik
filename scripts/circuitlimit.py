@@ -1,3 +1,4 @@
+from data_utils import atomic_write_json
 import os
 import json
 import logging
@@ -26,14 +27,8 @@ def setup_logging():
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 
 def save_json_file(data: Any, path: str):
-    """Saves data to a JSON file, creating the directory if needed."""
-    try:
-        os.makedirs(os.path.dirname(path), exist_ok=True)
-        with open(path, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=2)
-    except IOError as e:
-        logging.error(f"Error: Failed to write to file {path}: {e}")
-        raise  # Re-raise the exception to stop the script if saving fails
+    """Preserve the previous snapshot if serialization or writing fails."""
+    atomic_write_json(data, path)
 
 # -------------------------------
 # CORE LOGIC FUNCTIONS
@@ -74,7 +69,7 @@ def process_api_response(api_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
                     })
                     if source_date is None:
                         source_date = latest_tick[date_index]
-        
+
         if not processed_data_list:
             logging.warning("Warning: No stock data was found in the API response.")
             return None
@@ -102,11 +97,11 @@ def main():
 
     raw_api_data = fetch_data_from_api()
     if not raw_api_data:
-        return # Error is already logged by the fetch function
+        raise RuntimeError("Circuit-limit request failed; retaining existing data")
 
     final_data = process_api_response(raw_api_data)
     if not final_data:
-        return # Error is already logged by the process function
+        raise RuntimeError("Circuit-limit response invalid; retaining existing data")
 
     save_json_file(final_data, CONFIG["output_file"])
 

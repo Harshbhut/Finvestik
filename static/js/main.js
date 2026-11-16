@@ -14,10 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
             document.documentElement.classList.remove('light');
             if (themeToggle) themeToggle.innerHTML = sunIcon;
         }
+        if (themeToggle) themeToggle.setAttribute('aria-label', theme === 'light' ? 'Switch to dark theme' : 'Switch to light theme');
     }
     
     function loadTheme() {
-        const preferredTheme = localStorage.getItem(THEME_KEY);
+        let preferredTheme;
+        try { preferredTheme = localStorage.getItem(THEME_KEY); } catch (_) {}
         const systemTheme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         applyTheme(preferredTheme || systemTheme);
     }
@@ -25,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function toggleAndSaveTheme() {
         const newTheme = document.documentElement.classList.contains('light') ? 'dark' : 'light';
         applyTheme(newTheme);
-        localStorage.setItem(THEME_KEY, newTheme);
+        try { localStorage.setItem(THEME_KEY, newTheme); } catch (_) {}
     }
     
     if (themeToggle) {
@@ -52,10 +54,17 @@ document.addEventListener('DOMContentLoaded', () => {
         hamburgerMenuButton.addEventListener('click', toggleMobileMenu);
     }
 
-    // --- CHANGE: New robust active link highlighting ---
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && hamburgerMenuButton?.getAttribute('aria-expanded') === 'true') {
+            toggleMobileMenu();
+            hamburgerMenuButton.focus();
+        }
+    });
+
+    // --- Active link highlighting ---
     function setActiveNavLink() {
         // Helper to normalize paths for comparison (e.g., removes trailing slashes)
-        const normalizePath = (path) => path.replace(/\/$/, '');
+        const normalizePath = (path) => path.replace(/\/index\.html$/, '/').replace(/\/$/, '');
 
         const currentPagePath = normalizePath(window.location.pathname);
 
@@ -66,8 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (linkPath === currentPagePath) {
                 link.classList.add('active');
+                link.setAttribute('aria-current', 'page');
             } else {
                 link.classList.remove('active');
+                link.removeAttribute('aria-current');
             }
         });
     }

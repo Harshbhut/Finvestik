@@ -1,9 +1,11 @@
+from data_utils import atomic_write_json
 import requests
 import time
 import os
 import random
 import json
 import sys
+import math
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from typing import Optional, List, Dict
@@ -48,9 +50,14 @@ def fetch_json_data(url: str, max_retries: int = MAX_RETRIES) -> Optional[dict]:
     return None
 
 def safe_write_json(path: str, data: dict) -> None:
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+    if not data.get("data"):
+        raise ValueError("Refusing to publish an empty 52-week report")
+    values = (row.get(key) for row in data["data"]
+              for key in ("52_Weeks_High", "52_Weeks_Low"))
+    if not any(isinstance(value, (int, float)) and not isinstance(value, bool)
+               and math.isfinite(value) and value > 0 for value in values):
+        raise ValueError("52-week report has no valid extrema; retaining existing report")
+    atomic_write_json(data, path)
 
 def parse_iso_date_get_ymd(iso_str: str) -> Optional[str]:
     """Extract YYYY-MM-DD from an ISO-like string."""

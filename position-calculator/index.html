@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Finvestik - Position Sizing</title>
     
@@ -23,11 +24,9 @@
     <meta name="twitter:description" content="Risk & Allocation Based Stock Position Sizing Calculator" />
     <meta name="twitter:image" content="https://www.finvestik.com/static/images/Financial%20Growth%20Vector%20Logo.png" />
 
-    <link rel="icon" type="image/png" sizes="32x32" href="static/images/Financial Growth Vector Logo.png">
-    <link rel="apple-touch-icon" href="static/images/Financial Growth Vector Logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/Financial%20Growth%20Vector%20Logo.png">
+    <link rel="apple-touch-icon" href="/static/images/Financial%20Growth%20Vector%20Logo.png">
 
-    <!-- CHANGE: Add a prefetch link to start downloading the data for the next page -->
-    <link rel="prefetch" href="../static/data/stock_universe.json" as="fetch">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -49,7 +48,7 @@
     <header id="app-header" class="sticky top-0 z-50 w-full shadow-md" role="banner">
         <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16 sm:h-20">
             <div class="flex-shrink-0">
-                 <a href="/"><img src="/static/images/Financial%20Growth%20Vector%20Logo.png" alt="Finvestik Logo" id="finvestik-logo" class="h-[40px] w-[40px] sm:h-12 sm:w-12 md:h-16 md:w-16 rounded-md object-contain cursor-pointer"/></a>
+                 <a href="/"><img decoding="async" src="/static/images/Financial%20Growth%20Vector%20Logo.png" alt="Finvestik Logo" id="finvestik-logo" class="h-[40px] w-[40px] sm:h-12 sm:w-12 md:h-16 md:w-16 rounded-md object-contain cursor-pointer"/></a>
             </div>
             
             <!-- Desktop Navigation -->
@@ -319,15 +318,6 @@
 
             if(copyRiskQtyButton) copyRiskQtyButton.addEventListener('click', (e) => copyQtyToClipboard('risk_result_qty', e.currentTarget));
             if(copyAllocQtyButton) copyAllocQtyButton.addEventListener('click', (e) => copyQtyToClipboard('alloc_result_qty', e.currentTarget));
-
-            if(riskRiskPercentInput) {
-                riskRiskPercentInput.addEventListener('focus', (e) => {
-                    const input = e.currentTarget;
-                    const originalValue = input.value;
-                    input.value = '';
-                    setTimeout(() => { input.value = originalValue; }, 1);
-                });
-            }
 
             loadCalculatorSettings();
             updateAllCalculationsAndSave();

@@ -1,3 +1,4 @@
+from data_utils import atomic_write_json
 import requests
 import csv
 import json
@@ -16,41 +17,31 @@ HEADERS = {
 }
 
 def stream_csv_to_json(url, output_file):
-    print("Downloading (browser-like):", url)
-    resp = requests.get(url, stream=True, headers=HEADERS, timeout=TIMEOUT)
-    resp.raise_for_status()
-
-    lines = resp.iter_lines(decode_unicode=True)
-    reader = csv.DictReader(lines)
-
-    total = 0
-    with open(output_file, "w", encoding="utf-8") as out:
-        out.write("[")
-        first = True
+    """Parse and validate the CSV before replacing the last known-good snapshot."""
+    print("Downloading:", url)
+    with requests.get(url, stream=True, headers=HEADERS, timeout=TIMEOUT) as resp:
+        resp.raise_for_status()
+        resp.encoding = "utf-8-sig"
+        reader = csv.DictReader(resp.iter_lines(decode_unicode=True))
+        columns = {(key or "").strip().upper() for key in (reader.fieldnames or [])}
+        if not {"SYMBOL", "ISIN NUMBER"}.issubset(columns):
+            raise ValueError("NSE response is missing required CSV columns")
+        records = []
         for row in reader:
             record = {}
             for key, value in row.items():
                 if key is None:
                     continue
-                val = (value or "").strip()
-                ku = key.strip().upper()
-                if ku == "SYMBOL":
-                    record["trading_symbol"] = val
-                elif ku == "ISIN NUMBER":
-                    record["isin"] = val
-                else:
-                    record[key.strip().lower().replace(" ", "_")] = val
-
-            if not first:
-                out.write(",\n")
-            json.dump(record, out, ensure_ascii=False)
-            first = False
-            total += 1
-
-        out.write("]")
-
-    resp.close()
-    print(f"✅ Done — processed {total} rows. Saved: {os.path.abspath(output_file)}")
+                field = {"SYMBOL": "trading_symbol", "ISIN NUMBER": "isin"}.get(
+                    key.strip().upper(), key.strip().lower().replace(" ", "_"))
+                record[field] = (value or "").strip()
+            if not record.get("trading_symbol") or not record.get("isin"):
+                raise ValueError("NSE response contains a row without a symbol or ISIN")
+            records.append(record)
+        if not records:
+            raise ValueError("NSE response contains no securities")
+        atomic_write_json(records, output_file)
+    print(f"✅ Done — processed {len(records)} rows. Saved: {os.path.abspath(output_file)}")
 
 if __name__ == "__main__":
     start = time.time()
@@ -58,4 +49,5 @@ if __name__ == "__main__":
         stream_csv_to_json(URL, OUTPUT)
     except Exception as e:
         print("ERROR:", e)
+        raise
     print(f"Time elapsed: {time.time() - start:.2f}s")

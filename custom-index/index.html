@@ -4,6 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Finvestik - Custom Index</title>
     
@@ -27,7 +28,6 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/static/images/Financial Growth Vector Logo.png">
     <link rel="apple-touch-icon" href="/static/images/Financial Growth Vector Logo.png">
 
-    <!-- CHANGE: Add a prefetch link to start downloading the data for the next page -->
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -49,7 +49,7 @@
     <header id="app-header" class="sticky top-0 z-50 w-full shadow-md" role="banner">
         <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16 sm:h-20">
             <div class="flex-shrink-0">
-                 <a href="/"><img src="/static/images/Financial Growth Vector Logo.png" alt="Finvestik Logo" id="finvestik-logo" class="h-[40px] w-[40px] sm:h-12 sm:w-12 md:h-16 md:w-16 rounded-md object-contain cursor-pointer"/></a>
+                 <a href="/"><img decoding="async" src="/static/images/Financial Growth Vector Logo.png" alt="Finvestik Logo" id="finvestik-logo" class="h-[40px] w-[40px] sm:h-12 sm:w-12 md:h-16 md:w-16 rounded-md object-contain cursor-pointer"/></a>
             </div>
             
             <nav class="hidden sm:flex flex-grow justify-center px-2 space-x-2" aria-label="Main navigation">
@@ -170,6 +170,8 @@
 
             // --- DOM ELEMENTS ---
             const customIndexTable = document.getElementById('custom-index-table');
+            // The data tool may be disabled while its maintenance message is shown.
+            if (!customIndexTable) return;
             const customIndexTableHead = customIndexTable.querySelector('thead');
             const customIndexTableBody = customIndexTable.querySelector('tbody');
             const customIndexLoading = document.getElementById('custom-index-loading');
@@ -184,13 +186,26 @@
             
             // --- FUNCTIONS ---
             const parseCSV = (csvText) => {
-                const lines = csvText.replace(/\r/g,'').trim().split('\n'); if(lines.length<2) return[];
-                const headers=lines[0].split(',').map(h=>h.trim()); const result=[];
-                for(let i=1; i<lines.length; i++){
-                    if(!lines[i])continue; const values=lines[i].split(',').map(v=>v.trim());
-                    if(values.length!==headers.length){continue;} const obj={};
-                    for(let j=0; j<headers.length; j++){ obj[headers[j]]=values[j]; } result.push(obj);
-                } return result;
+                // A quoted field may contain commas, escaped quotes, or newlines.
+                const rows = []; let row = [], field = '', quoted = false;
+                for (let i = 0; i < csvText.length; i++) {
+                    const char = csvText[i];
+                    if (char === '"') {
+                        if (quoted && csvText[i + 1] === '"') { field += '"'; i++; }
+                        else if (quoted || field === '') quoted = !quoted;
+                        else field += char;
+                    } else if (char === ',' && !quoted) { row.push(field.trim()); field = ''; }
+                    else if ((char === '\n' || char === '\r') && !quoted) {
+                        if (char === '\r' && csvText[i + 1] === '\n') i++;
+                        row.push(field.trim()); rows.push(row); row = []; field = '';
+                    } else field += char;
+                }
+                if (quoted) throw new Error('Malformed CSV: unclosed quoted field.');
+                row.push(field.trim()); rows.push(row);
+                const headers = rows.shift() || [];
+                if (!headers.length || new Set(headers).size !== headers.length) throw new Error('Invalid CSV headers.');
+                return rows.filter(values => values.length === headers.length && values.some(Boolean))
+                    .map(values => Object.fromEntries(headers.map((header, index) => [header, values[index]])));
             };
 
             const renderCustomIndexTable = (data, timestampText) => {
@@ -202,7 +217,9 @@
                 const headers=Object.keys(data[0]); const headerRow=document.createElement('tr');
                 headers.forEach(headerText=>{const th=document.createElement('th');th.textContent=headerText.replace(/_/g,' ').replace(/\b\w/g,l=>l.toUpperCase());headerRow.appendChild(th);});
                 customIndexTableHead.appendChild(headerRow);
-                data.forEach(item=>{const row=document.createElement('tr');headers.forEach(header=>{const cell=document.createElement('td');cell.textContent=item[header]||'N/A';row.appendChild(cell);});customIndexTableBody.appendChild(row);});
+                const fragment = document.createDocumentFragment();
+                data.forEach(item=>{const row=document.createElement('tr');headers.forEach(header=>{const cell=document.createElement('td');cell.textContent=item[header]||'N/A';row.appendChild(cell);});fragment.appendChild(row);});
+                customIndexTableBody.appendChild(fragment);
             };
 
             const formatCustomIndexDataForExport = (data) => {
@@ -216,17 +233,19 @@
             const fetchAndRenderCustomIndexData = async (options={force:false}) => {
                 try {
                     const cachedDataJSON = localStorage.getItem(CUSTOM_INDEX_CACHE_KEY);
-                    if(cachedDataJSON && !options.force){ const cache=JSON.parse(cachedDataJSON); const isCacheFresh=(Date.now()-cache.timestamp)<CUSTOM_INDEX_CACHE_DURATION_MS; if(isCacheFresh){renderCustomIndexTable(cache.data,`Cached at: ${new Date(cache.timestamp).toLocaleString()}`); return; } }
+                    if(cachedDataJSON && !options.force){ const cache=JSON.parse(cachedDataJSON); const age = Date.now() - cache.timestamp; const isCacheFresh=age >= 0 && age < CUSTOM_INDEX_CACHE_DURATION_MS && Array.isArray(cache.data) && cache.data.length > 0; if(isCacheFresh){renderCustomIndexTable(cache.data,`Cached at: ${new Date(cache.timestamp).toLocaleString()}`); return; } }
                 } catch(e) {}
                 customIndexLoading.classList.remove('hidden'); customIndexError.classList.add('hidden');
                 customIndexMessage.classList.remove('hidden'); customIndexMessage.textContent='Fetching latest data...';
                 try {
-                    const response=await fetch(GOOGLE_SHEET_CSV_URL,{cache:"no-store"});
+                    const response=await fetch(GOOGLE_SHEET_CSV_URL,{cache:"no-cache", signal: AbortSignal.timeout(30000)});
                     if(!response.ok) throw new Error(`Network error: ${response.status}`);
                     const csvText = await response.text();
                     if(!csvText || csvText.trim().length < 5) throw new Error("Empty or invalid data from sheet.");
-                    const data = parseCSV(csvText); const timestamp=Date.now();
-                    localStorage.setItem(CUSTOM_INDEX_CACHE_KEY,JSON.stringify({data,timestamp}));
+                    const data = parseCSV(csvText);
+                    if (!data.length) throw new Error('No valid rows received from sheet.');
+                    const timestamp=Date.now();
+                    try { localStorage.setItem(CUSTOM_INDEX_CACHE_KEY,JSON.stringify({data,timestamp})); } catch (_) {}
                     renderCustomIndexTable(data,`Fetched at: ${new Date(timestamp).toLocaleString()}`);
                 } catch(err) { customIndexLoading.classList.add('hidden'); customIndexError.textContent=`Error: ${err.message}`; customIndexError.classList.remove('hidden'); customIndexMessage.classList.add('hidden'); }
             };

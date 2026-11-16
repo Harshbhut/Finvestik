@@ -1,43 +1,41 @@
-name: Run Historical Data Collector
-
-permissions:
-  contents: write   # ✅ Needed to push commit
+name: "Run Historical Data Collector"
 
 on:
   schedule:
-    - cron: '30 0 * * *' # 6 AM IST
+    - cron: "30 0 * * *"
   workflow_dispatch:
 
+# Only this collector job can write generated snapshots.
+permissions:
+  contents: read
+concurrency:
+  group: data-${{ github.workflow }}
+  cancel-in-progress: false
+
 jobs:
-  run-historical-script:
+  collect:
+    if: ${{ github.event_name != 'workflow_dispatch' || github.ref_name == github.event.repository.default_branch }}
     runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: scripts
-
+    timeout-minutes: 180
+    permissions:
+      contents: write
+    env:
+      DATA_BRANCH: ${{ github.event.repository.default_branch }}
     steps:
-      - name: ⬇️ Checkout code
-        uses: actions/checkout@v5
+      - name: Checkout default branch
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: 🐍 Set up Python
-        uses: actions/setup-python@v6
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 1
+      - name: Set up Python
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
-          python-version: '3.14'
-
-      - name: 📦 Install dependencies
-        run: |
-          pip install requests
-          
-      - name: 🚀 Run Historical_Data.py
-        run: python Historical_Data.py
-
-      - name: 💾 Commit & Push updated file
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add stock_historical_universe.json
-          git diff --staged --quiet || git commit -m "📈 Auto-update historical data at $(TZ='Asia/Kolkata' date '+%Y-%m-%d %H:%M:%S IST')"
-          git push
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: scripts/requirements.txt
+      - name: Install collector dependencies
+        run: python -m pip install -r scripts/requirements.txt
+      - name: Collect and validate data
+        run: python scripts/Historical_Data.py
+      - name: Commit generated snapshots
+        run: bash scripts/commit_data.sh scripts/stock_historical_universe.json
